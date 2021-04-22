@@ -11,6 +11,10 @@ package ltd.newbee.mall.service.impl;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
+import ltd.newbee.mall.entity.GoodsDesc;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -100,4 +104,27 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
         PageResult pageResult = new PageResult(newBeeMallSearchGoodsVOS, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
+
+	@Override
+	public List<GoodsImage> getGoodsImageEntityByGoodsId(Long goodsId) {
+		
+		List<GoodsImage> list = goodsMapper.getImageList(goodsId);
+		return list;
+	}
+	@Override
+	public List<GoodsReview> getGoodsReviewEntityByGoodsId(Long  goodsId){
+		List<GoodsReview> list =goodsMapper.getReviewList(goodsId);
+		return list;
+	}
+	@Override
+	public List<GoodsQa> getGoodsQaEntityByGoodsId(Long  goodsId){
+		List<GoodsQa> list =goodsMapper.getGoodsQaList(goodsId);
+		return list;
+	}
+	@Override
+	public GoodsDesc getGoodsDescEntityByGoodsId(Long  goodsId){
+		GoodsDesc goodsDesc=goodsMapper. getGoodsDesc(goodsId);
+		return goodsDesc;
+	}
+	
 }

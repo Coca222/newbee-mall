@@ -374,4 +374,25 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where goods_id = #{goodsId,jdbcType=BIGINT}
   </update>
+  <select id="getImageList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsImage">
+      select goods_id, path from goods_image
+      where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  <select id="getGoodsDesc"  parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsDesc">
+     select goods_id, color, size, material, weight, warranty_year, set_date, warp_size from goods_desc
+      where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="getGoodsQaList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsQa">
+      select id,goods_id, question, submit_date, answer, answer_date, helped_num from goods_qa
+      where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select> 
+  
+   <select id="getReviewList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
+ 	  select r.star, r.comment_date, r.title, r.content, r.picture, r.goods_id, u.nick_name, i.goods_name
+      from goods_review as r join tb_newbee_mall_user as u on r.custermer_id = u.user_id join tb_newbee_mall_goods_info as i  
+      on r.goods_id = i.goods_id
+      where r.goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>  
 </mapper>

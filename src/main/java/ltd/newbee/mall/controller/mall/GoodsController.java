@@ -11,8 +11,16 @@ package ltd.newbee.mall.controller.mall;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.controller.vo.GoodsDescVO;
+import ltd.newbee.mall.controller.vo.GoodsImageVO;
+import ltd.newbee.mall.controller.vo.GoodsQAVO;
+import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.entity.GoodsDesc;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
@@ -26,6 +34,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -86,7 +97,85 @@ public class GoodsController {
         BeanUtil.copyProperties(goods, goodsDetailVO);
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
-        return "mall/detail";
+        
+        // added by coca 2021/04/19 recall GoodsImage service
+        List<GoodsImage> list =newBeeMallGoodsService.getGoodsImageEntityByGoodsId(goodsId);
+        if (list == null || list.isEmpty()) {
+            NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        
+        List<GoodsImageVO> imageVOList = new ArrayList<GoodsImageVO>();
+//         直接将list中值copy到imageVOList中，无需for循环
+//         List<GoodsImageVO> imageVOList = BeanUtil.copyList(list, GoodsImageVO.class);
+        for(int i = 0; i < list.size(); i++){
+        	GoodsImage image = new GoodsImage();
+        	image = list.get(i);
+        	if(image!=null) {
+//        	String path = image.getPath();
+        	GoodsImageVO imageVO = new GoodsImageVO();
+//        	 imageVO.setPath(path); 
+        	BeanUtil.copyProperties(image, imageVO);
+        	 imageVOList.add(imageVO);
+       } else {
+    	   break;
+    	   }
+       }
+        
+        //recall GoodsReview Service
+        List<GoodsReview> listRev =newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(goodsId);
+        if (listRev == null || listRev.isEmpty()) {
+            NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        List<GoodsReviewVO> reviewVOList = new ArrayList<GoodsReviewVO>();
+        for(int i = 0; i < listRev.size(); i++){
+        	GoodsReview review = new GoodsReview();
+        	review = listRev.get(i);
+        	if(review!=null) {
+//        	Integer star = review.getStar();
+        	GoodsReviewVO reviewVO = new GoodsReviewVO();
+//        	 reviewVO.setStar(star); 
+        	BeanUtil.copyProperties(review, reviewVO);
+        	 reviewVOList.add(reviewVO);
+        } else {
+    	   break;
+    	   }   
     }
-
+        
+        // recall GoodsQa Service
+        List<GoodsQa> listQa =newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
+        if (listQa == null|| listQa.isEmpty()) {
+            NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        List<GoodsQAVO> qaVOList = new ArrayList<GoodsQAVO>();
+        for(int i = 0; i < listQa.size();i++) {
+        	GoodsQa qa = new GoodsQa();
+        	qa=listQa.get(i);
+        	if(qa != null) {
+//        		String answer = qa.getAnswer();
+        		GoodsQAVO qaVO = new GoodsQAVO();
+//        		qaVO.setAnswer(answer);
+        		BeanUtil.copyProperties(qa, qaVO);
+        		qaVOList.add(qaVO);
+        	} else {
+        		break;
+        	}
+        		
+        }
+        
+        
+        // recall GoodsDesc Service
+        GoodsDesc descEntity =newBeeMallGoodsService.getGoodsDescEntityByGoodsId(goodsId);
+        if (descEntity == null) {
+            NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        GoodsDescVO descVO = new GoodsDescVO();
+        BeanUtil.copyProperties(descEntity, descVO);
+        
+        request.setAttribute("goodsImageDetail", imageVOList);
+        request.setAttribute("goodsReviewDetail", reviewVOList);
+        request.setAttribute("goodsQADetail",qaVOList);
+        request.setAttribute("goodsDescDetail",descVO);
+        
+        return "mall/detail";     
+	}
 }

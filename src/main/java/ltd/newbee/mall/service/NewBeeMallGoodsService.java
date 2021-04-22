@@ -8,6 +8,10 @@
  */
 package ltd.newbee.mall.service;
 
+import ltd.newbee.mall.entity.GoodsDesc;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
@@ -70,4 +74,9 @@ public interface NewBeeMallGoodsService {
      * @return
      */
     PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
+    
+    List<GoodsImage> getGoodsImageEntityByGoodsId(Long  goodsId);
+    List<GoodsReview> getGoodsReviewEntityByGoodsId(Long  goodsId);
+    List<GoodsQa> getGoodsQaEntityByGoodsId(Long  goodsId);
+    GoodsDesc getGoodsDescEntityByGoodsId(Long  goodsId);
 }

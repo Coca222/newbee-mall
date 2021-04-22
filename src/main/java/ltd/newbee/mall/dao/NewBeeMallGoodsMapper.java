@@ -8,6 +8,10 @@
  */
 package ltd.newbee.mall.dao;
 
+import ltd.newbee.mall.entity.GoodsDesc;
+import ltd.newbee.mall.entity.GoodsImage;
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -45,5 +49,12 @@ public interface NewBeeMallGoodsMapper {
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 
     int batchUpdateSellStatus(@Param("orderIds")Long[] orderIds,@Param("sellStatus") int sellStatus);
-
+        // added by coca 2021/04/16 イメージリストを取得
+     List<GoodsImage> getImageList(Long goodsId);
+        // added by coca 2021/04/16　レビューリストを取得
+     List<GoodsReview> getReviewList(Long goodsId);
+     	// added by coca 2021/04/16 QAリストを取得
+     List<GoodsQa> getGoodsQaList(Long goodsId);
+     	// added by coca 2021/04/16 説明を取得
+     GoodsDesc getGoodsDesc(Long goodsId);
 }
