@@ -20,6 +20,8 @@ import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -125,6 +127,15 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	public GoodsDesc getGoodsDescEntityByGoodsId(Long  goodsId){
 		GoodsDesc goodsDesc=goodsMapper. getGoodsDesc(goodsId);
 		return goodsDesc;
+	}
+
+	 // Adding ServiceImp to achieve paging added by coca 2021/04/23
+	@Override
+	public PageResult getGoodsQaPageByUtil(PageQueryUtil pageUtil){
+		List <GoodsQa> qaPageList =goodsMapper.findGoodsQaList(pageUtil);;	
+		int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+		PageResult pageResult = new PageResult(qaPageList, total, pageUtil.getLimit(), pageUtil.getPage());
+       return pageResult;
 	}
 	
 }

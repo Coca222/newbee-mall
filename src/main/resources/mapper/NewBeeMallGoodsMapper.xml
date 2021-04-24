@@ -389,10 +389,16 @@
       where goods_id = #{goodsId,jdbcType=BIGINT}
   </select> 
   
-   <select id="getReviewList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
+  <select id="getReviewList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
  	  select r.star, r.comment_date, r.title, r.content, r.picture, r.goods_id, u.nick_name, i.goods_name
       from goods_review as r join tb_newbee_mall_user as u on r.custermer_id = u.user_id join tb_newbee_mall_goods_info as i  
       on r.goods_id = i.goods_id
       where r.goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  
+ <!--  Adding XML to achieve paging added by coca 2021/04/23 -->
+<select id="findGoodsQaList" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
+      select id,goods_id, question, submit_date, answer, answer_date, helped_num from goods_qa order by id
+      limit #{start},#{limit} 
   </select>  
 </mapper>

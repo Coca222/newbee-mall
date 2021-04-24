@@ -61,6 +61,7 @@
 	    	<div class="slgcolumn" >
 		      <img class="slgdemo" th:src="@{${image.path}}">
 		    </div>
+		    
 		   <!-- <div class="slgcolumn" >
 		      <img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(1)" alt="The Woods">
 		    </div>
@@ -407,10 +408,11 @@
 		</p>
 	</div>
 
-<th: block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">	
 <ul class="g-reviewList">
 <li class="g-reviewList_item">
 	    <p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
+	    
+<th: block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">	
 	    <div class="g-lg-flow-sm">
 			<p class="g-score">
 				<!--<span data-score="5.0">
@@ -448,6 +450,7 @@
 					</span>
 	      		</span>
 			</p>
+
 <!--	      	<p class="g-reviewList_user"><b>ルル</b>さん 2021/03/09</p>
 	    </div>
 	    <p class="g-reviewList_info">購入商品:カジュアルソファ(パトレック GR/LBR)</p>

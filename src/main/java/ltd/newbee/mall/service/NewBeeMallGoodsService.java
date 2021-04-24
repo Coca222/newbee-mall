@@ -16,6 +16,7 @@ import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
 
+
 import java.util.List;
 
 public interface NewBeeMallGoodsService {
@@ -79,4 +80,7 @@ public interface NewBeeMallGoodsService {
     List<GoodsReview> getGoodsReviewEntityByGoodsId(Long  goodsId);
     List<GoodsQa> getGoodsQaEntityByGoodsId(Long  goodsId);
     GoodsDesc getGoodsDescEntityByGoodsId(Long  goodsId);
+//     Adding Service to achieve paging added by coca 2021/04/23
+    PageResult getGoodsQaPageByUtil(PageQueryUtil pageUtil);
+   
 }
