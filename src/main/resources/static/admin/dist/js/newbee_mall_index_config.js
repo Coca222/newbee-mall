@@ -62,6 +62,7 @@ function configAdd() {
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
+	debugger;
     var configName = $("#configName").val();
     var configType = $("#configType").val();
     var redirectUrl = $("#redirectUrl").val();

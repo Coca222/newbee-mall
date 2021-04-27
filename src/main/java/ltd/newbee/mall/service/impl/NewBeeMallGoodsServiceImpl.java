@@ -133,9 +133,25 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	@Override
 	public PageResult getGoodsQaPageByUtil(PageQueryUtil pageUtil){
 		List <GoodsQa> qaPageList =goodsMapper.findGoodsQaList(pageUtil);;	
-		int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+		int total = goodsMapper.findGoodsQaCount(pageUtil);
 		PageResult pageResult = new PageResult(qaPageList, total, pageUtil.getLimit(), pageUtil.getPage());
        return pageResult;
 	}
-	
+	// adding sorting way added by coca 2021/04/24
+	@Override
+	public PageResult getGoodsQaPageBySorting(PageQueryUtil pageUtil) {
+		List <GoodsQa> qaSortList =goodsMapper.findGoodsQaSortSubmitDate(pageUtil);	
+		int total = goodsMapper.findGoodsQaCount(pageUtil);
+		PageResult pageResult = new PageResult(qaSortList, total, pageUtil.getLimit(), pageUtil.getPage());
+       return pageResult;
+		}
+	// adding inserting way added by coca 2021/04/24
+	@Override
+    public String saveGoodsQa(GoodsQa goodsQa) {
+        if (goodsMapper.qaInsertSelective(goodsQa) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
 }

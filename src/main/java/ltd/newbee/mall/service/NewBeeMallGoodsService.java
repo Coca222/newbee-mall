@@ -13,9 +13,10 @@ import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
-
+import ltd.newbee.mall.util.Result;
 
 import java.util.List;
 
@@ -82,5 +83,11 @@ public interface NewBeeMallGoodsService {
     GoodsDesc getGoodsDescEntityByGoodsId(Long  goodsId);
 //     Adding Service to achieve paging added by coca 2021/04/23
     PageResult getGoodsQaPageByUtil(PageQueryUtil pageUtil);
-   
+//     Adding Service to achieve sort paging added by coca 2021/04/23
+    PageResult getGoodsQaPageBySorting(PageQueryUtil pageUtil); 
+//     Adding service to achieve inserting added by coca 2021/04/24
+    String saveGoodsQa(GoodsQa goodsQa);
+
+	
+
 }

@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
@@ -67,7 +68,7 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
    List<GoodsQa> list =newBeeMallGoodsService.getGoodsQaEntityByGoodsId(numQa); 
    		GoodsQa qa =list.get(0); 
    		String id =qa.getId();
-   		assertEquals("1",id); 
+   		assertEquals("001",id); 
    		String submitDate= qa.getSubmitDate();
    		assertEquals("2020-01-13",submitDate); 
    		String question = qa.getQuestion();
@@ -125,22 +126,40 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
       assertEquals(3,size);
       
     //to test if lists are same
-     
-        GoodsQa test1= new GoodsQa();
-        test1.setAnswer("そうです");
-        test1.setAnswerDate("2020-01-13");
-        test1.setGoodsId(10700L);
-        test1.setHelpedNum("3");       
-        test1.setId("1");        
-        test1.setQuestion("この製品には耐久性がありますか？");     
-        test1.setSubmitDate("2020-01-13");
-       
-        
-    	List<GoodsQa> testList =new ArrayList<GoodsQa>();
-    	testList.add(test1);
-    	Boolean isTrue = qaList.get(0).equals(testList.get(0));
-    	assertEquals(true,isTrue);
+    	assertEquals("001",qaList.get(0).getId());
+    	assertEquals("002",qaList.get(1).getId());
+    	assertEquals("003",qaList.get(2).getId());
+       	
   }
 
+    //To test qa sorting added by coca 2021/04/24
+  @Test public void testGoodsQaSorting() {
+	  Map<String, Object> params = new HashMap<>();
+	  params.put("page", 1);
+	  params.put("limit", 3);
+	  params.put("orderBy", "submit_date");
+	  PageQueryUtil pageUtil = new PageQueryUtil(params);
+	  PageResult result = newBeeMallGoodsService.getGoodsQaPageBySorting((pageUtil));
+	  List<GoodsQa> qaList = (List<GoodsQa>) result.getList();
+	  assertEquals("2020-01-13",qaList.get(0).getSubmitDate());
+  	  assertEquals("2020-04-06",qaList.get(1).getSubmitDate());
+  	  assertEquals("2020-06-06",qaList.get(2).getSubmitDate());
+	 
+	  }
   
+    //To test inserting  added by coca 2021/04/24
+	
+//	  @Test public void testGoodsQaInserting() { 
+//		  GoodsQa qa = new GoodsQa();
+//	  qa.setId("21"); 
+//	  qa.setGoodsId(10700L);
+//	  qa.setQuestion("crazy");
+//	  qa.setSubmitDate("2020-11-28");
+//	  qa.setAnswer("crazy");
+//	  qa.setAnswerDate("2020-12-28"); 
+//	  String rs = newBeeMallGoodsService.saveGoodsQa(qa);
+//	 
+//	  assertEquals(ServiceResultEnum.SUCCESS.getResult(), rs);
+// }
+
 }

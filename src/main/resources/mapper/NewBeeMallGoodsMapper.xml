@@ -396,9 +396,93 @@
       where r.goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
   
- <!--  Adding XML to achieve paging added by coca 2021/04/23 -->
-<select id="findGoodsQaList" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
-      select id,goods_id, question, submit_date, answer, answer_date, helped_num from goods_qa order by id
+  <!--  Adding XML to achieve paging added by coca 2021/04/23 -->
+  <select id="findGoodsQaList" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
+      select id,goods_id, question, submit_date, answer, answer_date, helped_num from goods_qa 
       limit #{start},#{limit} 
   </select>  
+  <!--  Adding sorting way added by coca 2021/04/23 -->
+  <select id="findGoodsQaSortSubmitDate" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
+      select id,goods_id, question, submit_date, answer, answer_date, helped_num from goods_qa 
+      <if test="orderBy!=null and orderBy!=''">
+         <choose>
+                <when test="orderBy == 'submit_date'">
+                    <!-- 按照发布时间排列 -->
+                    order by submit_date 
+                </when>
+                    <!-- 按照参考人数排列 -->
+                <when test="orderBy == 'helped_num'">
+                    order by helped_num 
+                </when>
+                <!-- 默认按照id从小到大 -->
+                <otherwise>             
+                    order by id
+                </otherwise>
+         </choose>
+      </if>
+      <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+      </if>
+  </select>   
+  <!-- adding count added by coca 2021/04/24 -->
+  <select id="findGoodsQaCount" parameterType="Map" resultType="int">
+      select count(*) from goods_qa 
+      limit #{start},#{limit} 
+  </select> 
+  
+  <!-- adding insert added by coca 2021/04/24 -->
+ <insert id="qaInsert" parameterType="ltd.newbee.mall.entity.GoodsQa">
+    insert into goods_qa (id, goods_id, question, submit_date, answer, answer_date)
+    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{submitDate,jdbcType=VARCHAR},
+    #{answer,jdbcType=VARCHAR}, #{answerDate,jdbcType=VARCHAR})  
+  </insert>
+    <insert id="qaInsertSelective" parameterType="ltd.newbee.mall.entity.GoodsQa">
+        insert into goods_qa
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="question != null">
+                question,
+            </if>
+            <if test="submitDate != null">
+                submit_date,
+            </if>
+            <if test="answer != null">
+                answer,
+            </if>
+            <if test="answerDate != null">
+                answer_date,
+            </if>
+            <if test="helpedNum != null">
+                helped_num,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=INTEGER},
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="submitDate != null">
+                #{submitDate,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="answerDate != null">
+                #{answerDate,jdbcType=VARCHAR},
+            </if>
+            <if test="helpedNum != null">
+                #{helpedNum,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 </mapper>

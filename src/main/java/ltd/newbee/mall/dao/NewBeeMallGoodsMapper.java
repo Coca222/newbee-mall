@@ -57,6 +57,13 @@ public interface NewBeeMallGoodsMapper {
      List<GoodsQa> getGoodsQaList(Long goodsId);
      	// added by coca 2021/04/16 説明を取得
      GoodsDesc getGoodsDesc(Long goodsId);
-       // Adding Mapper to achieve paging added by coca 2021/04/23
+        // Adding Mapper to achieve paging added by coca 2021/04/23
      List<GoodsQa> findGoodsQaList(PageQueryUtil pageUtil);
+     int findGoodsQaCount(PageQueryUtil pageUtil);
+        // Adding Mapper to sort paging added by coca 2021/04/24
+     List<GoodsQa> findGoodsQaSortSubmitDate(PageQueryUtil pageUtil);
+        //adding insert added by coca 2021/04/24
+     int qaInsert(GoodsQa qaRecord);
+
+     int qaInsertSelective(GoodsQa qaRecord);
 }

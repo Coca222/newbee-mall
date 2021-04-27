@@ -57,10 +57,11 @@
     <div class="imgContainer">
         <div class="slgrow">
 	    	<a class="slgprev" onclick="plusSlides(-1)">❮</a>
-	    	<th: block th:each="image: ${goodsImageDetail}">
+	    	<th:block th:each="image: ${goodsImageDetail}">
 	    	<div class="slgcolumn" >
 		      <img class="slgdemo" th:src="@{${image.path}}">
 		    </div>
+	    	</th:block>
 		    
 		   <!-- <div class="slgcolumn" >
 		      <img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(1)" alt="The Woods">
@@ -137,7 +138,7 @@
   <div class="zv-cqa-step-link">
     <span>全2件</span>
 
-    <span>ページ1/1</span>
+    <span>ページ<span id="currentPageNum">1</span>/1</span>
 
   </div>
   <div class="zv-select-wrap">
@@ -148,9 +149,8 @@
   </div>
 </div>
 
- 
-<th: block th:each="qa: ${goodsQADetail}" th:if="${qa != null}">
- <div class="zv-cqa">
+<div class="zv-cqa hiddenQaDiv">
+<th:block th:each="qa: ${goodsQADetail}" th:if="${qa != null}">
 
     <div class="zv-cqa-question">
       <span class="zv-space">Q. </span>
@@ -228,8 +228,9 @@
 
 
     </div>
-  </div>
- 
+    </th:block>
+   </div>
+  
 
   <!--<div class="zv-cqa">
     <div class="zv-cqa-question">
@@ -312,7 +313,7 @@
     </div>
   </div>-->
 	 
-		    <div class="zv-cqa-step">
+  <div class="zv-cqa-step" id="detailFooter">
   <div class="zv-cqa-step-link">
     <span>全2件</span>
 
@@ -412,7 +413,7 @@
 <li class="g-reviewList_item">
 	    <p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
 	    
-<th: block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">	
+   <th:block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">	
 	    <div class="g-lg-flow-sm">
 			<p class="g-score">
 				<!--<span data-score="5.0">
@@ -424,10 +425,10 @@
 	    <p class="g-reviewList_info" th:text="${rev.goodsName}">購入商品:カジュアルソファ(パトレック GR/MBR）</p>
 	    <p class="g-reviewList_h" th:text="${rev.title}">安くて、座り心地良いです。</p>
 	    <p th:text="${rev.content}">安価なソファだと、座面がかなり低く、立ち上がるのにもしんどいと、よく聞きます。友人の家のソファに座るとなるほどと思い、座面が低すぎなくて、比較的安価なものを探していました。
-これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
-適度なフカフカさもあります。
-良い買い物出来ました。
-触り心地良いですが、飲み物などこぼしたら、シミになりそうなので、私は色も好きだけど、ソファカバーを店舗で買いました。</p>
+			これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
+			適度なフカフカさもあります。
+			良い買い物出来ました。
+			触り心地良いですが、飲み物などこぼしたら、シミになりそうなので、私は色も好きだけど、ソファカバーを店舗で買いました。</p>
 
         <p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（125人）</span></a></p>
 	 	<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable="">
@@ -435,8 +436,9 @@
 	 		<img class="thumUpImg" src="/goods-img/thumUp.jpg" alt="Italian Trulli">
 	 	</i><span>参考になった（125人）</span></a></p>  	
 	 	</li>
+	</th:block>
 
-  	<li class="g-reviewList_item">
+    <li class="g-reviewList_item">
 	    <div class="g-lg-flow-sm">
 			<p class="g-score">
 				<span data-score="5.0">
@@ -451,16 +453,16 @@
 	      		</span>
 			</p>
 
-<!--	      	<p class="g-reviewList_user"><b>ルル</b>さん 2021/03/09</p>
+	      	<p class="g-reviewList_user"><b>ルル</b>さん 2021/03/09</p>
 	    </div>
 	    <p class="g-reviewList_info">購入商品:カジュアルソファ(パトレック GR/LBR)</p>
 	    <p class="g-reviewList_h">可愛い</p>
 	    <p>コンパクトで色もめっちゃ可愛いです。本当に買って良かったです。
-組み立ても簡単でした。</p>
+        組み立ても簡単でした。</p>
 	 	<p class="g-reviewList_like"><a class="g-link reviewLike1" id="js-hitLike" data-count="1" data="60476d48d3d291002900011a" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（2人）</span></a></p>
   	</li>
 
-  	<li class="g-reviewList_item">
+  <!-- 	<li class="g-reviewList_item">
 	    <div class="g-lg-flow-sm">
 			<p class="g-score">
 				<span data-score="5.0">
@@ -532,6 +534,7 @@
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
 <script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+<script th:src="@{/mall/js/detailFunc.js}" type="text/javascript"></script>
 <script type="text/javascript">
     /**
      * 添加到购物车

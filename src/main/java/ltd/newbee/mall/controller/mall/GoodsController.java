@@ -21,23 +21,35 @@ import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
+import ltd.newbee.mall.util.PageResult;
+import ltd.newbee.mall.util.Result;
+import ltd.newbee.mall.util.ResultGenerator;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class GoodsController {
@@ -116,10 +128,8 @@ public class GoodsController {
 //        	 imageVO.setPath(path); 
         	BeanUtil.copyProperties(image, imageVO);
         	 imageVOList.add(imageVO);
-       } else {
-    	   break;
-    	   }
        }
+   }
         
         //recall GoodsReview Service
         List<GoodsReview> listRev =newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(goodsId);
@@ -136,9 +146,7 @@ public class GoodsController {
 //        	 reviewVO.setStar(star); 
         	BeanUtil.copyProperties(review, reviewVO);
         	 reviewVOList.add(reviewVO);
-        } else {
-    	   break;
-    	   }   
+        }
     }
         
         // recall GoodsQa Service
@@ -156,10 +164,7 @@ public class GoodsController {
 //        		qaVO.setAnswer(answer);
         		BeanUtil.copyProperties(qa, qaVO);
         		qaVOList.add(qaVO);
-        	} else {
-        		break;
-        	}
-        		
+        	} 
         }
         
         
@@ -176,6 +181,26 @@ public class GoodsController {
         request.setAttribute("goodsQADetail",qaVOList);
         request.setAttribute("goodsDescDetail",descVO);
         
-        return "mall/detail";     
+        return "mall/detail";    
+        
 	}
+ // adding font paging added by coca 2021/04/26
+    /**
+     * 添加
+     */
+    @RequestMapping(value = "/goods/qaSort", method = RequestMethod.POST)
+    @ResponseBody
+    public Result getGoodsQaPageBySorting(@RequestBody PagingQa  pageQa) {
+		   	
+//		if(pageQa!=null) {
+//			System.out.print(pageQa.getPage());
+//		}
+    	 Map<String, Object> params = new HashMap<>();
+	   	  params.put("page", pageQa.getPage());
+	   	  params.put("limit",Constants.GOODS_QA_SEARCH_PAGE_LIMIT);
+	   	  params.put("orderBy", pageQa.getSubmitDate());
+		  PageQueryUtil pageUtil = new PageQueryUtil(params);
+		  PageResult result = newBeeMallGoodsService.getGoodsQaPageBySorting((pageUtil));
+		return ResultGenerator.genSuccessResult(result);
+    }
 }

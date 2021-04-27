@@ -1356,6 +1356,7 @@ img {
 .g-reviewList_like {
     margin: 18px;
 }
+
 /* .g-s {
     flex-shrink: 0;
     width: 1em;
@@ -1369,10 +1370,14 @@ img {
     pointer-events: none;
     speak: none;
 } */
+
 .thumUpImg {
     width:30px;
     height:30px;
 }
 .zv-error-message {
     display:none;
+}
+.hiddenQaDiv{
+	display:none;
 }
