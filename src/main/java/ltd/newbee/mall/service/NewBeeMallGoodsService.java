@@ -86,7 +86,9 @@ public interface NewBeeMallGoodsService {
 //     Adding Service to achieve sort paging added by coca 2021/04/23
     PageResult getGoodsQaPageBySorting(PageQueryUtil pageUtil); 
 //     Adding service to achieve inserting added by coca 2021/04/24
-    String saveGoodsQa(GoodsQa goodsQa);
+    int qaInsertSelective(GoodsQa qaRecord);
+ // get max id of qa added by coca 2021/04/29
+    Long getMaxQaId(Long goodsId);
 
 	
 

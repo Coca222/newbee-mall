@@ -426,15 +426,13 @@
   </select>   
   <!-- adding count added by coca 2021/04/24 -->
   <select id="findGoodsQaCount" parameterType="Map" resultType="int">
-      select count(*) from goods_qa 
-      limit #{start},#{limit} 
+      select count(*) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
   </select> 
   
   <!-- adding insert added by coca 2021/04/24 -->
  <insert id="qaInsert" parameterType="ltd.newbee.mall.entity.GoodsQa">
-    insert into goods_qa (id, goods_id, question, submit_date, answer, answer_date)
-    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{submitDate,jdbcType=VARCHAR},
-    #{answer,jdbcType=VARCHAR}, #{answerDate,jdbcType=VARCHAR})  
+    insert into goods_qa (id, goods_id, question, submit_date)
+    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{submitDate,jdbcType=VARCHAR})  
   </insert>
     <insert id="qaInsertSelective" parameterType="ltd.newbee.mall.entity.GoodsQa">
         insert into goods_qa
@@ -472,17 +470,20 @@
                 #{question,jdbcType=VARCHAR},
             </if>
             <if test="submitDate != null">
-                #{submitDate,jdbcType=VARCHAR},
+                #{submitDate,jdbcType=Date},
             </if>
             <if test="answer != null">
                 #{answer,jdbcType=VARCHAR},
             </if>
             <if test="answerDate != null">
-                #{answerDate,jdbcType=VARCHAR},
+                #{answerDate,jdbcType=Date},
             </if>
             <if test="helpedNum != null">
                 #{helpedNum,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
+    <select id="getMaxQaId" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
+      select max(id) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
+   </select> 
 </mapper>

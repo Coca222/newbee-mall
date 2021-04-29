@@ -17,17 +17,17 @@ import java.util.List;
  */
 public class GoodsQAVO implements Serializable {
 
-	private String id;
+	private Long id;
 	private String question;
-	private String submitDate;
+	private Date submitDate;
 	private String answer;
-	private String answerDate;
+	private Date answerDate;
 	private String helpedNum;
 	private Long goodsId;
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getQuestion() {
@@ -36,10 +36,10 @@ public class GoodsQAVO implements Serializable {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-	public String getSubmitDate() {
+	public Date getSubmitDate() {
 		return submitDate;
 	}
-	public void setSubmitDate(String submitDate) {
+	public void setSubmitDate(Date submitDate) {
 		this.submitDate = submitDate;
 	}
 	public String getAnswer() {
@@ -48,10 +48,10 @@ public class GoodsQAVO implements Serializable {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public String getAnswerDate() {
+	public Date getAnswerDate() {
 		return answerDate;
 	}
-	public void setAnswerDate(String answerDate) {
+	public void setAnswerDate(Date answerDate) {
 		this.answerDate = answerDate;
 	}
 	public String getHelpedNum() {

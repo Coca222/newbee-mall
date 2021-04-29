@@ -150,8 +150,17 @@ public class GoodsController {
     }
         
         // recall GoodsQa Service
-        List<GoodsQa> listQa =newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
-        if (listQa == null|| listQa.isEmpty()) {
+        Map<String, Object> params = new HashMap<>();
+	   	  params.put("page", 1);
+	   	  params.put("limit",Constants.GOODS_QA_SEARCH_PAGE_LIMIT);
+	   	  params.put("orderBy", "submit_date");
+//	   	  params.put("orderBy", "helped_num");
+		  PageQueryUtil pageUtil = new PageQueryUtil(params);
+		  PageResult result = newBeeMallGoodsService.getGoodsQaPageBySorting((pageUtil));
+		  
+		  List<GoodsQa> listQa = (List<GoodsQa>) result.getList();
+//        List<GoodsQa> listQa =newBeeMallGoodsService.getGoodsQaEntityByGoodsId(goodsId);
+         if (listQa == null|| listQa.isEmpty()) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
         List<GoodsQAVO> qaVOList = new ArrayList<GoodsQAVO>();
@@ -178,7 +187,7 @@ public class GoodsController {
         
         request.setAttribute("goodsImageDetail", imageVOList);
         request.setAttribute("goodsReviewDetail", reviewVOList);
-        request.setAttribute("goodsQADetail",qaVOList);
+        request.setAttribute("goodsQaDetail",qaVOList);
         request.setAttribute("goodsDescDetail",descVO);
         
         return "mall/detail";    
@@ -193,7 +202,7 @@ public class GoodsController {
     public Result getGoodsQaPageBySorting(@RequestBody PagingQa  pageQa) {
 		   	
 //		if(pageQa!=null) {
-//			System.out.print(pageQa.getPage());
+//			System.out.print(pageQa.getPage(totalPage));
 //		}
     	 Map<String, Object> params = new HashMap<>();
 	   	  params.put("page", pageQa.getPage());
@@ -203,4 +212,17 @@ public class GoodsController {
 		  PageResult result = newBeeMallGoodsService.getGoodsQaPageBySorting((pageUtil));
 		return ResultGenerator.genSuccessResult(result);
     }
+
+    // adding insert paging added by coca 2021/04/29
+    @RequestMapping(value = "/goods/qaInsert", method = RequestMethod.POST)
+    @ResponseBody
+    public Result qaInsertSelective(@RequestBody GoodsQa qaRecord){
+		  Integer count = null; 	
+		if(qaRecord !=null) {
+			count=newBeeMallGoodsService.qaInsertSelective(qaRecord);
+		}
+    
+		return ResultGenerator.genSuccessResult(count);
+    }
+
 }

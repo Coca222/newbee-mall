@@ -147,11 +147,15 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		}
 	// adding inserting way added by coca 2021/04/24
 	@Override
-    public String saveGoodsQa(GoodsQa goodsQa) {
-        if (goodsMapper.qaInsertSelective(goodsQa) > 0) {
-            return ServiceResultEnum.SUCCESS.getResult();
-        }
-        return ServiceResultEnum.DB_ERROR.getResult();
-    }
+    public int qaInsertSelective(GoodsQa qaRecord){
+    	int count = goodsMapper.qaInsertSelective(qaRecord);
+    	return count;
+	}
+	// adding get max id added by coca 2021/04/29
+		@Override
+	    public Long getMaxQaId(Long goodsId){
+	    	Long maxGoodsId = goodsMapper.getMaxQaId(goodsId);
+	    	return maxGoodsId + 1;
+		}
 
 }

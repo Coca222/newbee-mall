@@ -1,20 +1,20 @@
 package ltd.newbee.mall.entity;
 
-
+import java.util.Date;
 
 public class GoodsQa {
 
-	private String id;
+	private Long id;
 	private String question;
-	private String submitDate;
+	private Date submitDate;
 	private String answer;
-	private String answerDate;
+	private Date answerDate;
 	private String helpedNum;
 	private Long goodsId;
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getQuestion() {
@@ -23,10 +23,10 @@ public class GoodsQa {
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-	public String getSubmitDate() {
+	public Date getSubmitDate() {
 		return submitDate;
 	}
-	public void setSubmitDate(String submitDate) {
+	public void setSubmitDate(Date submitDate) {
 		this.submitDate = submitDate;
 	}
 	public String getAnswer() {
@@ -35,10 +35,10 @@ public class GoodsQa {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public String getAnswerDate() {
+	public Date getAnswerDate() {
 		return answerDate;
 	}
-	public void setAnswerDate(String answerDate) {
+	public void setAnswerDate(Date answerDate) {
 		this.answerDate = answerDate;
 	}
 	public String getHelpedNum() {
@@ -55,8 +55,8 @@ public class GoodsQa {
 	}
 	@Override
 	public String toString() {
-		return "GoodsQa [id=" + id + ", question=" + question + ", submitDate=" + submitDate + ", answer=" + answer
-				+ ", answerDate=" + answerDate + ", helpedNum=" + helpedNum + ", goodsId=" + goodsId + "]";
+		return "GoodsQa [id=" + id + ", question=" + question + ", answer=" + answer + ", helpedNum=" + helpedNum
+				+ ", goodsId=" + goodsId + "]";
 	}
 	
 	

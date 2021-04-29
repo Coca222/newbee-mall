@@ -5,6 +5,7 @@ package ltd.newbee.mall.entity;
 public class PagingQa {
 
 	private String page;
+	private String totalPage;
 	private String submitDate;
 	private String helpedNum;
 	public String getPage() {
@@ -12,6 +13,12 @@ public class PagingQa {
 	}
 	public void setPage(String page) {
 		this.page = page;
+	}
+	public String getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(String totalPage) {
+		this.totalPage = totalPage;
 	}
 	public String getSubmitDate() {
 		return submitDate;
@@ -27,7 +34,8 @@ public class PagingQa {
 	}
 	@Override
 	public String toString() {
-		return "PagingQa [page=" + page + ", submitDate=" + submitDate + ", helpedNum=" + helpedNum + "]";
+		return "PagingQa [page=" + page + ", totalPage=" + totalPage + ", submitDate=" + submitDate + ", helpedNum="
+				+ helpedNum + "]";
 	}
 	
 	

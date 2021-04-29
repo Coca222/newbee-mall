@@ -67,15 +67,15 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
     	long numQa=10700L;  
    List<GoodsQa> list =newBeeMallGoodsService.getGoodsQaEntityByGoodsId(numQa); 
    		GoodsQa qa =list.get(0); 
-   		String id =qa.getId();
+   		Long id =qa.getId();
    		assertEquals("001",id); 
-   		String submitDate= qa.getSubmitDate();
+   		Date submitDate= qa.getSubmitDate();
    		assertEquals("2020-01-13",submitDate); 
    		String question = qa.getQuestion();
    		assertEquals("この製品には耐久性がありますか？",question); 
    		String answer = qa.getAnswer();
 		assertEquals("そうです",answer); 
-		String answerDate=qa.getAnswerDate();
+		Date answerDate=qa.getAnswerDate();
 		assertEquals("2020-01-13",answerDate); 
 		String helpedNum=qa.getHelpedNum();
 		assertEquals("3",helpedNum); 
@@ -157,7 +157,7 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
 //	  qa.setSubmitDate("2020-11-28");
 //	  qa.setAnswer("crazy");
 //	  qa.setAnswerDate("2020-12-28"); 
-//	  String rs = newBeeMallGoodsService.saveGoodsQa(qa);
+//	  String rs = newBeeMallGoodsService.int qaInsert(qa);
 //	 
 //	  assertEquals(ServiceResultEnum.SUCCESS.getResult(), rs);
 // }

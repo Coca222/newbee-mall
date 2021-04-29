@@ -63,7 +63,8 @@ public interface NewBeeMallGoodsMapper {
         // Adding Mapper to sort paging added by coca 2021/04/24
      List<GoodsQa> findGoodsQaSortSubmitDate(PageQueryUtil pageUtil);
         //adding insert added by coca 2021/04/24
-     int qaInsert(GoodsQa qaRecord);
-
      int qaInsertSelective(GoodsQa qaRecord);
+
+     	// get max id of qa added by coca 2021/04/29
+     Long getMaxQaId(Long goodsId);
 }
