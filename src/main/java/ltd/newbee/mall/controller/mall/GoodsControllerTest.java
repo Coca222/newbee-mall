@@ -64,13 +64,14 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
     
     
     @Test public void testGoodsQa() {
-    	long numQa=10700L;  
+    	long numQa=10700L; 
    List<GoodsQa> list =newBeeMallGoodsService.getGoodsQaEntityByGoodsId(numQa); 
    		GoodsQa qa =list.get(0); 
    		Long id =qa.getId();
-   		assertEquals("001",id); 
+   		Long a=1L;
+   		assertEquals(a,id); 
    		Date submitDate= qa.getSubmitDate();
-   		assertEquals("2020-01-13",submitDate); 
+   		assertEquals("2020-08-13",submitDate); 
    		String question = qa.getQuestion();
    		assertEquals("この製品には耐久性がありますか？",question); 
    		String answer = qa.getAnswer();
@@ -126,9 +127,12 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
       assertEquals(3,size);
       
     //to test if lists are same
-    	assertEquals("001",qaList.get(0).getId());
-    	assertEquals("002",qaList.get(1).getId());
-    	assertEquals("003",qaList.get(2).getId());
+	      Long a = 1L;
+	      Long b = 2L;
+	      Long c = 3L;
+    	assertEquals(a,qaList.get(0).getId());
+    	assertEquals(b,qaList.get(1).getId());
+    	assertEquals(c,qaList.get(2).getId());
        	
   }
 

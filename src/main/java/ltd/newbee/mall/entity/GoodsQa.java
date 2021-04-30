@@ -55,8 +55,8 @@ public class GoodsQa {
 	}
 	@Override
 	public String toString() {
-		return "GoodsQa [id=" + id + ", question=" + question + ", answer=" + answer + ", helpedNum=" + helpedNum
-				+ ", goodsId=" + goodsId + "]";
+		return "GoodsQa [id=" + id + ", question=" + question + ", submitDate=" + submitDate + ", answer=" + answer
+				+ ", answerDate=" + answerDate + ", helpedNum=" + helpedNum + ", goodsId=" + goodsId + "]";
 	}
 	
 	

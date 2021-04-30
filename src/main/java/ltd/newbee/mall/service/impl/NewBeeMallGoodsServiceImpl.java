@@ -155,7 +155,12 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		@Override
 	    public Long getMaxQaId(Long goodsId){
 	    	Long maxGoodsId = goodsMapper.getMaxQaId(goodsId);
-	    	return maxGoodsId + 1;
+	    	if (maxGoodsId != null) {
+	    		return maxGoodsId + 1;	
+	    	} else {
+	    		return 1L;
+	    	}
+	    	
 		}
 
 }

@@ -46,6 +46,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,11 +218,17 @@ public class GoodsController {
     @RequestMapping(value = "/goods/qaInsert", method = RequestMethod.POST)
     @ResponseBody
     public Result qaInsertSelective(@RequestBody GoodsQa qaRecord){
-		  Integer count = null; 	
+		  Integer count = null;
+		  Long qaId = newBeeMallGoodsService.getMaxQaId(qaRecord.getGoodsId());
+		  qaRecord.setId(qaId);
+		  Date submitDate=new Date();
+		  qaRecord.setSubmitDate(submitDate);
 		if(qaRecord !=null) {
 			count=newBeeMallGoodsService.qaInsertSelective(qaRecord);
 		}
-    
+		if(!(count > 0))  {
+	        return ResultGenerator.genFailResult("投稿失敗！");
+	        }
 		return ResultGenerator.genSuccessResult(count);
     }
 

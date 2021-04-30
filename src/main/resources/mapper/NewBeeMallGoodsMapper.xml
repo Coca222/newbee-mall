@@ -470,20 +470,20 @@
                 #{question,jdbcType=VARCHAR},
             </if>
             <if test="submitDate != null">
-                #{submitDate,jdbcType=Date},
+                #{submitDate,jdbcType=TIMESTAMP},
             </if>
             <if test="answer != null">
                 #{answer,jdbcType=VARCHAR},
             </if>
             <if test="answerDate != null">
-                #{answerDate,jdbcType=Date},
+                #{answerDate,jdbcType=TIMESTAMP},
             </if>
             <if test="helpedNum != null">
                 #{helpedNum,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
-    <select id="getMaxQaId" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
+    <select id="getMaxQaId" parameterType="java.lang.Long" resultType="java.lang.Long">
       select max(id) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
    </select> 
 </mapper>

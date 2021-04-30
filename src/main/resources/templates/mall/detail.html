@@ -487,21 +487,22 @@
 	<span>レビュー</span>
 </h2>
 
-		 
+ 
 <div class="p-reviewScore">
 		<p class="p-average">
 			平均評価<span class="g-digit">4.7</span>
 		</p>
 		<p class="g-score">
 			<span data-score="4.7"></span>		
-			  <th:block th:each="userInfo: ${goodsUserInfoDetail}" th:if="${userInfo !=null}">	
-			<span>(<span id="js-reviews" th:text="${userInfo.star}">4</span>)</span>
+			<span>(<span id="js-reviews" >4</span>)</span>
 		</p>
 	</div>		    
 <ul class="g-reviewList">
 <li class="g-reviewList_item">
 	    <p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
-	     <th:block th:each="userInfo: ${goodsUserInfoDetail}" th:if="${userInfo !=null}">
+	    
+	 <th:block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">
+	    	
 	    <div class="g-lg-flow-sm">
 			<p class="g-score">
 				<span data-score="5.0">
@@ -509,14 +510,15 @@
 	      		</span>
 			</p>
 	    </div>    
-	    <p class="g-reviewList_info">購入商品:カジュアルソファ(パトレック GR/MBR）</p>
-      	<p class="g-reviewList_user"><b th:text="${userInfo.nickName}"> </b>さん<span class="g-clip" th:text="${userInfo.CommentDate}">2020/07/20</p>
-	    <p class="g-reviewList_h" th:text="${userInfo.title}">安くて、座り心地良いです。</p>
-	    <p th:text="${userInfo.content}">安価なソファだと、座面がかなり低く、立ち上がるのにもしんどいと、よく聞きます。友人の家のソファに座るとなるほどと思い、座面が低すぎなくて、比較的安価なものを探していました。
-これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
-適度なフカフカさもあります。
-良い買い物出来ました。
-触り心地良いですが、飲み物などこぼしたら、シミになりそうなので、私は色も好きだけど、ソファカバーを店舗で買いました。</p>
+	    
+      	<p class="g-reviewList_user"><b th:text="${rev.nickName}"> </b>さん<span class="g-clip" th:text="${rev.commentDate}">2020/07/20</p>
+      	<p class="g-reviewList_info" th:text="${rev.goodsName}">購入商品:カジュアルソファ(パトレック GR/MBR）</p>
+	    <p class="g-reviewList_h" th:text="${rev.title}">安くて、座り心地良いです。</p>
+	    <p th:text="${rev.content}">安価なソファだと、座面がかなり低く、立ち上がるのにもしんどいと、よく聞きます。友人の家のソファに座るとなるほどと思い、座面が低すぎなくて、比較的安価なものを探していました。
+     これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
+     適度なフカフカさもあります。
+     良い買い物出来ました。
+     触り心地良いですが、飲み物などこぼしたら、シミになりそうなので、私は色も好きだけど、ソファカバーを店舗で買いました。</p>
 	 	<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（125人）</span></a></p>
 	 	<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable="">
 	 	<i class="g-s g-s-like-g" aria-hidden="true">
