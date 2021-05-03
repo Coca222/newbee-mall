@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.service;
 
+import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
@@ -78,7 +79,7 @@ public interface NewBeeMallGoodsService {
     PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
     
     List<GoodsImage> getGoodsImageEntityByGoodsId(Long  goodsId);
-    List<GoodsReview> getGoodsReviewEntityByGoodsId(Long  goodsId);
+    List<GoodsReviewVO> getGoodsReviewEntityByGoodsId(Long  goodsId);
     List<GoodsQa> getGoodsQaEntityByGoodsId(Long  goodsId);
     GoodsDesc getGoodsDescEntityByGoodsId(Long  goodsId);
 //     Adding Service to achieve paging added by coca 2021/04/23

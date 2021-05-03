@@ -3,17 +3,18 @@ package ltd.newbee.mall.entity;
 
 public class GoodsReview {
 
-	private String star;
+	private int star;
 	private String commentDate;
 	private String title;
 	private String content;
 	private String picture;
 	private String nickName;
 	private String goodsName;
-	public String getStar() {
+	private String helpedNum;
+	public int getStar() {
 		return star;
 	}
-	public void setStar(String star) {
+	public void setStar(int star) {
 		this.star = star;
 	}
 	public String getCommentDate() {
@@ -52,11 +53,18 @@ public class GoodsReview {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
+	public String getHelpedNum() {
+		return helpedNum;
+	}
+	public void setHelpedNum(String helpedNum) {
+		this.helpedNum = helpedNum;
+	}
 	@Override
 	public String toString() {
 		return "GoodsReview [star=" + star + ", commentDate=" + commentDate + ", title=" + title + ", content="
-				+ content + ", picture=" + picture + ", nickName=" + nickName + ", goodsName=" + goodsName + "]";
+				+ content + ", picture=" + picture + ", nickName=" + nickName + ", goodsName=" + goodsName
+				+ ", helpedNum=" + helpedNum + "]";
 	}
 	
-
+	
 }

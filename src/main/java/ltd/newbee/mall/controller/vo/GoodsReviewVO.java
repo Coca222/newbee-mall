@@ -17,17 +17,18 @@ import java.util.List;
  */
 public class GoodsReviewVO implements Serializable {
 
-	private String star;
+	private int star;
 	private String commentDate;
 	private String title;
 	private String content;
 	private String picture;
 	private String nickName;
 	private String goodsName;
-	public String getStar() {
+	private String helpedNum;
+	public int getStar() {
 		return star;
 	}
-	public void setStar(String star) {
+	public void setStar(int star) {
 		this.star = star;
 	}
 	public String getCommentDate() {
@@ -65,5 +66,11 @@ public class GoodsReviewVO implements Serializable {
 	}
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
+	}
+	public String getHelpedNum() {
+		return helpedNum;
+	}
+	public void setHelpedNum(String helpedNum) {
+		this.helpedNum = helpedNum;
 	}
 }

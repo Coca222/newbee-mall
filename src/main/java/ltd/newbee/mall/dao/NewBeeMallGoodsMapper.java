@@ -52,7 +52,7 @@ public interface NewBeeMallGoodsMapper {
         // added by coca 2021/04/16 イメージリストを取得
      List<GoodsImage> getImageList(Long goodsId);
         // added by coca 2021/04/16　レビューリストを取得
-     List<GoodsReview> getReviewList(Long goodsId);
+     List<GoodsReview> getRevList(Long goodsId);
      	// added by coca 2021/04/16 QAリストを取得
      List<GoodsQa> getGoodsQaList(Long goodsId);
      	// added by coca 2021/04/16 説明を取得

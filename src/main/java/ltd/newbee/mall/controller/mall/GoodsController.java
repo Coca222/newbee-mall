@@ -133,13 +133,13 @@ public class GoodsController {
    }
         
         //recall GoodsReview Service
-        List<GoodsReview> listRev =newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(goodsId);
+        List<GoodsReviewVO> listRev =newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(goodsId);
         if (listRev == null || listRev.isEmpty()) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
         List<GoodsReviewVO> reviewVOList = new ArrayList<GoodsReviewVO>();
         for(int i = 0; i < listRev.size(); i++){
-        	GoodsReview review = new GoodsReview();
+        	GoodsReviewVO review = new GoodsReviewVO();
         	review = listRev.get(i);
         	if(review!=null) {
 //        	Integer star = review.getStar();
@@ -230,6 +230,17 @@ public class GoodsController {
 	        return ResultGenerator.genFailResult("投稿失敗！");
 	        }
 		return ResultGenerator.genSuccessResult(count);
+    }
+    
+    // adding レビューをもっと見るクリックイベント added by coca 2021/05/03
+    @RequestMapping(value = "/goods/showMoreReviews", method = RequestMethod.POST)
+    @ResponseBody
+    public Result getGoodsReviewEntityByGoodsId(@RequestBody Long goodsId){
+		 
+    	List<GoodsReviewVO> listRev =newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(goodsId);
+		
+	        
+		return ResultGenerator.genSuccessResult(listRev);
     }
 
 }

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
@@ -41,18 +42,18 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
 
   @Test public void testGoodsReview() {
 	  long numRev=10700L;
-  List<GoodsReview> list=newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(numRev); 
-  GoodsReview review =list.get(0); 
+  List<GoodsReviewVO> list=newBeeMallGoodsService.getGoodsReviewEntityByGoodsId(numRev); 
+  GoodsReviewVO review =list.get(0); 
   String nickName = review.getNickName();
-  assertEquals("十三",nickName);
+  assertEquals("测试用户2测试用户2测试用户2测试用户2",nickName);
   String title = review.getTitle();
-  assertEquals("外形外观",title);
-  String star = review.getStar();
-  assertEquals("4",star);
+  assertEquals("功能",title);
+  int star = review.getStar();
+  assertEquals(6L,star);
   String commentDate=review.getCommentDate();
-  assertEquals("2020-02-13",commentDate);
+  assertEquals("2020-05-13",commentDate);
   String content=review.getContent();
-  assertEquals("京东以旧换新很给力，也很方便，拿走旧机，送货心机，没的拍机了，只能拍拍简单盒子，苹果12颜色很好看，狠喜欢，质量也特别好，卖家服务态度也很好，值得大家信赖。",content);
+  assertEquals("功能很强大",content);
   String goodsName = review.getGoodsName();
   assertEquals("荣耀8X 千元屏霸 91%屏占比 2000万AI双摄",goodsName);
   String picture= review.getPicture();

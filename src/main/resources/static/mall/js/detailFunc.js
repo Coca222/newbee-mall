@@ -15,9 +15,49 @@
 	$(".previousPage").click(function(){
 	paging(1);	
 	  });  
-	  
-	$("#ZVPostQuestionButton").click(function(){
-	var question = $("#ZVQuestionTextarea").val();	
+	// レビューをもっと見るクリックイベント　added by coca 2021/05/03
+	$("#showMoreReviewBtn").click(function(){
+	var goodsId = getGoodsId();
+	var data ={
+		"goodsId": goodsId
+	          };
+		debugger;  
+        $.ajax({
+            type: 'POST',//方法类型
+            url: "/goods/showMoreReviews",
+            contentType: 'application/json',
+            data: JSON.stringify(goodsId),
+            success: function (result) {
+	//サーバーが成功した場合
+                if (result.resultCode == 200) {
+	                var list = result.data;
+	                if(list=== undefined){
+					swal(error, {
+                        icon: "error",
+                    });
+	            }      
+				if(list !=undefined && list.length!=0 ){
+					for(i=0;i<list.length;i++){
+						var el=$(".hiddenList").clone().removeClass("hiddenList");
+						$(".hiddenList").before(el);
+					}
+				}
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+                ;
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        })	
+	}); 
+	 
+	function getGoodsId(){
 	// get url
 	var path = window.location.pathname;
 	//split with /
@@ -26,6 +66,12 @@
 	var len = ar.length;
 	//get goodsId
 	var goodsId = ar[len-1];
+	
+	return goodsId;
+	}  
+	$("#ZVPostQuestionButton").click(function(){
+	var question = $("#ZVQuestionTextarea").val();
+	var goodsId = getGoodsId();
 	var data ={
 		"question": question,
 		"goodsId": goodsId
