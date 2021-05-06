@@ -402,6 +402,7 @@
       limit #{start},#{limit} 
   </select>  
   <!--  Adding sorting way added by coca 2021/04/23 -->
+  
   <select id="findGoodsQaSortSubmitDate" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsQa">
       select id,goods_id, question, submit_date, answer, answer_date, helped_num from goods_qa 
       <if test="orderBy!=null and orderBy!=''">

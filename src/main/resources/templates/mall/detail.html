@@ -74,8 +74,8 @@
 		    </div>
 		    <div class="slgcolumn" >
 		      <img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(3)" alt="Mountains and fjords">
-		    </div>
-				<a class="slgnext" onclick="plusSlides(1)">❯</a>-->
+		    </div>-->
+				<a class="slgnext" onclick="plusSlides(1)">❯</a>
 			</div>
 		</div>
 		<div id="sizeQAContainer">
@@ -614,14 +614,14 @@
 								</div>
 
 										<ul class="g-reviewListInitial">
-										<th:block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">
-										<li class="g-reviewList_item reviewDelete">
+										
+										<li class="g-reviewList_item">
 											<p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
-
+										<th:block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">
 											<div class="g-lg-flow-sm">
 												<p class="g-score">
 													<span data-score="5.0">
-															<span class="g-clip">text.product.review.Rating</span>
+															<span class="g-clip"></span>
 														<span class="g-clip">
 														<img  src="/goods-img/star.jpg">
 														<img  src="/goods-img/star.jpg">
@@ -650,7 +650,7 @@
 													<i class="g-s g-s-like-g" aria-hidden="true">
 														<img class="thumUpImg" src="/goods-img/thumUp.jpg"
 															alt="Italian Trulli">
-													</i><span class="initialHelpNumSpan" th:text="${rev.reviewNum}">参考になった（125人）</span></a></p>
+													</i><span class="initialHelpNumSpan" th:text=" '参考になった'+ ${rev.reviewNum} + '人'">参考になった（125人）</span></a></p>
 											　　　　　
 										</li>
 										</th:block>
@@ -663,7 +663,7 @@
 											<div class="g-lg-flow-sm">
 												<p class="g-score">
 													<span data-score="5.0">
-														<span class="g-clip">text.product.review.Rating</span>
+														<span class="g-clip"></span>
 														<span class="g-clip">
 														<img  src="/goods-img/star.jpg">
 														<img  src="/goods-img/star.jpg">
@@ -680,7 +680,7 @@
 											<p class="g-reviewList_info">購入商品:カジュアルソファ(パトレック
 												GR/MBR）</p>
 											<p class="g-reviewList_h">安くて、座り心地良いです。</p>
-											<p>
+											<p id="content">
 												安価なソファだと、座面がかなり低く、立ち上がるのにもしんどいと、よく聞きます。友人の家のソファに座るとなるほどと思い、座面が低すぎなくて、比較的安価なものを探していました。
 												これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
 												適度なフカフカさもあります。
@@ -701,7 +701,7 @@
 										　　
 										</li>
 										</ul>
-																				
+																	
 								
 								
    	                       

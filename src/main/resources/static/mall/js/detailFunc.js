@@ -50,6 +50,13 @@
 				if(list !=undefined && list.length!=0 ){
 					for(i=0;i<list.length;i++){
 						var el=$(".hiddenList").clone().removeClass("hiddenList");
+						el.find(".g-reviewList_user").html(list[i].nickName);
+						el.find(".g-clip").html(list[i].commentDate);
+						el.find(".g-reviewList_info").html(list[i].goodsName);
+						el.find(".g-reviewList_h").html(list[i].title);
+						el.find("#content").html(list[i].content);
+						el.find(".helpNumSpan").html();
+						el.find(".helpNumSpan").html(list[i].reviewNum);						
 	//					el.find(".g-clip").html(list[i].id);
 						el.find(".hidSpForRevId").html(list[i].id);
 						el.find(".helpNumSpan").on("click",helpNumClickFunc);
