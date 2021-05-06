@@ -16,6 +16,7 @@ import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -164,5 +165,24 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	    	}
 	    	
 		}
+		
+	// insert helpNum added by coca 2021/05/04	
+	@Override
+	public boolean addHelpNum (GoodsReviewHelpNum goodsReviewHelpNum) {
+		
+		return goodsMapper.insertHelpNum(goodsReviewHelpNum);
+	}
+
+	@Override
+	public boolean updateReviewNum(GoodsReviewHelpNum goodsReviewHelpNum) {
+		// TODO Auto-generated method stub
+		return goodsMapper.updateReviewNum(goodsReviewHelpNum);
+	}
+
+	@Override
+	public long getRevListHelpNum(int reviewId) {
+		// TODO Auto-generated method stub
+		return goodsMapper.getRevListHelpNum(reviewId);
+	}	
 
 }

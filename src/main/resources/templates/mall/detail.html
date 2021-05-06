@@ -1,323 +1,416 @@
 <!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="mall/header::head-fragment('NewBee商城-商品详情','detail')">
 </head>
+
 <body>
-<header th:replace="mall/header::header-fragment"></header>
-<div id="detail">
-    <!-- nav -->
-    <nav th:replace="mall/header::nav-fragment"></nav>
-    <div class="dc">
-        <div class="content w">
-            <div class="title fl">商品详情</div>
-            <div class="clear"></div>
-        </div>
-    </div>
-    <div class="intro mt20 w clearfix">
-        <div class="left fl" style="position: relative;">
-            <div class="swiper-container fl">
-                <img th:src="@{${goodsDetail.goodsCoverImg}}">
-            </div>
-        </div>
-        <div class="right fr">
-            <div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">NewBeeMall</div>
-            <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">NewBeeMall</div>
-            <div class="item_price mr40 ml20 mt10">
-                <th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
-                <del>
-                    <th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
-                </del>
-            </div>
-            <div class="order">
-                <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
-                <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
-            </div>
-            <div class="tb-extra ml20" id="J_tbExtra">
-                <dl>
-                    <dt>承诺</dt>
-                    <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
-                           target="_blank"><img th:src="@{/mall/image/7d.jpg}">7天无理由</a></dd>
-                </dl>
-                <dl>
-                    <dt>支付</dt>
-                    <dd><a href="##" target="_blank"><img th:src="@{/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
-                                                                                                     target="_blank"><img
-                            th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
-                            th:src="@{/mall/image/ji.png}">集分宝</a></dd>
-                </dl>
-                <dl>
-                    <dt>支持</dt>
-                    <dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
-                </dl>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="imgContainer">
-        <div class="slgrow">
-	    	<a class="slgprev" onclick="plusSlides(-1)">❮</a>
-	    	
-		    <th:block th:each="image:${goodsImageDetail}">
-		    <div class="slgcolumn" >		    
-		      <img class= "slgdemo" th:src="@{${image.path}}">
-		      </div>
-		    </th:block>
-		    
-<!--		      <img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(1)" alt="The Woods">
-	    </div>
+	<header th:replace="mall/header::header-fragment"></header>
+	<div id="detail">
+		<!-- nav -->
+		<nav th:replace="mall/header::nav-fragment"></nav>
+		<div class="dc">
+			<div class="content w">
+				<div class="title fl">商品详情</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="intro mt20 w clearfix">
+			<div class="left fl" style="position: relative;">
+				<div class="swiper-container fl">
+					<img th:src="@{${goodsDetail.goodsCoverImg}}">
+				</div>
+			</div>
+			<div class="right fr">
+				<div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">NewBeeMall</div>
+				<div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">NewBeeMall</div>
+				<div class="item_price mr40 ml20 mt10">
+					<th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
+					<del>
+						<th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
+					</del>
+				</div>
+				<div class="order">
+					<input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'"
+						value="立即选购" />
+					<input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'"
+						value="加入购物车" />
+				</div>
+				<div class="tb-extra ml20" id="J_tbExtra">
+					<dl>
+						<dt>承诺</dt>
+						<dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
+								target="_blank"><img th:src="@{/mall/image/7d.jpg}">7天无理由</a></dd>
+					</dl>
+					<dl>
+						<dt>支付</dt>
+						<dd><a href="##" target="_blank"><img th:src="@{/mall/image/hua.png}">蚂蚁花呗</a><a href="##"
+								target="_blank"><img th:src="@{/mall/image/card.png}">信用卡支付</a><a href="##"
+								target="_blank"><img th:src="@{/mall/image/ji.png}">集分宝</a></dd>
+					</dl>
+					<dl>
+						<dt>支持</dt>
+						<dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
+					</dl>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="imgContainer">
+			<div class="slgrow">
+				<a class="slgprev" onclick="plusSlides(-1)">❮</a>
+
+				<th:block th:each="image:${goodsImageDetail}">
+					<div class="slgcolumn">
+						<img class="slgdemo" th:src="@{${image.path}}" th:attr="onclick=|clickImage('${image.path}')|">
+					</div>
+				</th:block>
+			<!--<div class="slgcolumn" >
+				<img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(1)" alt="The Woods">
+	        </div>
 		    <div class="slgcolumn" >		       
-		  <!--    <img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(2)" alt="Cinque Terre">
+		      <img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(2)" alt="Cinque Terre">
 		    </div>
 		    <div class="slgcolumn" >
 		      <img class="slgdemo" src="/goods-img/6a160b96-9b4a-4844-b335-feb31b1f5d8c.jpg"  onclick="currentSlide(3)" alt="Mountains and fjords">
-		    </div>-->
-		    <a class="slgnext" onclick="plusSlides(1)">❯</a>
-	  	</div>
-    </div>
-	<div id="sizeQAContainer">
-		<div id ="innerSizeQAContainer">
-		<section class="g-block-sm p-spec" id="js-product-spec">
-			<h2 class="g-h-2 g-h-i p-hd"><i class="g-s g-s-size" aria-hidden="true"></i><span>仕様・サイズ</span></h2>
-			<div id="p-specMore" aria-hidden="false" data-accordion-more="">
-				<ul class="g-flow-lg g-flow-half g-unit js-sku-manuals p-sku-manuals">
-					</ul>
-  			<table class="g-table-a js-sku-specs">
-    			<tbody>
-    				<tr>
-						<th>商品コード</th>
-						<td th:text="${goodsDescDetail.goodsId}"></td>
-					</tr><tr>
-						<th>カラー</th>
-						<td th:text="${goodsDescDetail.color}"></td>
-					</tr><tr>
-						<th>サイズ</th>
-						<td th:text="${goodsDescDetail.size}"></td>
-					</tr><tr>
-						<th>素材</th>
-						<td th:text="${goodsDescDetail.material}"></td>
-					</tr><tr>
-						<th>重量</th>
-						<td th:text="${goodsDescDetail.weight}"></td>
-					</tr><tr>
-						<th>保証年数</th>
-						<td th:text="${goodsDescDetail.warrantyYear}"></td>
-					</tr><tr>
-						<th>組立時間</th>
-						<td th:text="${goodsDescDetail.setDate}"></td>
-					</tr><tr>
-						<th>梱包サイズ</th>
-						<td th:text="${goodsDescDetail.warpSize}"></td>
-					</tr><tr hidden="hidden">
-						<th>原産国</th>
-						<td>中国</td>
-					</tr></tbody>
-			</table>
+		    </div>
+				<a class="slgnext" onclick="plusSlides(1)">❯</a>-->
+			</div>
 		</div>
+		<div id="sizeQAContainer">
+			<div id="innerSizeQAContainer">
+				<section class="g-block-sm p-spec" id="js-product-spec">
+					<h2 class="g-h-2 g-h-i p-hd"><i class="g-s g-s-size" aria-hidden="true"></i><span>仕様・サイズ</span></h2>
+					<div id="p-specMore" aria-hidden="false" data-accordion-more="">
+						<ul class="g-flow-lg g-flow-half g-unit js-sku-manuals p-sku-manuals">
+						</ul>
+						<table class="g-table-a js-sku-specs">
+							<tbody>
+								<tr>
+									<th>商品コード</th>
+									<td th:text="${goodsDescDetail.goodsId}"></td>
+								</tr>
+								<tr>
+									<th>カラー</th>
+									<td th:text="${goodsDescDetail.color}"></td>
+								</tr>
+								<tr>
+									<th>サイズ</th>
+									<td th:text="${goodsDescDetail.size}"></td>
+								</tr>
+								<tr>
+									<th>素材</th>
+									<td th:text="${goodsDescDetail.material}"></td>
+								</tr>
+								<tr>
+									<th>重量</th>
+									<td th:text="${goodsDescDetail.weight}"></td>
+								</tr>
+								<tr>
+									<th>保証年数</th>
+									<td th:text="${goodsDescDetail.warrantyYear}"></td>
+								</tr>
+								<tr>
+									<th>組立時間</th>
+									<td th:text="${goodsDescDetail.setDate}"></td>
+								</tr>
+								<tr>
+									<th>梱包サイズ</th>
+									<td th:text="${goodsDescDetail.warpSize}"></td>
+								</tr>
+								<tr hidden="hidden">
+									<th>原産国</th>
+									<td>中国</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
-		<div class="g-foot-v g-foot-sm" style="display: none;">
-			<p class="g-align-tc">
-				<a class="g-btn g-btn-w-md displaymorespec" href="#p-specMore" role="button" aria-expanded="true" aria-controls="p-specMore" data-label="閉じる" data-accordion="{&quot;scroll&quot;:false}">
-					<span>仕様・サイズをもっと見る</span>
-					<i class="g-i g-i-arrow-d" aria-hidden="true"></i>
-				</a>
-			</p>
-		</div>
+					<div class="g-foot-v g-foot-sm" style="display: none;">
+						<p class="g-align-tc">
+							<a class="g-btn g-btn-w-md displaymorespec" href="#p-specMore" role="button"
+								aria-expanded="true" aria-controls="p-specMore" data-label="閉じる"
+								data-accordion="{&quot;scroll&quot;:false}">
+								<span>仕様・サイズをもっと見る</span>
+								<i class="g-i g-i-arrow-d" aria-hidden="true"></i>
+							</a>
+						</p>
+					</div>
 
-	</section>
-<section class="g-grid_item g-sm-block-sm">
-							<section class="g-grid_item g-sm-block-sm" id="js-product-qa">
-	<h2 class="g-h-2 g-h-i p-hd">
-		<i class="g-s g-s-comment" aria-hidden="true"></i>
-		<span>商品Q&amp;A</span>
-	</h2>
-	<div id="ZVCQA" data-site-id="21f1714d-68e4-49b8-bc66-fed761ce701a" data-item-group-id="1141058s" data-needs-login="1" data-login-url="" data-user-id="" data-default-sort-key="created_at"><img data-src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at" id="zv-helpful-log-gif" style="display: none;"><img data-src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at" id="zv-viewing-log-gif" style="display: none;" src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at&amp;type=detail_view&amp;view_at=2021-04-15T00:20:02.152Z&amp;view_count=3"><img data-src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at" id="zv-action-log-gif" style="display: none;" src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at&amp;type=detail"><p class="zv-heading">カスタマーQ&amp;A</p>
-<div id="ZVCQuestionsArea">
+				</section>
+				<section class="g-grid_item g-sm-block-sm">
+					<section class="g-grid_item g-sm-block-sm" id="js-product-qa">
+						<h2 class="g-h-2 g-h-i p-hd">
+							<i class="g-s g-s-comment" aria-hidden="true"></i>
+							<span>商品Q&amp;A</span>
+						</h2>
+						<div id="ZVCQA" data-site-id="21f1714d-68e4-49b8-bc66-fed761ce701a"
+							data-item-group-id="1141058s" data-needs-login="1" data-login-url="" data-user-id=""
+							data-default-sort-key="created_at"><img
+								data-src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at"
+								id="zv-helpful-log-gif" style="display: none;"><img
+								data-src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at"
+								id="zv-viewing-log-gif" style="display: none;"
+								src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at&amp;type=detail_view&amp;view_at=2021-04-15T00:20:02.152Z&amp;view_count=3"><img
+								data-src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at"
+								id="zv-action-log-gif" style="display: none;"
+								src="https://tag.voice.zetacx.net/__zv_action_log.gif?user_id=bb509976-7f7d-481c-aa65-93b0650c7380&amp;session_key=4541238c-b398-4e25-84b9-a1c1ac5b2d1f&amp;at=2021-04-15T00:07:27.877Z&amp;path=https%3A%2F%2Fwww.nitori-net.jp%2Fec%2Fproduct%2F1141058s%2F%3Frc%3Dset&amp;merchant=21f1714d-68e4-49b8-bc66-fed761ce701a&amp;needs_login=1&amp;user=&amp;page=1&amp;order_by=desc&amp;item_group_id=1141058s&amp;sort=created_at&amp;type=detail">
+							<p class="zv-heading">カスタマーQ&amp;A</p>
+							<div id="ZVCQuestionsArea">
 
-	  	<div><class="zv-cqa">	    
+								<div>
+									<class="zv-cqa">
 
-<div class="zv-cqa-step">
-
-
- <div class="zv-cqa-step-link">
- <span class="previousPage">前ページ</span>
-    <span>全2件</span>
-     <span>ページ<span id="currentPageNo">1</span>/<span id="totalPageNo">5</span></span>
-<span class="nextPage">次ページ</span>
-  </div>
-  <div class="zv-select-wrap">
-  
-    <select id="zv-cqa-select-sort" class="zv-select" name="sort">
-      <option value="total_yes">トップ評価</option>
-      <option value="created_at" selected="">新しい順</option>
-    </select>
-  </div>
-</div>	
-  <th:block th:each="qa: ${goodsQaDetail}" th:if="${qa !=null}">		  	   
-  <div class="zv-cqa">
-
-    <div class="zv-cqa-question delete">
-      <span class="zv-space">Q. </span>
-   <span class="zv-cqa-step" th:text="${qa.question}">この商品は脚を外してロースタイルにすることは可能でしょうか？</span>
-
-    </div>
-    <div class="zv-cqa-q-info">
-      <span class="zv-cqa-q-reviewer" th:text="${goodsQaDetail.get(0).id}">投稿者&nbsp; </span>
-      <span class="zv-cqa-step" th:text="${qa.submitDate}">投稿日&nbsp;2021年04月02日</span>
-    </div>
-    <div class="zv-cqa-answers">
-
-      <div class="zv-cqa-answer zv-cqa-answer-first">
-        <span class="zv-space">A. </span>
-        <div class="zv-cqa-a-content">
-          <div class="zv-cqa-a-text">
-
-            <p class="zv-cqa-step" th:text="${qa.answer}">脚を取外してのご使用を想定しておりません。床を傷つける恐れがありますので、脚を外してのご使用はお控えください。</p>
-
-          </div>
-
-          <div class="zv-cqa-a-info">
-            <span class="zv-space"></span>
-            <span class="zv-cqa-a-reviewer"th:text="${goodsQaDetail.get(0).id}">回答者&nbsp; Nitori-QA-001</span>
-            <span class="zv-cqa-step" th:text="'回答日:'+${qa.answerDate}">回答日&nbsp;2021年04月05日</span>
-          </div>
-          <div class="zv-helpful-form" data-answer-id="58746">
-            <span class="zv-space"></span>
-            <span class="zv-error-message" id="ZVLoginErrorHelpful-58746" th:text="${goodsQaDetail.get(0).helpedNum}">「参考になった/参考にならなかった」を投稿するにはログインが必要です。</span>
-            <span class="zv-helpful-col">
-              <span class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-yes-58746" data-count="58746" data-clickable="" data-answer-id="58746">
-                <i class="zv-helpful zv-helpful-yes-i"></i>
-                <span class="zv-helpful zv-helpful-yes zv-helpful-yes-58746" data-count="58746" id="ZVHelpfulYes-58746">参考になった</span>
-                <span class="zv-cqa-step" th:text="${qa.helpedNum}+'人'">(0人)</span>
-              </span>
-            </span>
-            <span class="zv-helpful-col">
-              <span class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-no-58746" data-count="58746" data-clickable="" data-answer-id="58746">
-                <i class="zv-helpful  zv-helpful-no-i"></i>
-                <span class="zv-helpful zv-helpful-no zv-helpful-no-58746" data-count="58746" id="ZVHelpfulNo-58746">参考にならなかった</span>
-                <span class="zv-helpful zv-helpful-num zv-helpful-no-num zv-helpful-no-num-58746" data-count="58746" id="ZVHelpfulNoNum-58746">(0人)</span>
-              </span>
-            </span>
-            <span class="zv-separator">|</span>
-            <div class="zv-popupModal1">
-              <input type="radio" name="modalPop" id="pop1158746">
-              <label for="pop1158746">違反を報告</label>
-              <input type="radio" name="modalPop" id="pop1258746">
-              <label for="pop1258746">CLOSE</label>
-              <input type="radio" name="modalPop" id="pop1358746">
-              <label for="pop1358746">×</label>
-              <div class="zv-modalPopup2">
-                <div class="zv-modalPopup3">
-                  <h2 class="zv-modalTitle">違反を報告</h2>
-                  <div class="zv-modalMain">
-                    <p>このコンテンツは不適切であり、削除する必要があると思われる場合は、下のボタンをクリックしてお知らせください。</p>
-                    <div class="zv-report zv-btn" data-post-type="answer" data-target-id="58746">違反を報告する</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="zv-cqa-comment">
-            <div class="zv-cqa-comment-actions">
-              <p class="zv-error-message" id="ZVLoginErrorComment-58746">コメントを記入するにはログインが必要です。</p>
+										<div class="zv-cqa-step">
 
 
-            </div>
-            <div class="zv-cqa-comment-list-body zv-hide">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
- 
-   
-  <!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-   <div class="zv-cqa hiddenQaDiv">
+											<div class="zv-cqa-step-link">
+												<span class="previousPage">前ページ</span>
+												<span>全2件</span>
+												<span>ページ<span id="currentPageNo">1</span>/<span
+														id="totalPageNo">5</span></span>
+												<span class="nextPage">次ページ</span>
+											</div>
+											<div class="zv-select-wrap">
 
-    <div class="zv-cqa-question">
-      <span class="zv-space">Q. </span>
-   <span class="zv-cqa-step" th:text="${qa.question}">この商品は脚を外してロースタイルにすることは可能でしょうか？</span>
+												<select id="zv-cqa-select-sort" class="zv-select" name="sort">
+													<option value="total_yes">トップ評価</option>
+													<option value="created_at" selected="">新しい順</option>
+												</select>
+											</div>
+										</div>
+										<th:block th:each="qa: ${goodsQaDetail}" th:if="${qa !=null}">
+											<div class="zv-cqa delete">
 
-    </div>
-    <div class="zv-cqa-q-info">
-      <span class="zv-cqa-q-reviewer" th:text="${goodsQaDetail.get(0).id}">投稿者&nbsp; </span>
-      <span class="zv-cqa-step" th:text="${qa.submitDate}">投稿日&nbsp;2021年04月02日</span>
-    </div>
-    <div class="zv-cqa-answers">
+												<div class="zv-cqa-question">
+													<span class="zv-space">Q. </span>
+													<span class="zv-cqa-step"
+														th:text="${qa.question}">この商品は脚を外してロースタイルにすることは可能でしょうか？</span>
 
-      <div class="zv-cqa-answer zv-cqa-answer-first">
-        <span class="zv-space">A. </span>
-        <div class="zv-cqa-a-content">
-          <div class="zv-cqa-a-text">
+												</div>
+												<div class="zv-cqa-q-info">
+													<span class="zv-cqa-q-reviewer"
+														th:text="${goodsQaDetail.get(0).id}">投稿者&nbsp; </span>
+													<span class="zv-cqa-step"
+														th:text="${qa.submitDate}">投稿日&nbsp;2021年04月02日</span>
+												</div>
+												<div class="zv-cqa-answers">
 
-            <p class="zv-cqa-step" th:text="${qa.answer}">脚を取外してのご使用を想定しておりません。床を傷つける恐れがありますので、脚を外してのご使用はお控えください。</p>
+													<div class="zv-cqa-answer zv-cqa-answer-first">
+														<span class="zv-space">A. </span>
+														<div class="zv-cqa-a-content">
+															<div class="zv-cqa-a-text">
 
-          </div>
+																<p class="zv-cqa-step" th:text="${qa.answer}">
+																	脚を取外してのご使用を想定しておりません。床を傷つける恐れがありますので、脚を外してのご使用はお控えください。
+																</p>
 
-          <div class="zv-cqa-a-info">
-            <span class="zv-space"></span>
-            <span class="zv-cqa-a-reviewer"th:text="${goodsQaDetail.get(0).id}">回答者&nbsp; Nitori-QA-001</span>
-            <span class="zv-cqa-step" th:text="'回答日:'+${qa.answerDate}">回答日&nbsp;2021年04月05日</span>
-          </div>
-          <div class="zv-helpful-form" data-answer-id="58746">
-            <span class="zv-space"></span>
-            <span class="zv-error-message" id="ZVLoginErrorHelpful-58746" th:text="${goodsQaDetail.get(0).helpedNum}">「参考になった/参考にならなかった」を投稿するにはログインが必要です。</span>
-            <span class="zv-helpful-col">
-              <span class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-yes-58746" data-count="58746" data-clickable="" data-answer-id="58746">
-                <i class="zv-helpful zv-helpful-yes-i"></i>
-                <span class="zv-helpful zv-helpful-yes zv-helpful-yes-58746" data-count="58746" id="ZVHelpfulYes-58746">参考になった</span>
-                <span class="zv-cqa-step" th:text="${qa.helpedNum}+'人'">(0人)</span>
-              </span>
-            </span>
-            <span class="zv-helpful-col">
-              <span class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-no-58746" data-count="58746" data-clickable="" data-answer-id="58746">
-                <i class="zv-helpful  zv-helpful-no-i"></i>
-                <span class="zv-helpful zv-helpful-no zv-helpful-no-58746" data-count="58746" id="ZVHelpfulNo-58746">参考にならなかった</span>
-                <span class="zv-helpful zv-helpful-num zv-helpful-no-num zv-helpful-no-num-58746" data-count="58746" id="ZVHelpfulNoNum-58746">(0人)</span>
-              </span>
-            </span>
-            <span class="zv-separator">|</span>
-            <div class="zv-popupModal1">
-              <input type="radio" name="modalPop" id="pop1158746">
-              <label for="pop1158746">違反を報告</label>
-              <input type="radio" name="modalPop" id="pop1258746">
-              <label for="pop1258746">CLOSE</label>
-              <input type="radio" name="modalPop" id="pop1358746">
-              <label for="pop1358746">×</label>
-              <div class="zv-modalPopup2">
-                <div class="zv-modalPopup3">
-                  <h2 class="zv-modalTitle">違反を報告</h2>
-                  <div class="zv-modalMain">
-                    <p>このコンテンツは不適切であり、削除する必要があると思われる場合は、下のボタンをクリックしてお知らせください。</p>
-                    <div class="zv-report zv-btn" data-post-type="answer" data-target-id="58746">違反を報告する</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="zv-cqa-comment">
-            <div class="zv-cqa-comment-actions">
-              <p class="zv-error-message" id="ZVLoginErrorComment-58746">コメントを記入するにはログインが必要です。</p>
+															</div>
+
+															<div class="zv-cqa-a-info">
+																<span class="zv-space"></span>
+																<span class="zv-cqa-a-reviewer"
+																	th:text="${goodsQaDetail.get(0).id}">回答者&nbsp;
+																	Nitori-QA-001</span>
+																<span class="zv-cqa-step"
+																	th:text="'回答日:'+${qa.answerDate}">回答日&nbsp;2021年04月05日</span>
+															</div>
+															<div class="zv-helpful-form" data-answer-id="58746">
+																<span class="zv-space"></span>
+																<span class="zv-error-message"
+																	id="ZVLoginErrorHelpful-58746"
+																	th:text="${goodsQaDetail.get(0).helpedNum}">「参考になった/参考にならなかった」を投稿するにはログインが必要です。</span>
+																<span class="zv-helpful-col">
+																	<span
+																		class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-yes-58746"
+																		data-count="58746" data-clickable=""
+																		data-answer-id="58746">
+																		<i class="zv-helpful zv-helpful-yes-i"></i>
+																		<span
+																			class="zv-helpful zv-helpful-yes zv-helpful-yes-58746"
+																			data-count="58746"
+																			id="ZVHelpfulYes-58746">参考になった</span>
+																		<span class="zv-cqa-step"
+																			th:text="${qa.helpedNum}+'人'">(0人)</span>
+																	</span>
+																</span>
+																<span class="zv-helpful-col">
+																	<span
+																		class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-no-58746"
+																		data-count="58746" data-clickable=""
+																		data-answer-id="58746">
+																		<i class="zv-helpful  zv-helpful-no-i"></i>
+																		<span
+																			class="zv-helpful zv-helpful-no zv-helpful-no-58746"
+																			data-count="58746"
+																			id="ZVHelpfulNo-58746">参考にならなかった</span>
+																		<span
+																			class="zv-helpful zv-helpful-num zv-helpful-no-num zv-helpful-no-num-58746"
+																			data-count="58746"
+																			id="ZVHelpfulNoNum-58746">(0人)</span>
+																	</span>
+																</span>
+																<span class="zv-separator">|</span>
+																<div class="zv-popupModal1">
+																	<input type="radio" name="modalPop" id="pop1158746">
+																	<label for="pop1158746">違反を報告</label>
+																	<input type="radio" name="modalPop" id="pop1258746">
+																	<label for="pop1258746">CLOSE</label>
+																	<input type="radio" name="modalPop" id="pop1358746">
+																	<label for="pop1358746">×</label>
+																	<div class="zv-modalPopup2">
+																		<div class="zv-modalPopup3">
+																			<h2 class="zv-modalTitle">違反を報告</h2>
+																			<div class="zv-modalMain">
+																				<p>このコンテンツは不適切であり、削除する必要があると思われる場合は、下のボタンをクリックしてお知らせください。
+																				</p>
+																				<div class="zv-report zv-btn"
+																					data-post-type="answer"
+																					data-target-id="58746">違反を報告する</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="zv-cqa-comment">
+																<div class="zv-cqa-comment-actions">
+																	<p class="zv-error-message"
+																		id="ZVLoginErrorComment-58746">
+																		コメントを記入するにはログインが必要です。</p>
 
 
-            </div>
-            <div class="zv-cqa-comment-list-body zv-hide">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-  </div>
-  
-  </div> 
-</th:block>
+																</div>
+																<div class="zv-cqa-comment-list-body zv-hide">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												</div>
 
-   
-    
-  
-  <!--<div class="zv-cqa">
+
+												<!--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+												<div class="zv-cqa hiddenQaDiv">
+
+													<div class="zv-cqa-question">
+														<span class="zv-space">Q. </span>
+														<span class="zv-cqa-step"
+															th:text="${qa.question}">この商品は脚を外してロースタイルにすることは可能でしょうか？</span>
+
+													</div>
+													<div class="zv-cqa-q-info">
+														<span class="zv-cqa-q-reviewer"
+															th:text="${goodsQaDetail.get(0).id}">投稿者&nbsp; </span>
+														<span class="zv-cqa-step"
+															th:text="${qa.submitDate}">投稿日&nbsp;2021年04月02日</span>
+													</div>
+													<div class="zv-cqa-answers">
+
+														<div class="zv-cqa-answer zv-cqa-answer-first">
+															<span class="zv-space">A. </span>
+															<div class="zv-cqa-a-content">
+																<div class="zv-cqa-a-text">
+
+																	<p class="zv-cqa-step" th:text="${qa.answer}">
+																		脚を取外してのご使用を想定しておりません。床を傷つける恐れがありますので、脚を外してのご使用はお控えください。
+																	</p>
+
+																</div>
+
+																<div class="zv-cqa-a-info">
+																	<span class="zv-space"></span>
+																	<span class="zv-cqa-a-reviewer"
+																		th:text="${goodsQaDetail.get(0).id}">回答者&nbsp;
+																		Nitori-QA-001</span>
+																	<span class="zv-cqa-step"
+																		th:text="'回答日:'+${qa.answerDate}">回答日&nbsp;2021年04月05日</span>
+																</div>
+																<div class="zv-helpful-form" data-answer-id="58746">
+																	<span class="zv-space"></span>
+																	<span class="zv-error-message"
+																		id="ZVLoginErrorHelpful-58746"
+																		th:text="${goodsQaDetail.get(0).helpedNum}">「参考になった/参考にならなかった」を投稿するにはログインが必要です。</span>
+																	<span class="zv-helpful-col">
+																		<span
+																			class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-yes-58746"
+																			data-count="58746" data-clickable=""
+																			data-answer-id="58746">
+																			<i class="zv-helpful zv-helpful-yes-i"></i>
+																			<span
+																				class="zv-helpful zv-helpful-yes zv-helpful-yes-58746"
+																				data-count="58746"
+																				id="ZVHelpfulYes-58746">参考になった</span>
+																			<span class="zv-cqa-step"
+																				th:text="${qa.helpedNum}+'人'">(0人)</span>
+																		</span>
+																	</span>
+																	<span class="zv-helpful-col">
+																		<span
+																			class="zv-helpful zv-helpful-wrapper zv-helpful-wrapper-no-58746"
+																			data-count="58746" data-clickable=""
+																			data-answer-id="58746">
+																			<i class="zv-helpful  zv-helpful-no-i"></i>
+																			<span
+																				class="zv-helpful zv-helpful-no zv-helpful-no-58746"
+																				data-count="58746"
+																				id="ZVHelpfulNo-58746">参考にならなかった</span>
+																			<span
+																				class="zv-helpful zv-helpful-num zv-helpful-no-num zv-helpful-no-num-58746"
+																				data-count="58746"
+																				id="ZVHelpfulNoNum-58746">(0人)</span>
+																		</span>
+																	</span>
+																	<span class="zv-separator">|</span>
+																	<div class="zv-popupModal1">
+																		<input type="radio" name="modalPop"
+																			id="pop1158746">
+																		<label for="pop1158746">違反を報告</label>
+																		<input type="radio" name="modalPop"
+																			id="pop1258746">
+																		<label for="pop1258746">CLOSE</label>
+																		<input type="radio" name="modalPop"
+																			id="pop1358746">
+																		<label for="pop1358746">×</label>
+																		<div class="zv-modalPopup2">
+																			<div class="zv-modalPopup3">
+																				<h2 class="zv-modalTitle">違反を報告</h2>
+																				<div class="zv-modalMain">
+																					<p>このコンテンツは不適切であり、削除する必要があると思われる場合は、下のボタンをクリックしてお知らせください。
+																					</p>
+																					<div class="zv-report zv-btn"
+																						data-post-type="answer"
+																						data-target-id="58746">違反を報告する
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="zv-cqa-comment">
+																	<div class="zv-cqa-comment-actions">
+																		<p class="zv-error-message"
+																			id="ZVLoginErrorComment-58746">
+																			コメントを記入するにはログインが必要です。</p>
+
+
+																	</div>
+																	<div class="zv-cqa-comment-list-body zv-hide">
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+										</th:block>
+
+
+
+
+										<!--<div class="zv-cqa">
 
     <div class="zv-cqa-question">
       <span class="zv-space">Q. </span>
@@ -400,154 +493,224 @@
   </div>
 -->
 
-<div class="zv-cqa-step" id="detailFooter">
-  <div class="zv-cqa-step-link">
-  <span class="previousPage">前ページ</span>
-    <span>全2件</span>
+										<div class="zv-cqa-step" id="detailFooter">
+											<div class="zv-cqa-step-link">
+												<span class="previousPage">前ページ</span>
+												<span>全2件</span>
 
-   <span>ページ<span id="currentPageNo">1</span>/<span id="totalPageNo">5</span></span>
-	<span class="nextPage">次ページ</span>
-  </div>
-</div>
+												<span>ページ<span id="currentPageNo">1</span>/<span
+														id="totalPageNo">5</span></span>
+												<span class="nextPage">次ページ</span>
+											</div>
+										</div>
 
-</div>
+								</div>
 
-<div id="zv-modal-container" class="zv-hide">
-  <div id="zv-modal-root"></div>
-  <div id="zv-modal">
-    <div id="zv-lightbox">
-      <div id="zv-lightbox-header">
-        <button id="zv-close-button" type="button"><span class="zv-close-icon"></span></button>
-      </div>
-      <div id="zv-lightbox-body">
-        <div id="zv-lightbox-title-area">
-          <div id="zv-lightbox-title-label"></div>
-          <div id="zv-lightbox-title"></div>
-        </div>
-        <div id="zv-lightbox-value">
-          <div id="zv-lightbox-value-input">
-            <div id="zv-lightbox-name">
-              <label>ニックネーム</label>
-              <input id="zv-cqa-input-reviewer-name" type="text" class="zv-textbox" name="reviewer_name">
-            </div>
-            <div id="zv-lightbox-text">
-              <label id="zv-lightbox-text-label"></label>
-              <textarea id="zv-cqa-input-text" name="text" class="zv-input zv-textarea"></textarea>
-            </div>
-          </div>
-        </div>
+								<div id="zv-modal-container" class="zv-hide">
+									<div id="zv-modal-root"></div>
+									<div id="zv-modal">
+										<div id="zv-lightbox">
+											<div id="zv-lightbox-header">
+												<button id="zv-close-button" type="button"><span
+														class="zv-close-icon"></span></button>
+											</div>
+											<div id="zv-lightbox-body">
+												<div id="zv-lightbox-title-area">
+													<div id="zv-lightbox-title-label"></div>
+													<div id="zv-lightbox-title"></div>
+												</div>
+												<div id="zv-lightbox-value">
+													<div id="zv-lightbox-value-input">
+														<div id="zv-lightbox-name">
+															<label>ニックネーム</label>
+															<input id="zv-cqa-input-reviewer-name" type="text"
+																class="zv-textbox" name="reviewer_name">
+														</div>
+														<div id="zv-lightbox-text">
+															<label id="zv-lightbox-text-label"></label>
+															<textarea id="zv-cqa-input-text" name="text"
+																class="zv-input zv-textarea"></textarea>
+														</div>
+													</div>
+												</div>
 
-          <ul>
-    <li>「ニトリ商品Q&amp;A」は、お客様のご質問とニトリの回答を、他のお客様に参考にしていただくためのサービスです。</li>
-    <!--<li>回答を要するご質問やお急ぎの方は<a class="g-link-u" href="https://www.nitori-net.jp/ec/input-inquiry/" target="_blank">お問い合わせフォームへ</a>ご連絡ください。</li>-->
-    <li>ニトリが不適切と判断した際、後日投稿を削除する場合がございます。詳細はご利用ガイドの<a class="g-link-u" href="https://www.nitori-net.jp/ec/userguide/nitorinet/#zv-cqa" target="_blank">ニトリ商品Q&amp;Aについて</a>をご確認ください。</li>
-    </ul>
+												<ul>
+													<li>「ニトリ商品Q&amp;A」は、お客様のご質問とニトリの回答を、他のお客様に参考にしていただくためのサービスです。</li>
+													<!--<li>回答を要するご質問やお急ぎの方は<a class="g-link-u" href="https://www.nitori-net.jp/ec/input-inquiry/" target="_blank">お問い合わせフォームへ</a>ご連絡ください。</li>-->
+													<li>ニトリが不適切と判断した際、後日投稿を削除する場合がございます。詳細はご利用ガイドの<a class="g-link-u"
+															href="https://www.nitori-net.jp/ec/userguide/nitorinet/#zv-cqa"
+															target="_blank">ニトリ商品Q&amp;Aについて</a>をご確認ください。</li>
+												</ul>
 
-        <p class="zv-error-message" id="ZVSpamError">しばらく時間をおいて投稿してください。</p>
-        <div id="ZVPostArea" data-customerqa-message-after-post-answer="回答ありがとうございます。" data-customerqa-message-after-post-comment="コメントありがとうございます。">
-          <button type="button" class="zv-btn" id="ZVPostButton">回答</button>
-        </div>
-        <div id="ZVColseArea" class="zv-hide">
-          <button type="button" class="zv-btn" id="ZVColseButton">閉じる</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="zv-modal-wrapper"></div>
-</div>
+												<p class="zv-error-message" id="ZVSpamError">しばらく時間をおいて投稿してください。</p>
+												<div id="ZVPostArea"
+													data-customerqa-message-after-post-answer="回答ありがとうございます。"
+													data-customerqa-message-after-post-comment="コメントありがとうございます。">
+													<button type="button" class="zv-btn" id="ZVPostButton">回答</button>
+												</div>
+												<div id="ZVColseArea" class="zv-hide">
+													<button type="button" class="zv-btn" id="ZVColseButton">閉じる</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="zv-modal-wrapper"></div>
+								</div>
 
-<div id="ZVCQAPost">
+								<div id="ZVCQAPost">
 
-    <div class="zv-cqa-posting-rule">
-      <p class="zv-cqa-posting-rule-title">ご注意ください</p>
-      <ul>
-    <li>「ニトリ商品Q&amp;A」は、お客様のご質問とニトリの回答を、他のお客様に参考にしていただくためのサービスです。</li>
-    <!--<li>回答を要するご質問やお急ぎの方は<a class="g-link-u" href="https://www.nitori-net.jp/ec/input-inquiry/" target="_blank">お問い合わせフォームへ</a>ご連絡ください。</li>-->
-    <li>ニトリが不適切と判断した際、後日投稿を削除する場合がございます。詳細はご利用ガイドの<a class="g-link-u" href="https://www.nitori-net.jp/ec/userguide/nitorinet/#zv-cqa" target="_blank">ニトリ商品Q&amp;Aについて</a>をご確認ください。</li>
-    </ul>
-    </div>
+									<div class="zv-cqa-posting-rule">
+										<p class="zv-cqa-posting-rule-title">ご注意ください</p>
+										<ul>
+											<li>「ニトリ商品Q&amp;A」は、お客様のご質問とニトリの回答を、他のお客様に参考にしていただくためのサービスです。</li>
+											<!--<li>回答を要するご質問やお急ぎの方は<a class="g-link-u" href="https://www.nitori-net.jp/ec/input-inquiry/" target="_blank">お問い合わせフォームへ</a>ご連絡ください。</li>-->
+											<li>ニトリが不適切と判断した際、後日投稿を削除する場合がございます。詳細はご利用ガイドの<a class="g-link-u"
+													href="https://www.nitori-net.jp/ec/userguide/nitorinet/#zv-cqa"
+													target="_blank">ニトリ商品Q&amp;Aについて</a>をご確認ください。</li>
+										</ul>
+									</div>
 
-  <input type="textbox" id="ZVQuestionTextarea" class="zv-textbox" placeholder="不明な点を質問（例：この製品には耐久性がありますか？）">
-  <div id="ZVAskPostArea" data-customerqa-message-after-post-question="送信しました。回答があるまでしばらくお待ちください。">
-    <p class="zv-error-message" id="ZVLoginErrorQuestion">質問を投稿するにはログインが必要です。</p>
-    <p class="zv-error-message" id="ZVEmptyErrorQuestion">質問を入力してください。</p>
-    <p class="zv-error-message" id="ZVSpamErrorQuestion">しばらく時間をおいて投稿してください。</p>
-    <button type="button" id="ZVPostQuestionButton" class="zv-btn">質問を投稿</button>
-  </div>
-</div>
+									<input type="textbox" id="ZVQuestionTextarea" class="zv-textbox"
+										placeholder="不明な点を質問（例：この製品には耐久性がありますか？）">
+									<div id="ZVAskPostArea"
+										data-customerqa-message-after-post-question="送信しました。回答があるまでしばらくお待ちください。">
+										<p class="zv-error-message" id="ZVLoginErrorQuestion">質問を投稿するにはログインが必要です。</p>
+										<p class="zv-error-message" id="ZVEmptyErrorQuestion">質問を入力してください。</p>
+										<p class="zv-error-message" id="ZVSpamErrorQuestion">しばらく時間をおいて投稿してください。</p>
+										<button type="button" id="ZVPostQuestionButton" class="zv-btn">質問を投稿</button>
+									</div>
+								</div>
 
-</div>
-</section>
-<section class="g-grid_item g-sm-block-sm" id="js-product-reviews" aria-hidden="false">
-<div id="js-replace"><input type="hidden" name="productCodePost" value="">
+							</div>
+					</section>
+					<section class="g-grid_item g-sm-block-sm" id="js-product-reviews" aria-hidden="false">
+						<div id="js-replace"><input type="hidden" name="productCodePost" value="">
 
-<div id="normal-productreview">
-	<h2 class="g-h-2 g-h-i p-hd">
-	<i class="g-s g-s-comment" aria-hidden="true"></i>
-	<span>レビュー</span>
-</h2>
+							<div id="normal-productreview">
+								<h2 class="g-h-2 g-h-i p-hd">
+									<i class="g-s g-s-comment" aria-hidden="true"></i>
+									<span>レビュー</span>
+								</h2>
 
- 
-<div class="p-reviewScore">
-		<p class="p-average">
-			平均評価<span class="g-digit">4.7</span>
-			<span data-score="4.7">
-					<span class="g-clip">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					</span>
-	      		
-	      		</span>
-		</p>
-		<p class="g-score">
-			<span data-score="4.7"></span>		
-			<span>(<span id="js-reviews" >4</span>)</span>
-		</p>
-	</div>		    
-<ul class="g-reviewList">
-<li class="g-reviewList_item hiddenList">
-	    <p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
-	    
-	 <th:block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">
-	    	
+
+								<div class="p-reviewScore">
+									<p class="p-average">
+										平均評価<span class="g-digit">4.7</span>
+										<span data-score="4.7">
+											<span class="g-clip">
+												<img src="/goods-img/star.jpg">
+												<img src="/goods-img/star.jpg">
+												<img src="/goods-img/star.jpg">
+												<img src="/goods-img/star.jpg">
+												<img src="/goods-img/star.jpg">
+											</span>
+
+										</span>
+									</p>
+									<p class="g-score">
+										<span data-score="4.7"></span>
+										<span>(<span id="js-reviews">4</span>)</span>
+									</p>
+								</div>
+
+										<ul class="g-reviewListInitial">
+										<th:block th:each="rev: ${goodsReviewDetail}" th:if="${rev != null}">
+										<li class="g-reviewList_item reviewDelete">
+											<p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
+
+											<div class="g-lg-flow-sm">
+												<p class="g-score">
+													<span data-score="5.0">
+															<span class="g-clip">text.product.review.Rating</span>
+														<span class="g-clip">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">	
+														</span>
+													</span>
+												</p>
+											</div>
+
+											<p class="g-reviewList_user"><b th:text="${rev.nickName}"> </b>さん<span
+													class="g-clip" th:text="${rev.commentDate}">2020/07/20</p>
+											<p class="g-reviewList_info" th:text="${rev.goodsName}">購入商品:カジュアルソファ(パトレック
+												GR/MBR）</p>
+											<p class="g-reviewList_h" th:text="${rev.title}">安くて、座り心地良いです。</p>
+											<p th:text="${rev.content}">
+												安価なソファだと、座面がかなり低く、立ち上がるのにもしんどいと、よく聞きます。友人の家のソファに座るとなるほどと思い、座面が低すぎなくて、比較的安価なものを探していました。
+												これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
+												適度なフカフカさもあります。
+												良い買い物出来ました。
+												触り心地良いですが、飲み物などこぼしたら、シミになりそうなので、私は色も好きだけど、ソファカバーを店舗で買いました。</p>
+											<!--<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（125人）</span></a></p>-->
+											<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike"
+													data-count="0" data="5f157a91791f76004b000099" data-clickable="">
+													<i class="g-s g-s-like-g" aria-hidden="true">
+														<img class="thumUpImg" src="/goods-img/thumUp.jpg"
+															alt="Italian Trulli">
+													</i><span class="initialHelpNumSpan" th:text="${rev.reviewNum}">参考になった（125人）</span></a></p>
+											　　　　　
+										</li>
+										</th:block>
+								</ul>
+								
+								<ul class="g-reviewList">
+									
+										<li class="g-reviewList_item hiddenList">
+											<p class="g-label-brand g-reviewList_label">ピックアップレビュー</p>
+											<div class="g-lg-flow-sm">
+												<p class="g-score">
+													<span data-score="5.0">
+														<span class="g-clip">text.product.review.Rating</span>
+														<span class="g-clip">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">
+														<img  src="/goods-img/star.jpg">	
+														</span>
+													</span>
+												</p>
+											</div>
+
+											<p class="g-reviewList_user"><b> </b>さん<span
+													class="g-clip">2020/07/20</p>
+											<p class="g-reviewList_info">購入商品:カジュアルソファ(パトレック
+												GR/MBR）</p>
+											<p class="g-reviewList_h">安くて、座り心地良いです。</p>
+											<p>
+												安価なソファだと、座面がかなり低く、立ち上がるのにもしんどいと、よく聞きます。友人の家のソファに座るとなるほどと思い、座面が低すぎなくて、比較的安価なものを探していました。
+												これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
+												適度なフカフカさもあります。
+												良い買い物出来ました。
+												触り心地良いですが、飲み物などこぼしたら、シミになりそうなので、私は色も好きだけど、ソファカバーを店舗で買いました。</p>
+											<!--<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（125人）</span></a></p>-->
+											<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike"
+													data-count="0" data="5f157a91791f76004b000099" data-clickable="">
+													<i class="g-s g-s-like-g" aria-hidden="true">
+														<img class="thumUpImg" src="/goods-img/thumUp.jpg"
+															alt="Italian Trulli">
+													</i>
+													<span class="helpNumSpan">参考になった（125人）</span>
+													<span class="hidSpForRevId"></span>　　
+													</a>
+													</p>
+													
+										　　
+										</li>
+										</ul>
+																				
+								
+								
+   	                       
+								
+<!--								<li class="g-reviewList_item">
 	    <div class="g-lg-flow-sm">
+
+				
 			<p class="g-score">
-				<span data-score="5.0">
-				<!--	<span class="g-clip">text.product.review.Rating</span>-->
-					<span class="g-clip">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					<img  src="/goods-img/star.jpg">
-					</span>
-	      		</span>
-			</p>
-	    </div>    
-	    
-      	<p class="g-reviewList_user"><b th:text="${rev.nickName}"> </b>さん<span class="g-clip" th:text="${rev.commentDate}">2020/07/20</p>
-      	<p class="g-reviewList_info" th:text="${rev.goodsName}">購入商品:カジュアルソファ(パトレック GR/MBR）</p>
-	    <p class="g-reviewList_h" th:text="${rev.title}">安くて、座り心地良いです。</p>
-	    <p th:text="${rev.content}">安価なソファだと、座面がかなり低く、立ち上がるのにもしんどいと、よく聞きます。友人の家のソファに座るとなるほどと思い、座面が低すぎなくて、比較的安価なものを探していました。
-     これは、座り心地も良く、立ち上がるのにも足腰に負担にならないです。
-     適度なフカフカさもあります。
-     良い買い物出来ました。
-     触り心地良いですが、飲み物などこぼしたら、シミになりそうなので、私は色も好きだけど、ソファカバーを店舗で買いました。</p>
-	 	<!--<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（125人）</span></a></p>-->
-	 	<p class="g-reviewList_like"><a class="g-link reviewLike0" id="js-hitLike" data-count="0" data="5f157a91791f76004b000099" data-clickable="">
-	 	<i class="g-s g-s-like-g" aria-hidden="true">
-	 		<img class="thumUpImg" src="/goods-img/thumUp.jpg" alt="Italian Trulli">
-	 	</i><span>参考になった（125人）</span></a></p>
-　　　　　</li>
-  	<li class="g-reviewList_item">
-	    <div class="g-lg-flow-sm">
-
-			
-	</th:block>	
-			<!--<p class="g-score">
 				<span data-score="5.0">
 					<span class="g-clip">text.product.review.Rating</span>
 					<span class="g-clip">
@@ -562,9 +725,9 @@
 	      		
 			</p>
     	
-	      	<p class="g-reviewList_user" th:text="${goodsQaDetail.get(0).commentDate}"><b>ルル</b>さん 2021/03/09</p>-->
+	      	<p class="g-reviewList_user" th:text="${goodsReviewDetail.get(0).commentDate}"><b>ルル</b>さん 2021/03/09</p>
 	    </div>
-	    <!--<p class="g-reviewList_info">購入商品:カジュアルソファ(パトレック GR/LBR)</p>
+	    <p class="g-reviewList_info">購入商品:カジュアルソファ(パトレック GR/LBR)</p>
 	    <p class="g-reviewList_h">可愛い</p>
 	    <p>コンパクトで色もめっちゃ可愛いです。本当に買って良かったです。
 組み立ても簡単でした。</p>
@@ -591,11 +754,11 @@
 	 	<ul class="g-sm-flow-sm g-lg-flow g-reviewList_pics">
 		    	<li><img class="g-fw" src="https://p1-a50ece1c.imageflux.jp/c/f=webp:jpeg,w=1024,h=1024,a=0/store/reviewattachmentfile/53/4463/file/dfc67947e0933f0101d34c811355e0e5.jpeg" alt=""></li>
 		    	</ul>
-		<p class="g-reviewList_like"><a class="g-link reviewLike2" id="js-hitLike" data-count="2" data="6021d7f60a039300180000bd" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（96人）</span></a></p>-->
+		<p class="g-reviewList_like"><a class="g-link reviewLike2" id="js-hitLike" data-count="2" data="6021d7f60a039300180000bd" data-clickable=""><i class="g-s g-s-like-g" aria-hidden="true"></i><span>参考になった（96人）</span></a></p>
   	</li>
-
-  	</ul>
-		<!--<div id="p-reviewMore" aria-hidden="true"><ul class="g-reviewList">
+-->
+	
+								<!--<div id="p-reviewMore" aria-hidden="true"><ul class="g-reviewList">
 	<li class="g-reviewList_item">
 	    <div class="g-lg-flow-sm">
 			<p class="g-score">
@@ -622,111 +785,121 @@
 
   	</ul>
 		</div>-->
-	</div></div>
-								<div class="g-foot-v g-foot-sm" id="js-review-more" aria-hidden="false">
-									<p class="g-align-tc" id="showMoreReviewBtn">
-										<a class="g-link displaymorereview" href="#p-reviewMore" role="button" aria-expanded="false" aria-controls="p-reviewMore" data-label="閉じる" data-accordion="{&quot;scroll&quot;:false}">
-										<i class="g-i g-i-arrow-d"></i><span>レビューをもっと見る（3/<span id="js-reviews-more">4</span>）</span></a>
-									</p>
-								</div>
-							</section>
-						</section>	
+							</div>
 						</div>
-	</div>
+						<div class="g-foot-v g-foot-sm" id="js-review-more" aria-hidden="false">
+							<p class="g-align-tc" id="showMoreReviewBtn">
+								<a class="g-link displaymorereview" href="#p-reviewMore" role="button" aria-expanded="false"
+									aria-controls="p-reviewMore" data-label="閉じる" data-accordion="{&quot;scroll&quot;:false}">
+									<i class="g-i g-i-arrow-d"></i><span id="showMoreLabel">レビューをもっと見る（3/<span id="js-reviews-more">4</span>）</span></a>
+							</p>
+							<p class="g-align-tc" id="closeBtn">
+								<a class="g-link displaymorereview" href="#p-reviewMore" role="button" aria-expanded="false"
+									aria-controls="p-reviewMore" data-label="閉じる" data-accordion="{&quot;scroll&quot;:false}">
+									<i class="g-i g-i-arrow-d"></i>
+									<span id="closeLabel">閉じる</span>
+								</a>
+							</p>
+						</div>
+					</section>
+				</section>
+			</div>
+		</div>
 
-    <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
-    <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
-    </div>
-</div>
-<div th:replace="mall/footer::footer-fragment"></div>
-<!-- jQuery -->
-<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
-<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
-<script th:src="@{/mall/js/detailFunc.js}" type="text/javascript"></script>
-<script type="text/javascript">
-    /**
-     * 添加到购物车
-     */
-    function saveToCart(id) {
-        var goodsCount = 1;
-        var data = {
-            "goodsId": id,
-            "goodsCount": goodsCount
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/shop-cart',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                if (result.resultCode == 200) {
-                    swal({
-                        title: "添加成功",
-                        text: "确认框",
-                        icon: "success",
-                        buttons: true,
-                        dangerMode: true,
-                    }).then((flag) => {
-                            window.location.reload();
-                        }
-                    );
-                } else {
-                    swal(result.message, {
-                        icon: "error",
-                    });
-                }
-            },
-            error: function () {
-                swal("操作失败", {
-                    icon: "error",
-                });
-            }
-        });
-    }
-    /**
-     * 添加到购物车并跳转至购物车页面
-     */
-    function saveAndGoCart(id) {
-        var goodsCount = 1;
-        var data = {
-            "goodsId": id,
-            "goodsCount": goodsCount
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/shop-cart',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                if (result.resultCode == 200) {
-                    swal({
-                        title: "已将商品加入购物车",
-                        icon: "success",
-                        buttons: {
-                            cancel: "留在当前页",
-                            confirm: "去购物车结算"
-                        },
-                        dangerMode: false,
-                    }).then((flag) => {
-                            if (flag) {
-                                window.location.href = '/shop-cart';
-                            }
-                        }
-                    );
-                } else {
-                    swal(result.message, {
-                        icon: "error",
-                    });
-                }
-            },
-            error: function () {
-                swal("操作失败", {
-                    icon: "error",
-                });
-            }
-        });
-    }
-</script>
+		<!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
+		<div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
+		</div>
+	</div>
+	<div th:replace="mall/footer::footer-fragment"></div>
+	<!-- jQuery -->
+	<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+	<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+	<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+	<script th:src="@{/mall/js/detailFunc.js}" type="text/javascript"></script>
+	<script type="text/javascript">
+		/**
+		 * 添加到购物车
+		 */
+		function saveToCart(id) {
+			var goodsCount = 1;
+			var data = {
+				"goodsId": id,
+				"goodsCount": goodsCount
+			};
+			$.ajax({
+				type: 'POST',
+				url: '/shop-cart',
+				contentType: 'application/json',
+				data: JSON.stringify(data),
+				success: function (result) {
+					if (result.resultCode == 200) {
+						swal({
+							title: "添加成功",
+							text: "确认框",
+							icon: "success",
+							buttons: true,
+							dangerMode: true,
+						}).then((flag) => {
+							window.location.reload();
+						}
+						);
+					} else {
+						swal(result.message, {
+							icon: "error",
+						});
+					}
+				},
+				error: function () {
+					swal("操作失败", {
+						icon: "error",
+					});
+				}
+			});
+		}
+		/**
+		 * 添加到购物车并跳转至购物车页面
+		 */
+		function saveAndGoCart(id) {
+			var goodsCount = 1;
+			var data = {
+				"goodsId": id,
+				"goodsCount": goodsCount
+			};
+			$.ajax({
+				type: 'POST',
+				url: '/shop-cart',
+				contentType: 'application/json',
+				data: JSON.stringify(data),
+				success: function (result) {
+					if (result.resultCode == 200) {
+						swal({
+							title: "已将商品加入购物车",
+							icon: "success",
+							buttons: {
+								cancel: "留在当前页",
+								confirm: "去购物车结算"
+							},
+							dangerMode: false,
+						}).then((flag) => {
+							if (flag) {
+								window.location.href = '/shop-cart';
+							}
+						}
+						);
+					} else {
+						swal(result.message, {
+							icon: "error",
+						});
+					}
+				},
+				error: function () {
+					swal("操作失败", {
+						icon: "error",
+					});
+				}
+			});
+		}
+	</script>
 </body>
+
 </html>

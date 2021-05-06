@@ -17,19 +17,32 @@ import java.util.List;
  */
 public class GoodsReviewVO implements Serializable {
 
+	private int id;
 	private int star;
+	private long reviewNum;
 	private String commentDate;
 	private String title;
 	private String content;
 	private String picture;
 	private String nickName;
 	private String goodsName;
-	private String helpedNum;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getStar() {
 		return star;
 	}
 	public void setStar(int star) {
 		this.star = star;
+	}
+	public long getReviewNum() {
+		return reviewNum;
+	}
+	public void setReviewNum(long reviewNum) {
+		this.reviewNum = reviewNum;
 	}
 	public String getCommentDate() {
 		return commentDate;
@@ -66,11 +79,5 @@ public class GoodsReviewVO implements Serializable {
 	}
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
-	}
-	public String getHelpedNum() {
-		return helpedNum;
-	}
-	public void setHelpedNum(String helpedNum) {
-		this.helpedNum = helpedNum;
 	}
 }

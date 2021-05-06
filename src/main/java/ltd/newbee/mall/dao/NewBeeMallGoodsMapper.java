@@ -12,6 +12,7 @@ import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -67,4 +68,10 @@ public interface NewBeeMallGoodsMapper {
 
      	// get max id of qa added by coca 2021/04/29
      Long getMaxQaId(Long goodsId);
+     // add insertHelpNum by coca 2021/05/04
+     boolean insertHelpNum (GoodsReviewHelpNum goodsReviewHelpNum);
+     // update Review help Num updateReviewNum by coca 2021/04/29
+     boolean updateReviewNum (GoodsReviewHelpNum goodsReviewHelpNum);
+  // to get total reviewNum add by coca 2021/04/29
+     long getRevListHelpNum(int reviewId);
 }

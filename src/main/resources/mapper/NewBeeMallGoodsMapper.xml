@@ -390,7 +390,7 @@
   </select> 
   
   <select id="getRevList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
- 	  select r.star,r.helped_num, r.comment_date, r.title, r.content, r.picture, r.goods_id, u.nick_name, i.goods_name
+ 	  select r.id, r.star,r.review_num, r.comment_date, r.title, r.content, r.picture, r.goods_id, u.nick_name, i.goods_name
       from goods_review as r join tb_newbee_mall_user as u on r.custermer_id = u.user_id join tb_newbee_mall_goods_info as i  
       on r.goods_id = i.goods_id
       where r.goods_id = #{goodsId,jdbcType=BIGINT} order by r.star DESC
@@ -432,7 +432,7 @@
   <!-- adding insert added by coca 2021/04/24 -->
  <insert id="qaInsert" parameterType="ltd.newbee.mall.entity.GoodsQa">
     insert into goods_qa (id, goods_id, question, submit_date)
-    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{submitDate,jdbcType=VARCHAR})  
+    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP})  
   </insert>
     <insert id="qaInsertSelective" parameterType="ltd.newbee.mall.entity.GoodsQa">
         insert into goods_qa
@@ -486,4 +486,18 @@
     <select id="getMaxQaId" parameterType="java.lang.Long" resultType="java.lang.Long">
       select max(id) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
    </select> 
+   
+  <!--   add review helpNum event added by coca 2021/05/04 -->
+   <insert id="insertHelpNum" parameterType="ltd.newbee.mall.entity.GoodsReviewHelpNum">
+        insert into help_num (review_id, user_id) values (#{reviewId, jdbcType=INTEGER},#{userId, jdbcType=BIGINT})
+        
+   </insert>
+   <update id="updateReviewNum">     
+            update goods_review set review_num = review_num + 1
+            where id = #{reviewId} 
+   </update>
+     <select id="getRevListHelpNum" parameterType="int" resultType="java.lang.Long">
+ 	  select review_num from goods_review 
+      where id = #{reviewId,jdbcType=BIGINT}
+  </select>
 </mapper>
