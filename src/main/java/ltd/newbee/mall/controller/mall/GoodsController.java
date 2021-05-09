@@ -271,5 +271,40 @@ public class GoodsController {
     	return ResultGenerator.genFailResult("挿入失敗！！");
     	}
     }
+    
+    // adding test searchHistory added by coca 2021/05/08
+	
+	/*
+	 * @RequestMapping(value = "/searchHistory/getSearchHistory", method =
+	 * RequestMethod.POST)
+	 * 
+	 * @ResponseBody 
+	 * public Result getSearchHistory( HttpSession httpSession){
+	 * List<NewBeeMallGoods> list = new ArrayList<NewBeeMallGoods>();
+	 * 
+	 * NewBeeMallGoods goods1= new NewBeeMallGoods(); goods1.setGoodsId(10700L);
+	 * goods1.setGoodsName("iphone12"); list.add(goods1);
+	 * 
+	 * NewBeeMallGoods goods2= new NewBeeMallGoods(); goods2.setGoodsId(10701L);
+	 * goods2.setGoodsName("iphone10"); list.add(goods2);
+	 * 
+	 * NewBeeMallGoods goods3= new NewBeeMallGoods(); goods3.setGoodsId(10702L);
+	 * goods3.setGoodsName("iphone4s"); list.add(goods3);
+	 * 
+	 * 
+	 * return ResultGenerator.genSuccessResult(list);
+	 * 
+	 * }
+	 */
+    
+    // adding test searchHistory added by coca 2021/05/08
+    @RequestMapping(value = "/searchHistory/getSearchHistory", method = RequestMethod.POST)
+    @ResponseBody 
+    public Result getSearchHistory(@RequestBody NewBeeMallGoods keyword, HttpSession httpSession){
+    	List<NewBeeMallGoods> list = newBeeMallGoodsService.getInforDropDownList(keyword);
+
+			return ResultGenerator.genSuccessResult(list);
+    
+    }
 
 }

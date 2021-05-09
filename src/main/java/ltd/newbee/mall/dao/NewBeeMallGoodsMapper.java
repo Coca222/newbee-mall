@@ -68,10 +68,13 @@ public interface NewBeeMallGoodsMapper {
 
      	// get max id of qa added by coca 2021/04/29
      Long getMaxQaId(Long goodsId);
-     // add insertHelpNum by coca 2021/05/04
+        // add insertHelpNum by coca 2021/05/04
      boolean insertHelpNum (GoodsReviewHelpNum goodsReviewHelpNum);
-     // update Review help Num updateReviewNum by coca 2021/04/29
+       // update Review help Num updateReviewNum by coca 2021/04/29
      boolean updateReviewNum (GoodsReviewHelpNum goodsReviewHelpNum);
-  // to get total reviewNum add by coca 2021/04/29
+       // to get total reviewNum add by coca 2021/04/29
      long getRevListHelpNum(int reviewId);
+       // add inquiry drop down list
+     List<NewBeeMallGoods> getInforDropDownList(NewBeeMallGoods keyword);
+     
 }

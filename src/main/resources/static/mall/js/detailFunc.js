@@ -1,5 +1,5 @@
+var currentImageIndex = 1;//used as changing picture for review
 	$(function(){
-	debugger;
 	$(".previousPage").css("pointer-events","none").css("color","grey");
 	//閉じるボタン非表示させる
 	$("#closeBtn").hide();
@@ -30,8 +30,7 @@
 	var goodsId = getGoodsId();
 	var data ={
 		"goodsId": goodsId
-	          };
-		debugger;  
+	          }; 
         $.ajax({
             type: 'POST',//方法类型
             url: "/goods/showMoreReviews",
@@ -48,19 +47,23 @@
                     });
 	            }      
 				if(list !=undefined && list.length!=0 ){
+					debugger;
 					for(i=0;i<list.length;i++){
 						var el=$(".hiddenList").clone().removeClass("hiddenList");
+						var img = "<img src='/goods-img/star.jpg'>"
+						var star = list[i].star;
+						for(var j=0; j<star;j++){
+							el.find(".g-clipStar").append(img)
+						}
 						el.find(".g-reviewList_user").html(list[i].nickName);
 						el.find(".g-clip").html(list[i].commentDate);
 						el.find(".g-reviewList_info").html(list[i].goodsName);
 						el.find(".g-reviewList_h").html(list[i].title);
 						el.find("#content").html(list[i].content);
-						el.find(".helpNumSpan").html();
-						el.find(".helpNumSpan").html(list[i].reviewNum);						
+						el.find(".helpNumSpan").text("参考になった(" + list[i].reviewNum+")人");						
 	//					el.find(".g-clip").html(list[i].id);
 						el.find(".hidSpForRevId").html(list[i].id);
 						el.find(".helpNumSpan").on("click",helpNumClickFunc);
-						debugger;
 						$(".hiddenList").before(el);
 					}
 				}
@@ -90,7 +93,6 @@
 		"reviewId":reviewId
 	}
 	var url="/goods/helpNum"
-	debugger; 
 	var _this= $(this);
         $.ajax({
             type: 'POST',//方法类型
@@ -101,7 +103,6 @@
 	//サーバーが成功した場合
 	//        var totalPage = $("#totalPageNo").text(totalPage);
                 if (result.resultCode == 200) {
-	               debugger;
 	           /*    swal("成功", {
                     icon: "success",
                 }); */  
@@ -136,16 +137,42 @@
 	
 	// change image add by coca 2021/05/05
 	function clickImage(src){
-	$(".swiper-container").find("img").attr('src', src);	
+		debugger;
+	$(".swiper-container").find("img").attr('src', src);
+	
+	var length=3;
+	for(var i=2; i<=length+1; i++){
+		var imageSrc =$(".slgrow div:nth-child(" + i + ")").find("img").attr('src');
+		if(imageSrc==src){
+			currentImageIndex=i-1;
+			}
+		}	
 	}
+
+//num is 1 or -1	
+function plusSlides(num){
+	var nextIndex= currentImageIndex+num
+	if(nextIndex==0){
+		nextIndex=3;
+	}
+	if(nextIndex==4){
+		nextIndex=1;
+	}
+	console.log(nextIndex);
+	var nextIndexInDiv = nextIndex+1;//class .slgrow里面第一个元素不是div 而是a 所以＋1
+	var src=$(".slgrow div:nth-child("+ nextIndexInDiv +")").find("img").attr('src');//规定属于其父元素slgrow的nextIndexInDiv子元素
+	console.log(src);
+	$(".swiper-container").find('img').attr('src',src)
+	currentImageIndex = nextIndex;
+}
+
 	$("#ZVPostQuestionButton").click(function(){
 	var question = $("#ZVQuestionTextarea").val();
 	var goodsId = getGoodsId();
 	var data ={
 		"question": question,
 		"goodsId": goodsId
-	          };
-		debugger;  
+	          };  
         $.ajax({
             type: 'POST',//方法类型
             url: "/goods/qaInsert",
@@ -173,7 +200,6 @@
             }
         })	
 	});
-     debugger;
 function paging(num){
 	var page = $("#currentPageNo").text();
 	
@@ -189,8 +215,7 @@ function paging(num){
 	var data = {
 		"page": pageNo
 	           };
-	console.log("data",data);  
-	debugger;  
+	console.log("data",data);    
         $.ajax({
             type: 'POST',//方法类型
             url: url,

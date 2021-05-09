@@ -497,8 +497,13 @@
             update goods_review set review_num = review_num + 1
             where id = #{reviewId} 
    </update>
-     <select id="getRevListHelpNum" parameterType="int" resultType="java.lang.Long">
+   <select id="getRevListHelpNum" parameterType="int" resultType="java.lang.Long">
  	  select review_num from goods_review 
       where id = #{reviewId,jdbcType=BIGINT}
+  </select>
+
+<!--   to achieve inquiry added by coca 2021/05/07 -->
+  <select id="getInforDropDownList" parameterType="Map" resultType="int">
+  	select goods_id, goods_name from tb_newbee_mall_goods_info where goods_name like CONCAT('%',#{keyword},'%')    
   </select>
 </mapper>
