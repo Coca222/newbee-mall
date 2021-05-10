@@ -26,6 +26,7 @@ import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -307,5 +308,23 @@ public class GoodsController {
 			  PageResult result = newBeeMallGoodsService.searchNewBeeMallGoods((pageUtil));
 			return ResultGenerator.genSuccessResult(result);  
 	   }
+     
+     // adding insert keyword added by coca 2021/05/10
+     @RequestMapping(value = "/goods/keywordInsert", method = RequestMethod.POST)
+     @ResponseBody
+     public Result insertKeyword(@RequestBody SearchHistory keywordRecord){
+ 		  Integer count = null;
+ 		  Long shId = newBeeMallGoodsService.getMaxShId(keywordRecord.getId());
+ 		 keywordRecord.setId(shId);
+ 		  Date date=new Date();
+ 		 keywordRecord.setDate(date);
+ 		if(keywordRecord !=null) {
+ 			count=newBeeMallGoodsService.insertKeyword(keywordRecord);
+ 		}
+ 		if(!(count > 0))  {
+ 	        return ResultGenerator.genFailResult("投稿失敗！");
+ 	        }
+ 		return ResultGenerator.genSuccessResult(count);
+     }
 
 }

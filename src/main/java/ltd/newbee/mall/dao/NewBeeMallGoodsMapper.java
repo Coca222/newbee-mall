@@ -14,6 +14,7 @@ import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
@@ -66,13 +67,17 @@ public interface NewBeeMallGoodsMapper {
         //adding insert added by coca 2021/04/24
      int qaInsertSelective(GoodsQa qaRecord);
 
-     	// get max id of qa added by coca 2021/04/29
+        // get max id of qa added by coca 2021/04/29
      Long getMaxQaId(Long goodsId);
-        // add insertHelpNum by coca 2021/05/04
+       // add insertHelpNum by coca 2021/05/04
      boolean insertHelpNum (GoodsReviewHelpNum goodsReviewHelpNum);
        // update Review help Num updateReviewNum by coca 2021/04/29
      boolean updateReviewNum (GoodsReviewHelpNum goodsReviewHelpNum);
        // to get total reviewNum add by coca 2021/04/29
      long getRevListHelpNum(int reviewId);
+       //adding keyword insert added by coca 2021/05/10
+     int insertKeyword(SearchHistory keywordRecord);
+       // get max id of SearchHistory added by coca 2021/05/10
+     Long getMaxShId(Long userId);
      
 }

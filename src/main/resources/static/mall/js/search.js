@@ -82,6 +82,7 @@ $( "#keyword" ).keyup(function() {
                debugger;
                clearResultList();
                showResultForLikeSearch(json_data);
+               keywordInsert(keyword);
             },
             error: function () {		//HTTP　エラー時
                 debugger;
@@ -109,7 +110,7 @@ function clearResultList(){
 function showResult(result){
 	var list =result.data;
 	//href="/goods/detail/10700"
-	var _href = "/goods/detail";
+	var _href = "/goods/detail/";
 	for(var i=0;i<list.length;i++){
 		var el=$(".dumyLi").clone().removeClass("dumyLi");
 		var link = el.find("a");
@@ -125,7 +126,7 @@ function showResultForLikeSearch(result){
 	debugger;
 	var list =result.data.list;
 	//href="/goods/detail/10700"
-	var _href = "/goods/detail";
+	var _href = "/goods/detail/";
 	for(var i=0;i<list.length;i++){
 		var el=$(".dumyLi").clone().removeClass("dumyLi");
 		var link = el.find("a");
@@ -161,3 +162,37 @@ $("#searchResultUl").mousemove(function(){
 $("#searchResultUl").mouseleave(function(){
 	MouseOnSearchResultUl = false;
 });
+
+function keywordInsert(keyword){
+	var keyword=$("#keyword").val();
+	var data ={
+		"keyword": keyword,
+	          };  
+        $.ajax({
+            type: 'POST',//方法类型
+            url: "/goods/keywordInsert",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+	//サーバーが成功した場合
+	        var totalPage = $("#totalPageNo").text(totalPage);
+                if (result.resultCode == 200) {
+	            swal("質問ご登録ありがとうございました", {
+                        icon: "success",
+                    });       
+
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+                ;
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        })	
+        
+      }

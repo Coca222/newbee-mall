@@ -506,4 +506,11 @@
   <select id="getInforDropDownList" parameterType="Map" resultType="int">
   	select goods_id, goods_name from tb_newbee_mall_goods_info where goods_name like CONCAT('%',#{keyword},'%')    
   </select>
+  <insert id="insertKeyword" parameterType="ltd.newbee.mall.entity.SearchHistory">
+    insert into search_historsy (id, user_id, keyword, date)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{keyword,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}) 
+  </insert>
+   <select id="getMaxShId" parameterType="java.lang.Long" resultType="java.lang.Long">
+      select max(id) from search_history 
+   </select> 
 </mapper>

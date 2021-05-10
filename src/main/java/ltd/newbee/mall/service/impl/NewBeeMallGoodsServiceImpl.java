@@ -18,6 +18,7 @@ import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -185,5 +186,24 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return goodsMapper.getRevListHelpNum(reviewId);
 	}
 
+	// adding inserting way added by coca 2021/05/10
+	@Override
+	public int insertKeyword(SearchHistory keywordRecord) {
+		int keywordCount = goodsMapper.insertKeyword(keywordRecord);
+    	return keywordCount;
+	}
+
+	// adding get max id added by coca 2021/04/29
+	@Override
+    public Long getMaxShId(Long userId){
+    	Long maxShId = goodsMapper.getMaxShId(userId);
+    	if (maxShId != null) {
+    		return maxShId + 1;	
+    	} else {
+    		return 1L;
+    	}
+    	
+	}
+			
 
 }

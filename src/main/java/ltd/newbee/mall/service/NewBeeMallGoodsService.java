@@ -16,6 +16,7 @@ import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
+import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
 import ltd.newbee.mall.util.Result;
@@ -100,5 +101,9 @@ public interface NewBeeMallGoodsService {
     // to get total reviewNum add by coca 2021/04/29
     long getRevListHelpNum(int reviewId);
     
-	
+    //adding keyword insert added by coca 2021/05/10   
+    int insertKeyword(SearchHistory keywordRecord);
+    
+    // get max id of SearchHistory added by coca 2021/05/10 
+    Long getMaxShId(Long userId);
 }
