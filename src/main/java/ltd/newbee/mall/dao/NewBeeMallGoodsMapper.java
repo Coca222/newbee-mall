@@ -74,7 +74,5 @@ public interface NewBeeMallGoodsMapper {
      boolean updateReviewNum (GoodsReviewHelpNum goodsReviewHelpNum);
        // to get total reviewNum add by coca 2021/04/29
      long getRevListHelpNum(int reviewId);
-       // add inquiry drop down list
-     List<NewBeeMallGoods> getInforDropDownList(NewBeeMallGoods keyword);
      
 }

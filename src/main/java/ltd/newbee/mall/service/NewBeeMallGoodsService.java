@@ -100,7 +100,5 @@ public interface NewBeeMallGoodsService {
     // to get total reviewNum add by coca 2021/04/29
     long getRevListHelpNum(int reviewId);
     
-    // add inquiry drop down list by coca 2021/05/07
-    List<NewBeeMallGoods> getInforDropDownList(NewBeeMallGoods keyword);
 	
 }

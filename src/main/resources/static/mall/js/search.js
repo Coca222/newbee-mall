@@ -21,14 +21,18 @@ function search() {
 
 //ajax 与后台通信 查找查询履历
 $( "#keyword" ).focus(function() {
- // $("#keyword").text();
+	debugger;
+	var keyword=$("#keyword").val();
+  if(keyword != ""){
+	$( "#keyword" ).trigger("keyup");
+				}
  //url:restful api
       debugger;
       $.ajax({
             type: 'POST',//方法类型
             url: "/searchHistory/getSearchHistory",
             contentType: 'application/json',
-           // data: JSON.stringify(keyword),
+         //   data: JSON.stringify(keyword),
             success: function (result) {
 			//サーバーが成功した場合
                 if (result.resultCode == 200) {
@@ -59,6 +63,38 @@ $("#keyword").focusout(function(){
 	//foreach is javascript's method
 	//$("#searchResultUl").children() is jquery
 	//toArray() convert $("#searchResultUl").children() to javascript array
+	  clearResultList();
+	//hide #searchResultUl
+	$("#searchResultUl").hide();
+});
+
+//ajax　曖昧検索
+$( "#keyword" ).keyup(function() {
+	debugger;
+	var keyword=$("#keyword").val();
+	      $.ajax({
+            type: 'get',//方法类型    method="post"
+            url:"/goods/search?goodsName="+keyword, //post送信先のurl
+            //data:keyword, //JSONデータ本体
+            //contentType: 'application/json',	//リクエストのcontentType
+            dataType:"json",	//レスポンスをJSONとしてパースする
+            success: function (json_data) {	//200 ok時
+               debugger;
+               clearResultList();
+               showResultForLikeSearch(json_data);
+            },
+            error: function () {		//HTTP　エラー時
+                debugger;
+                alert("Server Error. Please try again later.");
+            }
+        });	
+});
+
+function clearResultList(){
+    //clear #searchResultUl's elements
+	//foreach is javascript's method
+	//$("#searchResultUl").children() is jquery
+	//toArray() convert $("#searchResultUl").children() to javascript array
 	$("#searchResultUl").children().toArray().forEach(function(value,index,array){
 		//check if include class name which is dumyLi
 		// value is dom html element
@@ -68,17 +104,26 @@ $("#keyword").focusout(function(){
 			$(value).remove();
 		}
 	})
-	//hide #searchResultUl
-	$("#searchResultUl").hide();
-});
-
-//ajax　曖昧検索
-$( "#keyword" ).keyup(function() {
-   console.log( "Handler for .keyup() called." );
-});
+}
 
 function showResult(result){
 	var list =result.data;
+	//href="/goods/detail/10700"
+	var _href = "/goods/detail";
+	for(var i=0;i<list.length;i++){
+		var el=$(".dumyLi").clone().removeClass("dumyLi");
+		var link = el.find("a");
+		link.text(list[i].goodsName);
+		link.attr("href", _href+ list[i].goodsId)
+		$(".dumyLi").before(el);
+	}
+	$("#searchResultUl").show();
+	appendToSearchBar($("#searchResultUl"));
+}
+
+function showResultForLikeSearch(result){
+	debugger;
+	var list =result.data.list;
 	//href="/goods/detail/10700"
 	var _href = "/goods/detail";
 	for(var i=0;i<list.length;i++){

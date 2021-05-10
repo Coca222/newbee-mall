@@ -185,13 +185,5 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return goodsMapper.getRevListHelpNum(reviewId);
 	}
 
-	// add inquiry drop down list by coca 2021/05/07
-	@Override
-	public List<NewBeeMallGoods> getInforDropDownList(NewBeeMallGoods keyword) {
-		return  goodsMapper.getInforDropDownList(keyword);
-       
-        
-        
-	}	
 
 }
