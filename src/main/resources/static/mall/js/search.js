@@ -82,7 +82,13 @@ $( "#keyword" ).keyup(function() {
                debugger;
                clearResultList();
                showResultForLikeSearch(json_data);
+               debugger;
+               var list =json_data.data.list[0];
+               var str = list.goodsName;
+               var arr = str.split(" ");
+               arr.filter(keyword=> keyword.includes(keyword));
                keywordInsert(keyword);
+                 
             },
             error: function () {		//HTTP　エラー時
                 debugger;
@@ -175,7 +181,6 @@ function keywordInsert(keyword){
             data: JSON.stringify(data),
             success: function (result) {
 	//サーバーが成功した場合
-	        var totalPage = $("#totalPageNo").text(totalPage);
                 if (result.resultCode == 200) {
 	            swal("質問ご登録ありがとうございました", {
                         icon: "success",

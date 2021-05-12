@@ -507,10 +507,242 @@
   	select goods_id, goods_name from tb_newbee_mall_goods_info where goods_name like CONCAT('%',#{keyword},'%')    
   </select>
   <insert id="insertKeyword" parameterType="ltd.newbee.mall.entity.SearchHistory">
-    insert into search_historsy (id, user_id, keyword, date)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{keyword,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}) 
-  </insert>
+        insert into search_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="keyword != null">
+                keyword,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="keyword != null">
+                #{keyword,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=TIMESTAMP},
+            </if>
+            
+        </trim>
+    </insert>
    <select id="getMaxShId" parameterType="java.lang.Long" resultType="java.lang.Long">
       select max(id) from search_history 
    </select> 
+   <!--  table_sale xml added by coca 2021/05/11 -->
+    <select id="getTableSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableSale">
+      select id, goods_id, start_date, end_date from table_sale
+      where id = #{id,jdbcType=BIGINT}
+  </select> 
+    <!--  goods_sale xml added by coca 2021/05/11 -->
+    <select id="getGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
+      select id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag from goods_sale
+      where id = #{id,jdbcType=BIGINT}
+  </select> 
+    <!--  GoodsCoupon xml added by coca 2021/05/11 -->
+    <select id="getGoodsCoupon" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsCoupon">
+      select coupon_id, coupon_name, flag, start_date, end_date from goods_coupon
+      where coupon_id = #{couponId,jdbcType=BIGINT}
+  </select> 
+     <!--  GoodsCategory xml added by coca 2021/05/11 -->
+    <select id="getTableCategory" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableCategory">
+      select id, category_id, start_date, end_date table_category
+      where id = #{id,jdbcType=BIGINT}
+  </select> 
+  <!--  insert table_sale xml added by coca 2021/05/11 -->
+  <insert id="InsertTableSale" parameterType="ltd.newbee.mall.entity.TableSale">
+        insert into table_sale
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            
+        </trim>
+    </insert>
+    <!--  insert goods_sale xml added by coca 2021/05/11 -->
+     <insert id="InsertGoodsSale" parameterType="ltd.newbee.mall.entity.GoodsSale">
+        insert into goods_sale
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            <if test="campaign != null">
+                campaign,
+            </if>
+            <if test="content1 != null">
+                content1,
+            </if>
+            <if test="content2 != null">
+                content2,
+            </if>
+             <if test="content3 != null">
+                content3,
+            </if>
+            <if test="content4 != null">
+                content4,
+            </if>
+            <if test="content5 != null">
+                content5,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="campaign != null">
+                #{campaign,jdbcType=VARCHAR},
+            </if>
+            <if test="content1 != null">
+                #{content1,jdbcType=VARCHAR},
+            </if>
+            <if test="content2 != null">
+                #{content2,jdbcType=VARCHAR},
+            </if>
+             <if test="content3 != null">
+                #{content3,jdbcType=VARCHAR},
+            </if>
+            <if test="content4 != null">
+                #{content4,jdbcType=VARCHAR},
+            </if>
+            <if test="content5 != null">
+                #{content5,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=VARCHAR},
+            </if>
+            
+        </trim>
+    </insert>
+    <!--insert  GoodsCoupon xml added by coca 2021/05/11 -->
+    <insert id="InsertGoodsCoupon" parameterType="ltd.newbee.mall.entity.GoodsCoupon">
+        insert into goods_coupon
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="couponName != null">
+                coupon_name,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="couponId != null">
+                #{couponId,jdbcType=BIGINT},
+            </if>
+            <if test="couponName != null">
+                #{couponName,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=VARCHAR},
+            </if>
+             <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+         
+            </trim>
+    </insert>
+     <!--insert  GoodsCategory xml added by coca 2021/05/11 -->
+     <insert id="InsertTableCategory" parameterType="ltd.newbee.mall.entity.TableCategory">
+        insert into table_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+             <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+         
+            </trim>
+    </insert>
 </mapper>

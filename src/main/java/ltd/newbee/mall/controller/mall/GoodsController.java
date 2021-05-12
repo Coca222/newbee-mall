@@ -49,6 +49,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -312,12 +313,23 @@ public class GoodsController {
      // adding insert keyword added by coca 2021/05/10
      @RequestMapping(value = "/goods/keywordInsert", method = RequestMethod.POST)
      @ResponseBody
-     public Result insertKeyword(@RequestBody SearchHistory keywordRecord){
+     public Result insertKeyword(@RequestBody SearchHistory keywordRecord,HttpSession httpSession){
+    	 NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+     	if(user!=null) {
+     		keywordRecord.setUserId(user.getUserId());
+     	}
  		  Integer count = null;
  		  Long shId = newBeeMallGoodsService.getMaxShId(keywordRecord.getId());
  		 keywordRecord.setId(shId);
+ 		 
+ 		 SimpleDateFormat sdf = new SimpleDateFormat();
+ 		 sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");
  		  Date date=new Date();
  		 keywordRecord.setDate(date);
+// 		SearchHistory keyword = new SearchHistory();
+// 		keywordRecord.setKeyword(keyword.getKeyword());
+ 		 
+ 		
  		if(keywordRecord !=null) {
  			count=newBeeMallGoodsService.insertKeyword(keywordRecord);
  		}
@@ -326,5 +338,6 @@ public class GoodsController {
  	        }
  		return ResultGenerator.genSuccessResult(count);
      }
-
+     
+    
 }

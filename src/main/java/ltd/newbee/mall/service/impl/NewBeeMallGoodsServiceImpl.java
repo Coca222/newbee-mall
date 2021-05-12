@@ -12,13 +12,17 @@ import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
+import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.SearchHistory;
+import ltd.newbee.mall.entity.TableCategory;
+import ltd.newbee.mall.entity.TableSale;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -203,6 +207,55 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     		return 1L;
     	}
     	
+	}
+
+	// added by coca 2021/05/11 TableSaleリストを取得
+	@Override
+	public List<TableSale> getTableSale(Long goodsId) {
+		List<TableSale> tSlist =goodsMapper.getTableSale(goodsId);
+		return tSlist;
+	}
+	// added by coca 2021/05/11 GoodsSaleリストを取得
+	@Override
+	public List<GoodsSale> getGoodsSale(Long id) {
+		List<GoodsSale> gSlist =goodsMapper.getGoodsSale(id);
+		return gSlist;
+	}
+	 // added by coca 2021/05/11 GoodsCouponリストを取得
+	@Override
+	public List<GoodsCoupon> getGoodsCoupon(Long couponId) {
+		List<GoodsCoupon> gClist =goodsMapper.getGoodsCoupon(couponId);
+		return gClist;
+	}
+	// added by coca 2021/05/11 TableCategoryリストを取得
+	@Override
+	public List<TableCategory> getTableCategory(Long categoryId) {
+		List<TableCategory> tClist =goodsMapper.getTableCategory(categoryId);
+		return tClist;
+	}
+	//adding TableSale insert added by coca 2021/05/12
+	@Override
+	public int InsertTableSale(TableSale tSRecord) {
+		int tSCount = goodsMapper.InsertTableSale(tSRecord);
+    	return tSCount;
+	}
+	//adding TableSale insert added by coca 2021/05/12
+	@Override
+	public int InsertGoodsSale(GoodsSale gSRecord) {
+		int gSCount = goodsMapper.InsertGoodsSale(gSRecord);
+    	return gSCount;
+	}
+	//adding TableSale insert added by coca 2021/05/12
+	@Override
+	public int InsertGoodsCoupon(GoodsCoupon gCRecord) {
+		int gCCount = goodsMapper.InsertGoodsCoupon(gCRecord);
+    	return gCCount;
+	}
+	//adding TableSale insert added by coca 2021/05/12
+	@Override
+	public int InsertTableCategory(TableCategory tCRecord) {
+		int tCCount = goodsMapper.InsertTableCategory(tCRecord);
+    	return tCCount;
 	}
 			
 

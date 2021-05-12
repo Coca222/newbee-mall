@@ -8,14 +8,18 @@
  */
 package ltd.newbee.mall.dao;
 
+import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.StockNumDTO;
+import ltd.newbee.mall.entity.TableCategory;
+import ltd.newbee.mall.entity.TableSale;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
 
@@ -80,4 +84,20 @@ public interface NewBeeMallGoodsMapper {
        // get max id of SearchHistory added by coca 2021/05/10
      Long getMaxShId(Long userId);
      
+ 	// added by coca 2021/05/11 TableSaleリストを取得
+     List<TableSale> getTableSale(Long goodsId);
+    // added by coca 2021/05/11 GoodsSaleリストを取得
+     List<GoodsSale> getGoodsSale(Long id);
+    // added by coca 2021/05/11 GoodsCouponリストを取得
+     List<GoodsCoupon> getGoodsCoupon(Long couponId);
+    // added by coca 2021/05/11 TableCategoryリストを取得
+     List<TableCategory> getTableCategory(Long categoryId);
+     //adding TableSale insert added by coca 2021/05/12
+     int InsertTableSale(TableSale tSRecord);
+     //adding TableSale insert added by coca 2021/05/12
+     int InsertGoodsSale(GoodsSale gSRecord);
+     //adding TableSale insert added by coca 2021/05/12
+     int InsertGoodsCoupon(GoodsCoupon gCRecord);
+     //adding TableSale insert added by coca 2021/05/12
+     int InsertTableCategory(TableCategory tCRecord);
 }
