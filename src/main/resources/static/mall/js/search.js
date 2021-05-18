@@ -86,7 +86,13 @@ $( "#keyword" ).keyup(function() {
                var list =json_data.data.list[0];
                var str = list.goodsName;
                var arr = str.split(" ");
-               arr.filter(keyword=> keyword.includes(keyword));
+             /*  arr.filter(keyword=> keyword.includes(keyword));*/
+             for (var i=0;i<arr.length;i++){
+     			if(arr[i].includes(keyword)){
+    			keyword = arr[i];
+     					}
+      		}
+             
                keywordInsert(keyword);
                  
             },
@@ -170,7 +176,8 @@ $("#searchResultUl").mouseleave(function(){
 });
 
 function keywordInsert(keyword){
-	var keyword=$("#keyword").val();
+	debugger;
+	/*var keyword=$("#keyword").val();*/
 	var data ={
 		"keyword": keyword,
 	          };  
@@ -182,9 +189,9 @@ function keywordInsert(keyword){
             success: function (result) {
 	//サーバーが成功した場合
                 if (result.resultCode == 200) {
-	            swal("質問ご登録ありがとうございました", {
+	            /*swal("質問ご登録ありがとうございました", {
                         icon: "success",
-                    });       
+                    });    */   
 
                 } else {
                     swal(result.message, {

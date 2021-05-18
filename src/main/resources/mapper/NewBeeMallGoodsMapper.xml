@@ -18,6 +18,19 @@
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+    <resultMap id="GoodsSaleResultMap" type="ltd.newbee.mall.entity.GoodsSale">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="start_date" jdbcType="TIMESTAMP" property="startDate"/>
+        <result column="end_date" jdbcType="TIMESTAMP" property="endDate"/>
+        <result column="campaign" jdbcType="VARCHAR" property="campaign"/>
+        <result column="content1" jdbcType="VARCHAR" property="content1"/>
+        <result column="content2" jdbcType="VARCHAR" property="content2"/>
+        <result column="content3" jdbcType="VARCHAR" property="content3"/>
+        <result column="content4" jdbcType="VARCHAR" property="content4"/>
+        <result column="content5" jdbcType="VARCHAR" property="content5"/>
+        <result column="flag" jdbcType="VARCHAR" property="flag"/>
+    </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="ltd.newbee.mall.entity.NewBeeMallGoods">
         <result column="goods_detail_content" jdbcType="LONGVARCHAR" property="goodsDetailContent"/>
     </resultMap>
@@ -67,7 +80,7 @@
         from tb_newbee_mall_goods_info
         <where>
             <if test="goodsName!=null and goodsName!=''">
-                and goods_name like CONCAT('%','#{goodsName}','%')
+                and goods_name like CONCAT('%',#{goodsName},'%')
             </if>
             <if test="goodsSellStatus!=null and goodsSellStatus!=''">
                 and goods_sell_status = #{goodsSellStatus}
@@ -745,4 +758,34 @@
          
             </trim>
     </insert>
+      <!-- add download goods_sale xml added by coca 2021/05/14 -->
+    <select id="dlGetGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
+      select id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag from goods_sale
+      where id in 
+      <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+      </foreach>
+  </select>
+   
+   <!-- to achieve paging for goods sale added by coca 2021/05/15 -->
+  <select id="findGoodsSalePagingBySearch" parameterType="Map" resultMap="GoodsSaleResultMap">
+        select
+        id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag
+        from goods_sale  
+         <where>
+            <if test="keyword!=null and keyword!=''">
+                and name like CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!='' and desAsc!=null and desAsc!=''"> 
+        	order by #{orderBy} #{desAsc}
+        </if>
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+   </select>
+    <!-- adding count added by coca 2021/04/24 -->
+  <select id="findGoodsSaleCount" parameterType="Map" resultType="int">
+      select count(*) from goods_sale where id = #{id,jdbcType=BIGINT}
+  </select> 
 </mapper>

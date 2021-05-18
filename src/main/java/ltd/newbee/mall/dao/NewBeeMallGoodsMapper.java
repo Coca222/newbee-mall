@@ -100,4 +100,11 @@ public interface NewBeeMallGoodsMapper {
      int InsertGoodsCoupon(GoodsCoupon gCRecord);
      //adding TableSale insert added by coca 2021/05/12
      int InsertTableCategory(TableCategory tCRecord);
+     
+     //adding download csv file added by coca 2021/05/14
+     List<GoodsSale> dlGetGoodsSale(Integer[] ids);
+     
+     // Adding Mapper to achieve paging added by coca 2021/05/15
+     List<GoodsSale> findGoodsSalePagingBySearch(PageQueryUtil pageUtil);
+     int findGoodsSaleCount(PageQueryUtil pageUtil);
 }

@@ -23,6 +23,7 @@ import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
@@ -283,14 +284,19 @@ public class GoodsController {
 	  public Result getSearchHistory( HttpSession httpSession){
 	  List<NewBeeMallGoods> list = new ArrayList<NewBeeMallGoods>();
 	  
-	  NewBeeMallGoods goods1= new NewBeeMallGoods(); goods1.setGoodsId(10700L);
-	  goods1.setGoodsName("iphone12"); list.add(goods1);
+	  NewBeeMallGoods goods1= new NewBeeMallGoods(); 
+	  goods1.setGoodsId(10700L);
+	  goods1.setGoodsName("iphone12"); 
+	  list.add(goods1);
 	  
-	  NewBeeMallGoods goods2= new NewBeeMallGoods(); goods2.setGoodsId(10701L);
-	  goods2.setGoodsName("iphone10"); list.add(goods2);
+	  NewBeeMallGoods goods2= new NewBeeMallGoods(); 
+	  goods2.setGoodsId(10701L);
+	  goods2.setGoodsName("iphone10"); 
+	  list.add(goods2);
 	  
 	  NewBeeMallGoods goods3= new NewBeeMallGoods(); goods3.setGoodsId(10702L);
-	  goods3.setGoodsName("iphone4s"); list.add(goods3);
+	  goods3.setGoodsName("iphone4s"); 
+	  list.add(goods3);
 	  
 	  
 	  return ResultGenerator.genSuccessResult(list);
@@ -335,6 +341,7 @@ public class GoodsController {
  		}
  		if(!(count > 0))  {
  	        return ResultGenerator.genFailResult("投稿失敗！");
+ 	        
  	        }
  		return ResultGenerator.genSuccessResult(count);
      }

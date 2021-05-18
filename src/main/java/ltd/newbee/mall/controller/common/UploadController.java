@@ -9,6 +9,11 @@
 package ltd.newbee.mall.controller.common;
 
 import ltd.newbee.mall.common.Constants;
+import ltd.newbee.mall.controller.vo.GoodsQAVO;
+import ltd.newbee.mall.entity.GoodsQa;
+import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.service.NewBeeMallGoodsService;
+import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.NewBeeMallUtils;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
@@ -16,18 +21,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,7 +55,9 @@ import java.util.*;
 @Controller
 @RequestMapping("/admin")
 public class UploadController {
-
+	
+   @Resource
+    private NewBeeMallGoodsService newBeeMallGoodsService;
     @Autowired
     private StandardServletMultipartResolver standardServletMultipartResolver;
 
@@ -127,5 +144,102 @@ public class UploadController {
         resultSuccess.setData(fileNames);
         return resultSuccess;
     }
-
+    
+	/* add test uploadGoodsCoverImg added by coca 2021/05/13 */
+    @PostMapping({"/uploadtest/file"})
+    @ResponseBody
+    public Result uploadtest(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) throws URISyntaxException, ParseException {
+        
+        try {
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Integer count = null;
+        	InputStream is = file.getInputStream();
+        	//bufferedReader wrap inputStream
+        	BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String line;
+            //read line 
+            while((line = br.readLine())!=null) {
+            //split
+            	String[] arr = line.split(",");
+            // set entity
+            	GoodsSale gsEntity = new GoodsSale();
+            	gsEntity.setId(Long.parseLong(arr[0]));
+            	gsEntity.setName(arr[1]);
+            	gsEntity.setStartDate(sdFormat.parse(arr[2]));
+            	gsEntity.setEndDate(sdFormat.parse(arr[3]));
+            	gsEntity.setCampaign(arr[4]);
+            //call insert service
+            	 if(gsEntity !=null) {
+                 	count = newBeeMallGoodsService.InsertGoodsSale(gsEntity);
+          		}
+          		if(!(count > 0))  {
+          	        return ResultGenerator.genFailResult("投稿失敗！");
+          	        }
+          		
+          		return ResultGenerator.genSuccessResult(count);
+              
+            	
+                            }
+            br.close();  
+           
+        } catch (IOException e) {
+            e.printStackTrace();
+           
+        }
+        return ResultGenerator.genSuccessResult();
+	
+           }
+    
+    /* add test download added by coca 2021/05/14 */
+    @RequestMapping(value = "/downloadFile/post", method = RequestMethod.POST)
+    @ResponseBody
+    public Result downloadFile (@RequestBody Integer[] ids) {
+    	 
+    		  	File f = new File("C:\\upload\\test.csv");
+				BufferedWriter bw=null;
+				try {
+					bw = new BufferedWriter(new FileWriter(f));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				List<GoodsSale> gsList =newBeeMallGoodsService.dlGetGoodsSale(ids);
+	    	        for(int i = 0; i < gsList.size();i++) {
+	    	        	 GoodsSale gs=gsList.get(i);
+	    	        	if(gs != null) {
+	    	        		try {
+								bw.write(gs.toString());
+								bw.newLine();								
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	    	        		 	      
+	    	        		}
+			
+	    	        }
+	    	        
+//	    	        gsList.stream().forEach(c->{try {
+//								bw.write(c.toString());
+//								bw.newLine();
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//	    	        });
+	    	        
+	    	        try {
+						bw.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	    	        
+				
+	    	        Result resultSuccess = ResultGenerator.genSuccessResult();
+	    	        resultSuccess.setData("/upload/test.csv");
+	    	        return resultSuccess;
+		    	        
+	    }
+    
 }

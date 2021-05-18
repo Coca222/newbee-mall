@@ -121,10 +121,15 @@ public interface NewBeeMallGoodsService {
     List<TableCategory> getTableCategory(Long categoryId);
     //adding TableSale insert added by coca 2021/05/12
     int InsertTableSale(TableSale tSRecord);
-    //adding TableSale insert added by coca 2021/05/12
+    //adding GoodsSale insert added by coca 2021/05/12
     int InsertGoodsSale(GoodsSale gSRecord);
-    //adding TableSale insert added by coca 2021/05/12
+    //adding GoodsCoupon insert added by coca 2021/05/12
     int InsertGoodsCoupon(GoodsCoupon gCRecord);
-    //adding TableSale insert added by coca 2021/05/12
+    //adding TableCategory insert added by coca 2021/05/12
     int InsertTableCategory(TableCategory tCRecord);
+    
+    //adding download csv file added by coca 2021/05/14
+    List<GoodsSale> dlGetGoodsSale(Integer[] ids);
+    //adding Service to achieve goods sale paging added by coca 2021/05/16
+    PageResult findGoodsSalePagingBySearch(PageQueryUtil pageUtil); 
 }

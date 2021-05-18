@@ -2,6 +2,8 @@ package ltd.newbee.mall.controller.mall;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
+import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
@@ -166,5 +169,42 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
 //	 
 //	  assertEquals(ServiceResultEnum.SUCCESS.getResult(), rs);
 // }
+  
+  // To test paging added by coca 2021/05/18
+  @Test public void testGoodsSalePage() {
+	  Map<String, Object> params = new HashMap<>();
+	  params.put("orderBy", "id");
+	  params.put("page", 1);
+	  params.put("limit", 10);
+//	  params.put("keyword", "大");
+	  params.put("desAsc", "desc");
+	  PageQueryUtil pageUtil = new PageQueryUtil(params);
+	  PageResult result = newBeeMallGoodsService.findGoodsSalePagingBySearch((pageUtil));
+	  List<GoodsSale> gsList = (List<GoodsSale>) result.getList();
+	  // confirm size = limit
+	  int size = 0;
+	  if(gsList!=null || !gsList.isEmpty()) {
+		  size=gsList.size();
+	  }
+      assertEquals(2,size);
+      
+    //to test if lists are same
+	      Long a = 1L;
+	      Long b = 3L;
+    	assertEquals(a,gsList.get(0).getId());
+    	assertEquals(b,gsList.get(1).getId());
+    	
+    	assertEquals("夏季大甩卖",gsList.get(0).getName());
+    	assertEquals("清仓处理",gsList.get(1).getName());
+    	
+    	assertEquals("满三百减一百",gsList.get(0).getCampaign());
+    	assertEquals("打折50%",gsList.get(1).getCampaign());
+    	
+    	SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
+    	 String startDate1 = dmyFormat.format(gsList.get(0).getStartDate());
+    	 String startDate2 = dmyFormat.format(gsList.get(1).getStartDate());
+    	assertEquals("2021-03-31",startDate1);
+    	assertEquals("2021-04-30",startDate2);
+  }
 
 }

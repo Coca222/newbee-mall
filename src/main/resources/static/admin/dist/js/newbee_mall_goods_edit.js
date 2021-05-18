@@ -68,6 +68,29 @@ $(function () {
             }
         }
     });
+    
+      //add test 图片上传插件初始化 用于商品预览图上传 added by coca 2021/05/13
+    new AjaxUpload('#testUploadGoodsCoverImg', {
+        action: '/admin/uploadtest/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            if (!(extension && /^(jpg|jpeg|png|gif|csv)$/.test(extension.toLowerCase()))) {
+                alert('只支持jpg、png、gif、csv格式的文件！');
+                return false;
+            }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                $("#goodsCoverImg").attr("src", r.data);
+                $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
+                return false;
+            } else {
+                alert("error");
+            }
+        }
+    });
 });
 
 $('#saveButton').click(function () {
@@ -299,3 +322,42 @@ $('#levelTwo').on('change', function () {
         }
     });
 });
+
+//add download event added by coca 2021/05/14
+$('#download').on('click', function(){
+	debugger;
+	var _data = [1,3];	  
+    $.ajax({
+            type: 'POST',//方法类
+            url: "/admin/downloadFile/post",            
+            contentType: 'application/json',
+            data: JSON.stringify(_data),
+            success: function (result) {
+				//サーバーが成功した場合
+                if (result.resultCode == 200) {
+/*	               swal("成功", {
+                    icon: "success",
+                }); */
+                
+                  // file path
+                  debugger;
+              //  window.location.assign(result.data); // the function is same as below
+                  Download(result.data); 
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+                ;
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+ });
+ 
+ function Download(url) {
+ document.getElementById('my_iframe').src = url;
+				};

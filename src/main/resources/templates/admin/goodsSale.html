@@ -1,0 +1,112 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+         <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">キャンペーン管理</h3>
+                    </div> <!-- /.card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <button class="btn btn-info" onclick="campaignAdd()"><i class="fa fa-plus"></i>&nbsp;新規追加
+                            </button>
+                            <button class="btn btn-info" onclick="csvUpload()"><i class="fa fa-pencil-square-o"></i>&nbsp;CSV登録
+                            </button>
+                        </div>
+                        <br>
+                        <div>
+	                        <div style="float:left; width:30%;height:50px;">
+	                        	<span>
+	                        		<b>すべて(0)</b>
+	                        	</span>
+	                        </div>
+	                        <div style="float:left;width:30%;height:50px;">
+	                        	<span>
+	                        		<b>クローズ(0)</b>
+	                        	</span>
+	                        </div>
+	                        </div>
+                        <br>
+                        <div>
+	                        <div class="campaignDownload"  style="float:left; width:50%;height:50px;">
+	                        	<form name="input" action="html_form_action.php" method="get">
+									<select type="text" name="キャンペーン名" id="campaignName" style="width:200px"></select>
+									<button id="dumy download">Download</button>
+								</form>
+	                        </div>
+	                        <div class="campaignSearch"  style="float:left;width:50%;height:50px;">
+	                        	<input type="search" id="searchForCampaign" >
+								<button id="dumy search">絞り込み検索</button>
+	                        </div>
+                        </div>
+                        <br>
+                        <div class="campaignTable">
+	                        <table id="table" border="1" style="width:1200px">
+	                        	<thead>
+						            <tr>
+						                <th style="width:20px">
+						                    <input type="checkbox" id="checkAll"/>
+						                </th>
+						                <th style="width:80px">キャンペーンID</th>
+						                <th style="width:180px">キャンペーン名</th>
+						                <th style="width:150px">開始時間</th>
+						                <th style="width:150px">終了時間</th>
+						                <th style="width:80px">ステータス</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						            <tr>
+						                <td>
+						                    <input type="checkbox"/>
+						                </td>
+						                <td></td>
+						                <td></td>
+						                <td></td>
+						                <td></td>
+						                <td></td>
+						            </tr>
+								</tbody>
+							</table>
+						</div>
+                    </div><!-- /.card-body -->
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<!-- ajaxupload -->
+<script th:src="@{/admin/plugins/ajaxupload/ajaxupload.js}"></script>
+<!-- wangEditor -->
+<script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:src="@{/admin/dist/js/sale.js}"></script>
+
+</body>
+</html>

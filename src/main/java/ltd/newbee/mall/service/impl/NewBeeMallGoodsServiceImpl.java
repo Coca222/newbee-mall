@@ -10,6 +10,7 @@ package ltd.newbee.mall.service.impl;
 
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.controller.vo.GoodsSaleVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
 import ltd.newbee.mall.entity.GoodsCoupon;
@@ -256,6 +257,22 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	public int InsertTableCategory(TableCategory tCRecord) {
 		int tCCount = goodsMapper.InsertTableCategory(tCRecord);
     	return tCCount;
+	}
+
+	//adding download csv file added by coca 2021/05/14
+	@Override
+	public List<GoodsSale> dlGetGoodsSale(Integer[] ids) {
+		List<GoodsSale> gSlist =goodsMapper.dlGetGoodsSale(ids);
+        return gSlist ;
+	}
+
+	//adding Service to achieve goods sale paging added by coca 2021/05/16
+	@Override
+	public PageResult findGoodsSalePagingBySearch(PageQueryUtil pageUtil) {
+		List <GoodsSale> gsPageList =goodsMapper.findGoodsSalePagingBySearch(pageUtil);;	
+		int total = goodsMapper.findGoodsSaleCount(pageUtil);
+		PageResult pageResult = new PageResult(gsPageList, total, pageUtil.getLimit(), pageUtil.getPage());
+       return pageResult;
 	}
 			
 
