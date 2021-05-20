@@ -15,6 +15,7 @@ import ltd.newbee.mall.controller.vo.GoodsDescVO;
 import ltd.newbee.mall.controller.vo.GoodsImageVO;
 import ltd.newbee.mall.controller.vo.GoodsQAVO;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.controller.vo.GoodsSaleVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
@@ -198,8 +199,7 @@ public class GoodsController {
         request.setAttribute("goodsDescDetail",descVO);
         
         return "mall/detail";    
-        
-	}
+}    
  // adding font paging added by coca 2021/04/26
     /**
      * 添加

@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace="admin/header::header-fragment"></header>
+<link rel="stylesheet" th:href="@{/admin/dist/css/goodsSale.css}">
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
@@ -23,10 +24,23 @@
                         <h3 class="card-title">キャンペーン管理</h3>
                     </div> <!-- /.card-body -->
                     <div class="card-body">
+                   <!--uploade added by coca 2021/05/20-->
+                           <div class="form-group">
+                                    <div class="col-sm-4">
+                                        <th:block th:if="${null == goods}">
+                                            <img id="goodsCoverImg" src="/admin/dist/img/img-upload.png"
+                                                 style="height: 64px;width: 64px;">
+                                        </th:block>
+                                        <th:block th:unless="${null == goods}">
+                                            <img id="goodsCoverImg" th:src="${goods.goodsCoverImg}"
+                                                 style="width:160px ;height: 160px;display:block;">
+                                        </th:block>
+                                    </div>
+                            </div>
                         <div class="grid-btn">
                             <button class="btn btn-info" onclick="campaignAdd()"><i class="fa fa-plus"></i>&nbsp;新規追加
                             </button>
-                            <button class="btn btn-info" onclick="csvUpload()"><i class="fa fa-pencil-square-o"></i>&nbsp;CSV登録
+                            <button class="btn btn-info" id= "csvUpload" onclick="csvUpload()"><i class="fa fa-pencil-square-o"></i>&nbsp;CSV登録
                             </button>
                         </div>
                         <br>
@@ -47,11 +61,13 @@
 	                        <div class="campaignDownload"  style="float:left; width:50%;height:50px;">
 	                        	<form name="input" action="html_form_action.php" method="get">
 									<select type="text" name="キャンペーン名" id="campaignName" style="width:200px"></select>
-									<button id="dumy download">Download</button>
+									<!--add Download CSV added by coca 2021/05/19-->
+									<button id="download" style="border: none; background-color: #17a2b8;border-color: #17a2b8;color: #fff;" type="button">Download CSV</button>
+                                <iframe id="my_iframe" style="display:none;"></iframe>
 								</form>
 	                        </div>
 	                        <div class="campaignSearch"  style="float:left;width:50%;height:50px;">
-	                        	<input type="search" id="searchForCampaign" >
+	                        	<input type="search" id="keyword" >
 								<button id="dumy search">絞り込み検索</button>
 	                        </div>
                         </div>
@@ -71,16 +87,21 @@
 						            </tr>
 						        </thead>
 						        <tbody>
+						       <!-- add Initialal web page by coca 2021/05/19-->						        						            
+						            <th:block th:unless="${#lists.isEmpty(pageResult.list)}">
+						            <th:block th:each="gs: ${pageResult.list}">
 						            <tr>
 						                <td>
 						                    <input type="checkbox"/>
 						                </td>
-						                <td></td>
-						                <td></td>
-						                <td></td>
-						                <td></td>
-						                <td></td>
-						            </tr>
+						                <td th:text="${gs.id}"></td>
+						                <td th:text="${gs.name}"></td>
+						                <td th:text="${gs.startDate}"></td>
+						                <td th:text="${gs.endDate}"></td>
+						                <td th:text="${gs.flag}"></td>	
+						                </tr>						         					                
+						            </th:block>
+						            </th:block>						          						            					          						         
 								</tbody>
 							</table>
 						</div>
@@ -88,7 +109,44 @@
                 </div>
             </div><!-- /.container-fluid -->
         </div>
+        	<!--achieve paging added by coca 2021/05/20 	-->				
+      <div class="pages">
+        <div class="page_wrap">
+            <th:block th:if="${null != pageResult and !#lists.isEmpty(pageResult.list)}">
+            <span class="page_span1">
+                 <a th:href="@{${pageResult.currPage==1}?'##':'/admin/goods/sale?keyword='+${keyword==null?'':keyword}+'&page=' + ${pageResult.currPage-1}+'&orderBy='+${orderBy==null?'':orderBy}}">
+                                    < 上一页
+                                </a>
+                <th:block th:if="${pageResult.currPage-2 >=1}"><a
+                        th:href="@{'/admin/goods/sale?keyword='+${keyword==null?'':keyword}+'&page=' + ${pageResult.currPage-2}+'&orderBy='+${orderBy==null?'':orderBy}}"
+                        th:text="${pageResult.currPage -2}">1</a></th:block>
+                <th:block th:if="${pageResult.currPage-1 >=1}"><a
+                        th:href="@{'/admin/goods/sale?keyword='+${keyword==null?'':keyword}+'&page=' + ${pageResult.currPage-1}+'&orderBy='+${orderBy==null?'':orderBy}}"
+                        th:text="${pageResult.currPage -1}">1</a></th:block>
+                <a href="##" class="active" th:text="${pageResult.currPage}">1</a>
+                <th:block th:if="${pageResult.currPage+1<=pageResult.totalPage}"><a
+                        th:href="@{'/admin/goods/sale?keyword='+${keyword==null?'':keyword}+'&page=' + ${pageResult.currPage+1}+'&orderBy='+${orderBy==null?'':orderBy}}"
+                        th:text="${pageResult.currPage +1}">1</a></th:block>
+                <th:block th:if="${pageResult.currPage+2<=pageResult.totalPage}"><a
+                        th:href="@{'/admin/goods/sale?keyword='+${keyword==null?'':keyword}+'&page=' + ${pageResult.currPage+2}+'&orderBy='+${orderBy==null?'':orderBy}}"
+                        th:text="${pageResult.currPage +2}">1</a></th:block>
+                 <a th:href="@{${pageResult.currPage>=pageResult.totalPage}?'##':'/admin/goods/sale?keyword='+${keyword==null?'':keyword}+'&page=' + ${pageResult.currPage+1}+'&orderBy='+${orderBy==null?'':orderBy}}">
+                                    下一页 >
+                                </a>
+					</span>
+            </th:block>
+        </div>
+    </div>
+    <!--add goods sale serachhitory by coca 2021/05/20-->
+    <ul id="searchResultUl">
+    	<li class="dumyLi searchLi">
+    		<a>
+    			link
+    		</a>
+    	</li>
+    </ul>
     <!-- /.content-wrapper -->
+    </div>      
     <!-- 引入页脚footer-fragment -->
     <div th:replace="admin/footer::footer-fragment"></div>
 </div>
@@ -106,7 +164,7 @@
 <!-- wangEditor -->
 <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/dist/js/sale.js}"></script>
+<script th:src="@{/admin/dist/js/goodsSale.js}"></script>
 
 </body>
 </html>

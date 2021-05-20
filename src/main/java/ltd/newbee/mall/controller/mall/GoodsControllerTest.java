@@ -175,11 +175,11 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
 	  Map<String, Object> params = new HashMap<>();
 	  params.put("orderBy", "id");
 	  params.put("page", 1);
-	  params.put("limit", 10);
+	  params.put("limit", 2);
 //	  params.put("keyword", "大");
 	  params.put("desAsc", "desc");
 	  PageQueryUtil pageUtil = new PageQueryUtil(params);
-	  PageResult result = newBeeMallGoodsService.findGoodsSalePagingBySearch((pageUtil));
+	  PageResult result = newBeeMallGoodsService.findGoodsSalePagingBySearch(pageUtil);
 	  List<GoodsSale> gsList = (List<GoodsSale>) result.getList();
 	  // confirm size = limit
 	  int size = 0;
@@ -191,20 +191,82 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
     //to test if lists are same
 	      Long a = 1L;
 	      Long b = 3L;
+	      Long c = 4L;
     	assertEquals(a,gsList.get(0).getId());
     	assertEquals(b,gsList.get(1).getId());
+   // 	assertEquals(c,gsList.get(2).getId());
     	
     	assertEquals("夏季大甩卖",gsList.get(0).getName());
     	assertEquals("清仓处理",gsList.get(1).getName());
+   // 	assertEquals("冬季清仓处理",gsList.get(2).getName());
     	
     	assertEquals("满三百减一百",gsList.get(0).getCampaign());
     	assertEquals("打折50%",gsList.get(1).getCampaign());
+   // 	assertEquals("打折20%",gsList.get(2).getCampaign());
     	
     	SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
     	 String startDate1 = dmyFormat.format(gsList.get(0).getStartDate());
     	 String startDate2 = dmyFormat.format(gsList.get(1).getStartDate());
+   //	 String startDate3 = dmyFormat.format(gsList.get(2).getStartDate());
     	assertEquals("2021-03-31",startDate1);
     	assertEquals("2021-04-30",startDate2);
+   // 	assertEquals("2021-12-01",startDate3);
+    	
+    	 String endDate1 = dmyFormat.format(gsList.get(0).getEndDate());
+    	 String endDate2 = dmyFormat.format(gsList.get(1).getEndDate());
+   //	 String endDate3 = dmyFormat.format(gsList.get(2).getEndDate());
+    	assertEquals("2021-06-30",endDate1);
+    	assertEquals("2021-05-30",endDate2);
+   // 	assertEquals("2021-12-30",endDate3);
   }
 
+  // To test paging added by coca 2021/05/19
+  @Test public void testGoodsSalePage2() {
+	  Map<String, Object> params = new HashMap<>();
+	  params.put("orderBy", "id");
+	  params.put("page", 2);
+	  params.put("limit", 2);
+//	  params.put("keyword", "大");
+	  params.put("desAsc", "desc");
+	  PageQueryUtil pageUtil = new PageQueryUtil(params);
+	  PageResult result = newBeeMallGoodsService.findGoodsSalePagingBySearch(pageUtil);
+	  List<GoodsSale> gsList = (List<GoodsSale>) result.getList();
+	  // confirm size = limit
+	  int size = 0;
+	  if(gsList!=null || !gsList.isEmpty()) {
+		  size=gsList.size();
+	  }
+      assertEquals(1,size);
+      
+    //to test if lists are same
+	      Long a = 1L;
+	      Long b = 3L;
+	      Long c = 4L;
+//    	assertEquals(a,gsList.get(0).getId());
+//    	assertEquals(b,gsList.get(1).getId());
+    	assertEquals(c,gsList.get(0).getId());
+    	
+//    	assertEquals("夏季大甩卖",gsList.get(0).getName());
+//    	assertEquals("清仓处理",gsList.get(1).getName());
+    	assertEquals("冬季清仓处理",gsList.get(0).getName());
+    	
+//    	assertEquals("满三百减一百",gsList.get(0).getCampaign());
+//    	assertEquals("打折50%",gsList.get(1).getCampaign());
+    	assertEquals("打折20%",gsList.get(0).getCampaign());
+    	
+    	SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    	 String startDate1 = dmyFormat.format(gsList.get(0).getStartDate());
+//    	 String startDate2 = dmyFormat.format(gsList.get(1).getStartDate());
+   	 String startDate3 = dmyFormat.format(gsList.get(0).getStartDate());
+//    	assertEquals("2021-03-31",startDate1);
+//    	assertEquals("2021-04-30",startDate2);
+    	assertEquals("2021-12-01",startDate3);
+    	
+//    	 String endDate1 = dmyFormat.format(gsList.get(0).getEndDate());
+//    	 String endDate2 = dmyFormat.format(gsList.get(1).getEndDate());
+   	 String endDate3 = dmyFormat.format(gsList.get(0).getEndDate());
+//    	assertEquals("2021-06-30",endDate1);
+//    	assertEquals("2021-05-30",endDate2);
+    	assertEquals("2021-12-30",endDate3);
+  }
 }
