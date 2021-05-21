@@ -25,18 +25,7 @@
                     </div> <!-- /.card-body -->
                     <div class="card-body">
                    <!--uploade added by coca 2021/05/20-->
-                           <div class="form-group">
-                                    <div class="col-sm-4">
-                                        <th:block th:if="${null == goods}">
-                                            <img id="goodsCoverImg" src="/admin/dist/img/img-upload.png"
-                                                 style="height: 64px;width: 64px;">
-                                        </th:block>
-                                        <th:block th:unless="${null == goods}">
-                                            <img id="goodsCoverImg" th:src="${goods.goodsCoverImg}"
-                                                 style="width:160px ;height: 160px;display:block;">
-                                        </th:block>
-                                    </div>
-                            </div>
+                        <div class="col-sm-4"></div>                           
                         <div class="grid-btn">
                             <button class="btn btn-info" onclick="campaignAdd()"><i class="fa fa-plus"></i>&nbsp;新規追加
                             </button>
@@ -67,7 +56,7 @@
 								</form>
 	                        </div>
 	                        <div class="campaignSearch"  style="float:left;width:50%;height:50px;">
-	                        	<input type="search" id="keyword" >
+	                        	<input type="search" id="searchKeyword" autocomplete="off">
 								<button id="dumy search">絞り込み検索</button>
 	                        </div>
                         </div>
