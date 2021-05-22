@@ -153,3 +153,68 @@ $("#searchResultUl").mousemove(function(){
 $("#searchResultUl").mouseleave(function(){
 	MouseOnSearchResultUl = false;
 })
+
+//modal added by coca 2021/0522
+function gsAdd() {
+    reset();
+    $('.modal-title').html('分类添加');
+    $('#gsModal').modal('show');
+}
+
+
+//绑定modal上的保存按钮
+$('#saveButton').click(function () {
+    var gsName = $("#gsName").val();
+    var categoryLevel = $("#categoryLevel").val();
+    var parentId = $("#parentId").val();
+    var categoryRank = $("#categoryRank").val();
+    if (!validCN_ENString2_18(gsName)) {
+        $('#edit-error-msg').css("display", "block");
+        $('#edit-error-msg').html("请输入符合规范的分类名称！");
+    } else {
+        var data = {
+            "gsName": gsName,
+            "categoryLevel": categoryLevel,
+            "parentId": parentId,
+            "categoryRank": categoryRank
+        };
+        var url = '/admin/categories/save';
+        var id = getSelectedRowWithoutAlert();
+        if (id != null) {
+            url = '/admin/categories/update';
+            data = {
+                "categoryId": id,
+                "gsName": gsName,
+                "categoryLevel": categoryLevel,
+                "parentId": parentId,
+                "categoryRank": categoryRank
+            };
+        }
+        $.ajax({
+            type: 'POST',//方法类型
+            url: url,
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.resultCode == 200) {
+                    $('#categoryModal').modal('hide');
+                    swal("保存成功", {
+                        icon: "success",
+                    });
+                    reload();
+                } else {
+                    $('#categoryModal').modal('hide');
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+                ;
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        });
+    }
+});

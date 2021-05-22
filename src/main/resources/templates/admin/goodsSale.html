@@ -25,70 +25,84 @@
                     </div> <!-- /.card-body -->
                     <div class="card-body">
                    <!--uploade added by coca 2021/05/20-->
+                           <div class="form-group">
+                                    <div class="col-sm-4">
+                         
+                                    </div>
+                            </div>
                         <div class="col-sm-4"></div>                           
                         <div class="grid-btn">
-                            <button class="btn btn-info" onclick="campaignAdd()"><i class="fa fa-plus"></i>&nbsp;新規追加
+                        <div class="col-1">
+                            <button class="btn btn-info" onclick="gsAdd()" id="newAdd" >
+                            <i class="fa fa-plus"></i>&nbsp;新規追加
                             </button>
+                        </div>
+                        <div class="col-1">
                             <button class="btn btn-info" id= "csvUpload" onclick="csvUpload()"><i class="fa fa-pencil-square-o"></i>&nbsp;CSV登録
                             </button>
                         </div>
-                        <br>
-                        <div>
-	                        <div style="float:left; width:30%;height:50px;">
-	                        	<span>
-	                        		<b>すべて(0)</b>
-	                        	</span>
-	                        </div>
-	                        <div style="float:left;width:30%;height:50px;">
-	                        	<span>
-	                        		<b>クローズ(0)</b>
-	                        	</span>
-	                        </div>
-	                        </div>
-                        <br>
-                        <div>
-	                        <div class="campaignDownload"  style="float:left; width:50%;height:50px;">
-	                        	<form name="input" action="html_form_action.php" method="get">
-									<select type="text" name="キャンペーン名" id="campaignName" style="width:200px"></select>
-									<!--add Download CSV added by coca 2021/05/19-->
-									<button id="download" style="border: none; background-color: #17a2b8;border-color: #17a2b8;color: #fff;" type="button">Download CSV</button>
-                                <iframe id="my_iframe" style="display:none;"></iframe>
-								</form>
-	                        </div>
-	                        <div class="campaignSearch"  style="float:left;width:50%;height:50px;">
-	                        	<input type="search" id="searchKeyword" autocomplete="off">
-								<button id="dumy search">絞り込み検索</button>
-	                        </div>
                         </div>
                         <br>
-                        <div class="campaignTable">
-	                        <table id="table" border="1" style="width:1200px">
+                        <div>
+	                    <div class="col-1">   
+	                        	<span id="all">
+	                        		<b>すべて(0)</b>
+	                        	</span>
+	                    </div>
+                        <div class="col-2">
+	                        	<span id="close">
+	                        		<b>クローズ(0)</b>
+	                        	</span>
+	                    </div>    
+	                    </div>
+                        <br>                    
+                        <div>
+	                        <div class="col-12">
+	                        <div id="campaignDownload">
+	                        	<form name="input" action="html_form_action.php" method="get">
+									<select type="text" name="キャンペーン名" id="campaignName"></select>
+									<button id="download" type="button">Download CSV</button>
+                                <iframe id="my_iframe"></iframe>
+								</form>
+	                        </div>
+	                        </div>
+	                        
+	                        <div class="col-8">
+	                        <div id="campaignSearch">	                        
+	                        	<input type="search" id="searchKeyword" autocomplete="off">
+								<button id="search">絞り込み検索</button>
+	                        </div>
+	                        </div>
+	                    </div>
+                                                
+                        <div class="campaignTable" >
+	                       <table class="col-12" id="table" border="1">
 	                        	<thead>
-						            <tr>
-						                <th style="width:20px">
+						            <tr class="tableHead">
+						                <th class="col-1">
 						                    <input type="checkbox" id="checkAll"/>
 						                </th>
-						                <th style="width:80px">キャンペーンID</th>
-						                <th style="width:180px">キャンペーン名</th>
-						                <th style="width:150px">開始時間</th>
-						                <th style="width:150px">終了時間</th>
-						                <th style="width:80px">ステータス</th>
+						                <th class="col-1">キャンペーンID</th>
+						                <th class="col-2">キャンペーン名</th>
+						                <th class="col-2">開始時間</th>
+						                <th class="col-2">終了時間</th>
+						                <th class="col-2">ステータス</th>
 						            </tr>
 						        </thead>
 						        <tbody>
 						       <!-- add Initialal web page by coca 2021/05/19-->						        						            
 						            <th:block th:unless="${#lists.isEmpty(pageResult.list)}">
 						            <th:block th:each="gs: ${pageResult.list}">
-						            <tr>
-						                <td>
-						                    <input type="checkbox"/>
+						            <tr class="tableBody">
+						                <td class="col-1">
+						                    <input type="checkbox" id="checkAll"/>
 						                </td>
-						                <td th:text="${gs.id}"></td>
-						                <td th:text="${gs.name}"></td>
-						                <td th:text="${gs.startDate}"></td>
-						                <td th:text="${gs.endDate}"></td>
-						                <td th:text="${gs.flag}"></td>	
-						                </tr>						         					                
+						                <td class="col-1" th:text="${gs.id}"></td>
+						                <td class="col-2" th:text="${gs.name}"></td>
+						                <td class="col-2" th:text="${gs.startDate}"></td>
+						                <td class="col-2" th:text="${gs.endDate}"></td>
+						                <td class="col-2" th:text="${gs.flag}"></td>	
+						              </tr>						         					                
 						            </th:block>
 						            </th:block>						          						            					          						         
 								</tbody>
@@ -134,12 +148,54 @@
     		</a>
     	</li>
     </ul>
+            <!-- modal added by coca 2021/05/22 -->
+        <div class="content">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="gsModal" tabindex="-1" role="dialog" aria-labelledby="gsModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title" id="gsModalLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="gsForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+                                <!--<input type="hidden" class="form-control" id="categoryId" name="categoryId">
+                                <input type="hidden" id="categoryLevel" th:value="${categoryLevel}">
+                                <input type="hidden" id="parentId" th:value="${parentId}">
+                                <input type="hidden" id="backParentId" th:value="${backParentId}">-->
+                                <div class="form-group">
+                                    <label for="gsName" class="control-label">分类名称:</label>
+                                    <input type="text" class="form-control" id="gsName" name="gsName"
+                                           placeholder="请输入分类名称" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gsName" class="control-label">排序值:</label>
+                                    <input type="number" class="form-control" id="categoryRank" name="categoryRank"
+                                           placeholder="请输入分类排序值" required="true">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
     <!-- /.content-wrapper -->
     </div>      
     <!-- 引入页脚footer-fragment -->
     <div th:replace="admin/footer::footer-fragment"></div>
 </div>
-
 <!-- jQuery -->
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
 <!-- Bootstrap 4 -->
@@ -154,6 +210,5 @@
 <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
 <script th:src="@{/admin/dist/js/goodsSale.js}"></script>
-
 </body>
 </html>
