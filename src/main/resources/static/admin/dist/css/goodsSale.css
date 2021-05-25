@@ -13,12 +13,19 @@
 
 #campaignSearch{
 	float:right; 
-	height:50px;
+	
 }
-#campaignDownload{
-	float:left; 
-	height:50px;
+#searchKeyword{
+	height:38px;
 }
+#search{
+	border: 2px solid rgb(0, 0, 255);
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+	color: #fff;
+	height:38px;
+}
+
 #all {
     float:left;
 	height:40px;
@@ -38,12 +45,6 @@
 #campaignName{
 	width:200px;
 }											
-#download,#search{
-	border: 2px solid rgb(0, 0, 255);
-	background-color: #17a2b8;
-	border-color: #17a2b8;
-	color: #fff;
-}
 #my_iframe{
 	display:none;
 } 
@@ -64,4 +65,50 @@
 	max-height: 360px;
 	background-color: #fff;
 	width:300px;
+}
+/*csv txt 2021/05/24*/
+#input-group{
+	float:left;
+	height:50px;
+	width:30%;	
+}
+#download{
+	border: 2px solid rgb(0, 0, 255);
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+	color: #fff;
+}
+.input-group-append{
+		height:38px;
+		float:left;
+}
+/*2021/05/24  modal  */
+#cancell {
+ background-color: rgb(192, 192, 192);
+}
+.modal {
+ width: 100%;
+ height:100vh;
+ position: fixed;
+ top: 0;
+ left: 0;
+ display: none; 
+}
+.modal_bg {
+ height: 100%;
+ background-color: rgba(0,0,0,0.8);
+}
+.modal_window {
+ width: 33.33%;
+ height: 58.33%;
+ border-radius:5px;
+ background-color: white;
+ position: absolute;
+ top: 50%;
+ left:50%;
+ transform: translate(-50%,-50%);
+ text-align: center;
+}
+h3{
+ margin-bottom: 10%;
 }

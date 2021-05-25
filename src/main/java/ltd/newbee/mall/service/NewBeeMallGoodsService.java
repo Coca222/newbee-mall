@@ -27,6 +27,8 @@ import ltd.newbee.mall.util.Result;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 public interface NewBeeMallGoodsService {
     /**
      * 后台分页
@@ -132,4 +134,7 @@ public interface NewBeeMallGoodsService {
     List<GoodsSale> dlGetGoodsSale(Integer[] ids);
     //adding Service to achieve goods sale paging added by coca 2021/05/16
     PageResult findGoodsSalePagingBySearch(PageQueryUtil pageUtil); 
+    
+    // get max id of qa added by coca 2021/05/24
+    Long getMaxGsId(Long id);
 }

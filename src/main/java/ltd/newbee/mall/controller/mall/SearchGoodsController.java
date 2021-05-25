@@ -89,4 +89,5 @@ public class SearchGoodsController{
 			return ResultGenerator.genSuccessResult(result);  
 	   } 
    
+   
 }

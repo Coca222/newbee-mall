@@ -75,7 +75,7 @@ public class GoodsSaleController {
         if (StringUtils.isEmpty(params.get("page"))) {
             params.put("page", 1);
         }
-        params.put("limit", 2); //Constants.GOODS_SEARCH_PAGE_LIMIT
+        params.put("limit", 4); //Constants.GOODS_SEARCH_PAGE_LIMIT
         //封装参数供前端回显
         if (params.containsKey("orderBy") && !StringUtils.isEmpty(params.get("orderBy") + "")) {
             request.setAttribute("orderBy", params.get("orderBy") + "");
@@ -93,5 +93,25 @@ public class GoodsSaleController {
       
         return "admin/goodsSale";
     }
-       
+    
+    @RequestMapping(value = "/goods/insertSale", method = RequestMethod.POST)
+    @ResponseBody
+    public Result insertSale(@RequestBody GoodsSale gSRecord) {
+        GoodsSale list = new GoodsSale();
+        Integer count = null;  
+        long gsId = newBeeMallGoodsService.getMaxGsId(gSRecord.getId());
+        list.setId(gsId);
+        list.setName(gSRecord.getName());
+        list.setStartDate(gSRecord.getStartDate());
+        list.setEndDate(gSRecord.getEndDate());
+        
+        if(list != null) {
+            count = newBeeMallGoodsService.InsertGoodsSale(list);
+        }
+        if(!(count > 0))  {
+        return ResultGenerator.genFailResult("投稿失敗！");
+        }      
+        return ResultGenerator.genSuccessResult(count);    
+    }
+    
 }

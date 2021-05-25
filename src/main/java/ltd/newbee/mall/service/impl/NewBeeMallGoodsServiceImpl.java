@@ -12,6 +12,7 @@ import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
+import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
@@ -273,6 +274,15 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		PageResult pageResult = new PageResult(gsPageList, total, pageUtil.getLimit(), pageUtil.getPage());
        return pageResult;
 	}
-			
+
+	@Override
+	public Long getMaxGsId(Long id) {
+		Long maxGsId = goodsMapper.getMaxGsId(id);
+    	if (maxGsId != null) {
+    		return maxGsId + 1;	
+    	} else {
+    		return 1L;
+    	}
+	}
 
 }

@@ -8,6 +8,7 @@
  */
 package ltd.newbee.mall.dao;
 
+import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
@@ -106,5 +107,7 @@ public interface NewBeeMallGoodsMapper {
      
      // Adding Mapper to achieve paging added by coca 2021/05/15
      List<GoodsSale> findGoodsSalePagingBySearch(PageQueryUtil pageUtil);
-     int findGoodsSaleCount(PageQueryUtil pageUtil);
+     int findGoodsSaleCount(PageQueryUtil pageUtil);   
+  // get max id of qa added by coca 2021/05/24
+     Long getMaxGsId(long id);
 }

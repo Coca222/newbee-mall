@@ -33,6 +33,10 @@ $('#download').on('click', function(){
 		ids.push($(this).text())
 		return ids;
 	})
+var index = ids.indexOf("キャンペーンID");
+  if (index > -1) {
+  ids.splice(index, 1);
+}
 	if (ids==null){
 		swal("请选择一条记录", {
                     icon: "success",
@@ -153,68 +157,143 @@ $("#searchResultUl").mousemove(function(){
 $("#searchResultUl").mouseleave(function(){
 	MouseOnSearchResultUl = false;
 })
-
-//modal added by coca 2021/0522
-function gsAdd() {
-    reset();
-    $('.modal-title').html('分类添加');
-    $('#gsModal').modal('show');
-}
-
-
-//绑定modal上的保存按钮
-$('#saveButton').click(function () {
-    var gsName = $("#gsName").val();
-    var categoryLevel = $("#categoryLevel").val();
-    var parentId = $("#parentId").val();
-    var categoryRank = $("#categoryRank").val();
-    if (!validCN_ENString2_18(gsName)) {
-        $('#edit-error-msg').css("display", "block");
-        $('#edit-error-msg').html("请输入符合规范的分类名称！");
-    } else {
-        var data = {
-            "gsName": gsName,
-            "categoryLevel": categoryLevel,
-            "parentId": parentId,
-            "categoryRank": categoryRank
-        };
-        var url = '/admin/categories/save';
-        var id = getSelectedRowWithoutAlert();
-        if (id != null) {
-            url = '/admin/categories/update';
-            data = {
-                "categoryId": id,
-                "gsName": gsName,
-                "categoryLevel": categoryLevel,
-                "parentId": parentId,
-                "categoryRank": categoryRank
-            };
-        }
-        $.ajax({
-            type: 'POST',//方法类型
-            url: url,
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                if (result.resultCode == 200) {
-                    $('#categoryModal').modal('hide');
-                    swal("保存成功", {
-                        icon: "success",
-                    });
-                    reload();
-                } else {
-                    $('#categoryModal').modal('hide');
-                    swal(result.message, {
-                        icon: "error",
-                    });
-                }
-                ;
-            },
-            error: function () {
-                swal("操作失败", {
+  
+  //2021/05/24 modal test
+$(function(){
+ $("#newAdd").click(function(){
+  $(".modal").fadeIn();
+ });
+ $("#cancell").click(function(){
+  $(".modal").fadeOut();
+ });
+});
+//2021/05/24 insertSale 绑定modal上的保存按钮
+$("#saveSaleButton").click(function(){ 
+ //var id = $("#saleId").val();
+ var name = $("#campaignSaleName").val();
+ var startDate = $("#startDateSale").val();
+ var endDate = $("#endDateSale").val();
+    data = {
+//	"id":id,
+   "name":name,
+ "startDate":startDate,
+ "endDate":endDate,
+    };   
+    $.ajax({
+        type: 'POST',//方法类型
+        url: '/admin/goods/insertSale',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+//サーバーが成功した場合
+            if (result.resultCode == 200) {
+   debugger;     
+     swal("ご登録ありがとうございました！" ,{
+      icon:"success",
+     });
+            } else {
+                 swal(result.message, {
                     icon: "error",
                 });
             }
+            
+        },
+        error: function () {
+            swal("操作失败", {
+                icon: "error",
+            });
+         }
+     })
+     $(".modal").fadeOut();
+  });
+  
+  // Listen for click on toggle checkbox added by coca 2021/05/24
+$('#checkAll').click(function(event) {   
+    if(this.checked) {
+        // Iterate each checkbox
+        $(':checkbox').each(function() {
+            this.checked = true;                        
+        });
+    } else {
+        $(':checkbox').each(function() {
+            this.checked = false;                       
         });
     }
+});
+
+//achieve sorting goods sale by coca 2021/05/25 https://notepad-blog.com/content/127/
+$(function(){
+ 
+  // カラムのクリックイベント
+  $("th").click(function(){
+    // ★span要素の独自属性（sort）の値を取得
+    var sortClass = $(this).find("span").attr("sort");
+    var sortFlag = "asc";
+    // 初期化
+    $("table thead tr span").text("");
+    $("table thead tr span").attr("sort", "");
+
+    if(isBlank(sortClass) || sortClass == "asc") {
+      $(this).find("span").text("▼");
+      // ★独自属性（sort）の値を変更する
+      $(this).find("span").attr("sort", "desc");
+      sortFlag = "desc";
+    } else if(sortClass == "desc") {
+      $(this).find("span").text("▲");
+      $(this).find("span").attr("sort", "asc"); 
+      sortFlag = "asc";
+    }
+
+    var element = $(this).attr("id");
+    sort(element, sortFlag);
+  });
+
+
+  /******** 共通関数 ********/
+  function sort(element, sortFlag) {
+    // ★sort()で前後の要素を比較して並び変える。※対象が文字か数値で処理を変更
+    var arr = $("table tbody tr").sort(function(a, b) {
+      if ($.isNumeric($(a).find("td").eq(element).text())) {
+        // ソート対象が数値の場合
+        var a_num = Number($(a).find("td").eq(element).text());
+        var b_num = Number($(b).find("td").eq(element).text());
+
+        if(isBlank(sortFlag) || sortFlag == "desc") {
+          // 降順
+          return b_num - a_num;
+        } else {
+          // 昇順
+          return a_num - b_num;
+        }
+      } else {
+        // ソート対象が数値以外の場合
+        debugger;
+        var sortNum = 1;
+        if($(a).find("td").eq(element).text() 
+             > $(b).find("td").eq(element).text()) {
+          sortNum = 1;
+        } else {
+          sortNum = -1;
+        }
+        if(isBlank(sortFlag) || sortFlag == "desc") {
+          // 降順
+          sortNum *= (-1) ;
+        }
+
+        return sortNum;
+      }
+    });
+    // ★html()要素を置き換える
+    $("table tbody").html(arr);
+  }
+
+
+  //バリデーションチェック
+  function isBlank(data){
+    if (data.length ==0 || data == ''){
+      return true;
+    } else {
+      return false;
+    }
+  }
 });

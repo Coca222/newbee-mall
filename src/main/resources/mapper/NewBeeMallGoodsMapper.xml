@@ -576,7 +576,7 @@
       where id = #{id,jdbcType=BIGINT}
   </select> 
   <!--  insert table_sale xml added by coca 2021/05/11 -->
-  <insert id="InsertTableSale" parameterType="ltd.newbee.mall.entity.TableSale">
+  <insert id="InsertTableSale" parameterType="java.lang.Long">
         insert into table_sale
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -610,7 +610,7 @@
         </trim>
     </insert>
     <!--  insert goods_sale xml added by coca 2021/05/11 -->
-     <insert id="InsertGoodsSale" parameterType="ltd.newbee.mall.entity.GoodsSale">
+     <insert id="InsertGoodsSale" parameterType="java.lang.Long">
         insert into goods_sale
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -684,8 +684,11 @@
             
         </trim>
     </insert>
+	<select id="getMaxGsId" parameterType="java.lang.Long" resultType= "java.lang.Long">      
+	    select max(id) from goods_sale         
+	</select>
     <!--insert  GoodsCoupon xml added by coca 2021/05/11 -->
-    <insert id="InsertGoodsCoupon" parameterType="ltd.newbee.mall.entity.GoodsCoupon">
+    <insert id="InsertGoodsCoupon" parameterType="java.lang.Long">
         insert into goods_coupon
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="couponId != null">
@@ -725,7 +728,7 @@
             </trim>
     </insert>
      <!--insert  GoodsCategory xml added by coca 2021/05/11 -->
-     <insert id="InsertTableCategory" parameterType="ltd.newbee.mall.entity.TableCategory">
+     <insert id="InsertTableCategory" parameterType="java.lang.Long">
         insert into table_category
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
