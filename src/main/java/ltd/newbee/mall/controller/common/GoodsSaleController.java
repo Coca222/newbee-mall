@@ -75,7 +75,7 @@ public class GoodsSaleController {
         if (StringUtils.isEmpty(params.get("page"))) {
             params.put("page", 1);
         }
-        params.put("limit", 4); //Constants.GOODS_SEARCH_PAGE_LIMIT
+        params.put("limit", 8); //Constants.GOODS_SEARCH_PAGE_LIMIT
         //封装参数供前端回显
         if (params.containsKey("orderBy") && !StringUtils.isEmpty(params.get("orderBy") + "")) {
             request.setAttribute("orderBy", params.get("orderBy") + "");
@@ -99,7 +99,7 @@ public class GoodsSaleController {
     public Result insertSale(@RequestBody GoodsSale gSRecord) {
         GoodsSale list = new GoodsSale();
         Integer count = null;  
-        long gsId = newBeeMallGoodsService.getMaxGsId(gSRecord.getId());
+        Long gsId = newBeeMallGoodsService.getMaxGsId();
         list.setId(gsId);
         list.setName(gSRecord.getName());
         list.setStartDate(gSRecord.getStartDate());

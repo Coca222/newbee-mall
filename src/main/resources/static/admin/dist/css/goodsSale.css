@@ -99,7 +99,7 @@
  background-color: rgba(0,0,0,0.8);
 }
 .modal_window {
- width: 33.33%;
+ width: 41.66%;
  height: 58.33%;
  border-radius:5px;
  background-color: white;
@@ -111,7 +111,23 @@
 }
 h3{
  margin-bottom: 10%;
+
 }
 #table{
 	width:100%;
+}
+#campaignSaleModal{
+	overflow:scroll;
+}
+#campaignSaleModal h3{
+	border: 2px solid rgb(0, 0, 255);
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+	color: #fff;
+	text-align: center;
+	 margin-bottom: 5%;
+}
+.control-label{
+	 background-color: rgb(192, 192, 192);
+	 padding:5px;
 }

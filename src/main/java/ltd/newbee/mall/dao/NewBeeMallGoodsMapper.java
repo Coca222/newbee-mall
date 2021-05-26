@@ -109,5 +109,5 @@ public interface NewBeeMallGoodsMapper {
      List<GoodsSale> findGoodsSalePagingBySearch(PageQueryUtil pageUtil);
      int findGoodsSaleCount(PageQueryUtil pageUtil);   
   // get max id of qa added by coca 2021/05/24
-     Long getMaxGsId(long id);
+     Long findMaxGsId();
 }

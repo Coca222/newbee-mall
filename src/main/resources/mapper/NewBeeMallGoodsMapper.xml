@@ -684,7 +684,7 @@
             
         </trim>
     </insert>
-	<select id="getMaxGsId" parameterType="java.lang.Long" resultType= "java.lang.Long">      
+	<select id="findMaxGsId" parameterType="java.lang.Long" resultType= "java.lang.Long">      
 	    select max(id) from goods_sale         
 	</select>
     <!--insert  GoodsCoupon xml added by coca 2021/05/11 -->

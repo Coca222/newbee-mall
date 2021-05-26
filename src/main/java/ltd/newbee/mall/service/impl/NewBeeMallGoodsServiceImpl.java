@@ -276,8 +276,8 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	}
 
 	@Override
-	public Long getMaxGsId(Long id) {
-		Long maxGsId = goodsMapper.getMaxGsId(id);
+	public Long getMaxGsId() {
+		Long maxGsId = goodsMapper.findMaxGsId();
     	if (maxGsId != null) {
     		return maxGsId + 1;	
     	} else {

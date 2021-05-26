@@ -136,5 +136,5 @@ public interface NewBeeMallGoodsService {
     PageResult findGoodsSalePagingBySearch(PageQueryUtil pageUtil); 
     
     // get max id of qa added by coca 2021/05/24
-    Long getMaxGsId(Long id);
+    Long getMaxGsId();
 }

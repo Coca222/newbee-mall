@@ -193,14 +193,16 @@ public class UploadController {
     /* add test download added by coca 2021/05/14 */
     @RequestMapping(value = "/downloadFile/post", method = RequestMethod.POST)
     @ResponseBody
-    public Result downloadFile (@RequestBody Integer[] ids) {
+    public Result downloadFile (@RequestBody Integer[] ids,@RequestBody String format) {
     	 
-    		  	File f = new File("C:\\upload\\test.csv");
+    			StringBuilder txCv = new StringBuilder();
+    			txCv.append("."+ format);
+    			String test= "test" + txCv;
+    		  	File f = new File(Constants.FILE_UPLOAD_DIC + test);
 				BufferedWriter bw=null;
 				try {
 					bw = new BufferedWriter(new FileWriter(f));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				List<GoodsSale> gsList =newBeeMallGoodsService.dlGetGoodsSale(ids);
@@ -237,7 +239,7 @@ public class UploadController {
 	    	        
 				
 	    	        Result resultSuccess = ResultGenerator.genSuccessResult();
-	    	        resultSuccess.setData("/upload/test.csv");
+	    	        resultSuccess.setData("/upload/"+ test);
 	    	        return resultSuccess;
 		    	        
 	    }

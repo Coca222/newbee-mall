@@ -59,10 +59,10 @@
                         <div>
 	                        <div class="col-6">
 	                        	<div id="input-group">
-						          <select class="custom-select" id="inputGroupSelect04">
+						          <select class="custom-select" id="inputGroupSelect">
 						           <option "selected">Choose...</option>
-						           <option value="1">ファイル (.txt)</option>
-						            <option value="2"> ファイル (.csv)</option>						            
+						           <option value="txt">ファイル (.txt)</option>
+						            <option value="csv"> ファイル (.csv)</option>						            
 						             </select>
 						          </div>
 						    </div>
@@ -77,7 +77,7 @@
 	                        
 	                        <div class="col-9">
 			                    <div id="campaignSearch">	                        
-			                    	<input type="search" class="light-table-filter" data-table="order-table" placeholder="検索"  id="searchKeyword">
+			                    	<input type="text"   placeholder="検索"  id="searchKeyword">
 									<button id="search">絞り込み検索</button>
 			                    </div>
 	                       </div>	
@@ -173,7 +173,7 @@
 			
 			 <div class="modal_bg"></div>
 			 <div class="modal_window" id="campaignSaleModal">
-			  <h3>モーダルウィンドウ</h3>
+			  <h3>新規追加</h3>
 			 <!-- <div class="form-group">
 			   <label for="id" class="control-label">ID</label>
 			   <input type="text" class="form-control" id="saleId" name="saleId"
@@ -195,6 +195,41 @@
 			   <input type="date" class="form-control" id="endDateSale" name="categoryRank" placeholder="endDateを入力してください"
 			    required="true">
 			  </div>
+			   <div class="form-group">
+			   <label for="campaign" class="control-label">Campaign</label>
+			   <input type="text" class="form-control" id="campaign" name="campaign"
+			    placeholder="campaignを入力してください" required="true">
+			  </div>
+			   <div class="form-group">
+			   <label for="content1" class="control-label">content1</label>
+			   <input type="text" class="form-control" id="content1" name="content1"
+			    placeholder="content1を入力してください" required="true">
+			  </div>
+			   <div class="form-group">
+			   <label for="content2" class="control-label">content2</label>
+			   <input type="text" class="form-control" id="content2" name="content2"
+			    placeholder="content2を入力してください" required="true">
+			  </div>
+			   <div class="form-group">
+			   <label for="content3" class="control-label">content3</label>
+			   <input type="text" class="form-control" id="content3" name="content3"
+			    placeholder="content3を入力してください" required="true">
+			  </div>
+			   <div class="form-group">
+			   <label for="content4" class="control-label">content4</label>
+			   <input type="text" class="form-control" id="content4" name="content4"
+			    placeholder="content4を入力してください" required="true">
+			  </div>
+			   <div class="form-group">
+			   <label for="content5" class="control-label">content5</label>
+			   <input type="text" class="form-control" id="content5" name="content5"
+			    placeholder="content5を入力してください" required="true">
+			  </div>
+			   <div class="form-group">
+			   <label for="flag" class="control-label">flag</label>
+			   <input type="text" class="form-control" id="flag" name="flag"
+			    placeholder="flagを入力してください" required="true">
+			  </div>			 
 			  <div class="modal-footer">
 			   <button type="button" class="btn btn-default" id="cancell">キャンセル</button>
 			   <button type="button" class="btn btn-primary" id="saveSaleButton">確認</button>

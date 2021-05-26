@@ -29,14 +29,20 @@
 $('#download').on('click', function(){
 	debugger;
 	var ids= [ ];
+	var format=$("#inputGroupSelect").val();
 	$('input:checkbox:checked').parent().next().map(function(){
 		ids.push($(this).text())
 		return ids;
 	})
-var index = ids.indexOf("キャンペーンID");
-  if (index > -1) {
-  ids.splice(index, 1);
+	
+	var index = ids.indexOf("キャンペーンID");
+  	if (index > -1) {
+ 	 ids.splice(index, 1);
 }
+	var data={
+		"ids":ids,
+		"format":format
+	}
 	if (ids==null){
 		swal("请选择一条记录", {
                     icon: "success",
@@ -47,7 +53,7 @@ var index = ids.indexOf("キャンペーンID");
             type: 'POST',//方法类
             url: "/admin/downloadFile/post",            
             contentType: 'application/json',
-            data: JSON.stringify(ids),
+            data: JSON.stringify(data),
             success: function (result) {
 				//サーバーが成功した場合
                 if (result.resultCode == 200) {
@@ -79,43 +85,14 @@ var index = ids.indexOf("キャンペーンID");
 				};
 
 //to add filter by coca 2021/05/26
-debugger;
-(function(document) {
-  'use strict';
-  var LightTableFilter = (function(Arr) {
-    var _input;
-    function _onInputEvent(e) {
-      _input = e.target;
-      var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-      Arr.forEach.call(tables, function(table) {
-        Arr.forEach.call(table.tBodies, function(tbody) {
-          Arr.forEach.call(tbody.rows, _filter);
-        });
-      });
-    }
- 
-    function _filter(row) {
-      var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-    }
- 
-    return {
-      init: function() {
-        var inputs = document.getElementsByClassName('light-table-filter');
-        Arr.forEach.call(inputs, function(input) {
-          input.oninput = _onInputEvent;
-        });
-      }
-    };
-  })(Array.prototype);
- 
-  document.addEventListener('readystatechange', function() {
-    if (document.readyState === 'complete') {
-      LightTableFilter.init();
-    }
-  });
- 
-})(document);
+ $(function() {
+     $('#search').on('click', function() {
+         // console.log($('#searchKeyword').val());
+         $('table tbody tr').hide()
+             .filter(":contains('" + ($('#searchKeyword').val()) + "')")
+             .show();
+     })
+ })
   
   //2021/05/24 modal test
 $(function(){
@@ -128,15 +105,27 @@ $(function(){
 });
 //2021/05/24 insertSale 绑定modal上的保存按钮
 $("#saveSaleButton").click(function(){ 
- //var id = $("#saleId").val();
  var name = $("#campaignSaleName").val();
  var startDate = $("#startDateSale").val();
  var endDate = $("#endDateSale").val();
-    data = {
-//	"id":id,
-   "name":name,
+ var campaign = $("#campaign").val();
+ var content1 = $("#content1").val();
+ var content2 = $("#content2").val();
+ var content3 = $("#content3").val();
+ var content4 = $("#content4").val();
+ var content5 = $("#content5").val();
+ var flag = $("#flag").val();
+ var data = {
+  "name":name,
  "startDate":startDate,
  "endDate":endDate,
+ "campaign":campaign,
+ "content1":content1,
+ "content2":content2,
+ "content3":content3,
+ "content4":content4,
+ "content5":content5,
+ "flag":flag,
     };   
     $.ajax({
         type: 'POST',//方法类型

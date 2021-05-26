@@ -83,7 +83,7 @@ public class SearchGoodsController{
 		   Map<String, Object> params = new HashMap<String, Object>();
 		   	  params.put("keyword", name);
 		   	  params.put("page",1);
-		   	  params.put("limit",4);
+		   	  params.put("limit",8);
 			  PageQueryUtil pageUtil = new PageQueryUtil(params);
 			  PageResult result = newBeeMallGoodsService.findGoodsSalePagingBySearch(pageUtil);
 			return ResultGenerator.genSuccessResult(result);  
