@@ -77,86 +77,45 @@ var index = ids.indexOf("キャンペーンID");
  function Download(url) {
  document.getElementById('my_iframe').src = url;
 				};
+
+//to add filter by coca 2021/05/26
+debugger;
+(function(document) {
+  'use strict';
+  var LightTableFilter = (function(Arr) {
+    var _input;
+    function _onInputEvent(e) {
+      _input = e.target;
+      var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+      Arr.forEach.call(tables, function(table) {
+        Arr.forEach.call(table.tBodies, function(tbody) {
+          Arr.forEach.call(tbody.rows, _filter);
+        });
+      });
+    }
  
- //ajax 与后台通信 查找查询履历 added by coca 2021/05/20
- $( "#searchKeyword" ).focus(function(){
-	var keyword = $( "#searchKeyword" ).val();
-	if(keyword != ""){
-		$( "#searchKeyword" ).trigger("keyup");
-	}
-});		
-// delete elements when focus out
-$("#searchKeyword").focusout(function(){
-	if(MouseOnSearchResultUl)
-	return;
-    clearResultList()
-	//hide #searchResultUl
-	$("#searchResultUl").hide();
-});
-  //ajax　曖昧検索
-$("#searchKeyword").keyup(function(){
-	debugger;
-	var keyword = $("#searchKeyword").val();
-	    $.ajax({
-            type: 'get',//方法类型  //method = "POST"
-            url: "/searchGsHistory/getSearchGsHistory?name="+keyword,  //Post送信先のurl
-            dataType:"json",
-            success: function (json_data) {
-			debugger;
-			clearResultList();
-			showResultForLikeSearch(json_data);
-			debugger;
-	   	    var list = json_data.data.list[0];
-		    var str = list.name;
-		/*    var arr = str.split(" ");
-		    // arr.filter(keyword => keyword.includes(keyword),length > 2);  
-		    for (var i=0;i<arr.length;i++){
-			  if(arr[i].includes(keyword)){
-				keyword = arr[i];
-			  }
-		    }  */
-		},
-		error: function() {
-			debugger;
-			alert("Service Error. Pleasy try again later.");
-		}
-	});
-		
-});
-function clearResultList(){
-	$("#searchResultUl").children().toArray().forEach(function(value,index,array){
-		var incFlag = $(value).attr('class').includes("dumyLi");
-		if(!incFlag){
-			$(value).remove();
-		}
-	})
-}
-function showResultForLikeSearch(result){
-	var list = result.data.list;
-	for(var i = 0; i< list.length; i++){
-		var el = $(".dumyLi").clone().removeClass("dumyLi");
-		var link = el.find("a");
-		link.text(list[i].name);
-		$(".dumyLi").before(el);
-	}
-	$("#searchResultUl").show();
-	appendToSearchBar($("#searchResultUl"));
-}
-function appendToSearchBar(el){
-	debugger;
-	var searchBar = $("#searchKeyword");//jquery object
-	//var searchBar = document.getElementById("keyword");//dom
-	var rect = searchBar[0].getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
-	console.log(rect.top,rect.right,rect.bottom,rect.left);
-	var sbHeight = searchBar.height();
-	el.css({top: rect.top + sbHeight,left: rect.left,position:'absolute'});//相对定位relative  绝对定位absolute
-	}
-$("#searchResultUl").mousemove(function(){
-	MouseOnSearchResultUl = true;
-});
-$("#searchResultUl").mouseleave(function(){
-	MouseOnSearchResultUl = false;
-})
+    function _filter(row) {
+      var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    }
+ 
+    return {
+      init: function() {
+        var inputs = document.getElementsByClassName('light-table-filter');
+        Arr.forEach.call(inputs, function(input) {
+          input.oninput = _onInputEvent;
+        });
+      }
+    };
+  })(Array.prototype);
+ 
+  document.addEventListener('readystatechange', function() {
+    if (document.readyState === 'complete') {
+      LightTableFilter.init();
+    }
+  });
+ 
+})(document);
   
   //2021/05/24 modal test
 $(function(){
