@@ -9,6 +9,7 @@
 package ltd.newbee.mall.service;
 
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
@@ -113,13 +114,13 @@ public interface NewBeeMallGoodsService {
     // get max id of SearchHistory added by coca 2021/05/10 
     Long getMaxShId(Long userId);
     
-    // added by coca 2021/05/11 TableSaleリストを取得
+    // added by coca 2021/05/28 TableSaleリストを取得
     List<TableSale> getTableSale(Long goodsId);
-    // added by coca 2021/05/11 GoodsSaleリストを取得
-    List<GoodsSale> getGoodsSale(Long id);
+    // added by coca 2021/05/28 GoodsSaleリストを取得
+    List<GoodsSale> getGoodsSale();
     // added by coca 2021/05/11 GoodsCouponリストを取得
     List<GoodsCoupon> getGoodsCoupon(Long couponId);
-    // added by coca 2021/05/11 TableCategoryリストを取得
+    // added by coca 2021/05/28 TableCategoryリストを取得
     List<TableCategory> getTableCategory(Long categoryId);
     //adding TableSale insert added by coca 2021/05/12
     int InsertTableSale(TableSale tSRecord);
@@ -137,4 +138,8 @@ public interface NewBeeMallGoodsService {
     
     // get max id of qa added by coca 2021/05/24
     Long getMaxGsId();
+    
+    //キャンペーンの抽出 added by coca 2021/05/28
+    List<TableCategory> getGsTcList(Long id);
+    List<TableSale> getGsTsList(Long id);
 }

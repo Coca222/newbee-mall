@@ -210,16 +210,16 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     	
 	}
 
-	// added by coca 2021/05/11 TableSaleリストを取得
+	// added by coca 2021/05/28 TableSaleリストを取得
 	@Override
 	public List<TableSale> getTableSale(Long goodsId) {
 		List<TableSale> tSlist =goodsMapper.getTableSale(goodsId);
 		return tSlist;
 	}
-	// added by coca 2021/05/11 GoodsSaleリストを取得
+	// added by coca 2021/05/28 GoodsSaleリストを取得
 	@Override
-	public List<GoodsSale> getGoodsSale(Long id) {
-		List<GoodsSale> gSlist =goodsMapper.getGoodsSale(id);
+	public List<GoodsSale> getGoodsSale() {
+		List<GoodsSale> gSlist =goodsMapper.getNewGoodsSale();
 		return gSlist;
 	}
 	 // added by coca 2021/05/11 GoodsCouponリストを取得
@@ -228,7 +228,7 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		List<GoodsCoupon> gClist =goodsMapper.getGoodsCoupon(couponId);
 		return gClist;
 	}
-	// added by coca 2021/05/11 TableCategoryリストを取得
+	// added by coca 2021/05/28 TableCategoryリストを取得
 	@Override
 	public List<TableCategory> getTableCategory(Long categoryId) {
 		List<TableCategory> tClist =goodsMapper.getTableCategory(categoryId);
@@ -283,6 +283,18 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     	} else {
     		return 1L;
     	}
+	}
+	 //キャンペーンの抽出 added by coca 2021/05/28
+	@Override
+	public List<TableCategory> getGsTcList(Long id) {
+		List<TableCategory> tcList =goodsMapper.getGsTc(id);
+		return tcList;
+	}
+	 //キャンペーンの抽出 added by coca 2021/05/28
+	@Override
+	public List<TableSale> getGsTsList(Long id) {
+		List<TableSale> tsList =goodsMapper.getGsTs(id);
+		return tsList;
 	}
 
 }

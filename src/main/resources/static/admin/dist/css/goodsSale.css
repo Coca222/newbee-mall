@@ -15,15 +15,16 @@
 	float:right; 
 	
 }
-#searchKeyword{
+#searchKeyword,#dBKeyword{
 	height:38px;
 }
-#search{
+#search,#dBsearch{
 	border: 2px solid rgb(0, 0, 255);
 	background-color: #17a2b8;
 	border-color: #17a2b8;
 	color: #fff;
 	height:38px;
+	margin-right: 8px;
 }
 
 #all {

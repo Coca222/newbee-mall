@@ -56,4 +56,6 @@ public interface NewBeeMallCategoryService {
      * @return
      */
     List<GoodsCategory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, int categoryLevel);
+    // get categoryId added by coca 2021/05/28
+    List<GoodsCategory> selectByLevelAndParentIdsAndCategoryId(Long categoryId, int categoryLevel);
 }

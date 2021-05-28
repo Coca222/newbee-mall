@@ -558,22 +558,21 @@
    <!--  table_sale xml added by coca 2021/05/11 -->
     <select id="getTableSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableSale">
       select id, goods_id, start_date, end_date from table_sale
-      where id = #{id,jdbcType=BIGINT}
+      goods_id = #{goodsId,jdbcType=BIGINT}
   </select> 
     <!--  goods_sale xml added by coca 2021/05/11 -->
     <select id="getGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
-      select id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag from goods_sale
-      where id = #{id,jdbcType=BIGINT}
+      select id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag from goods_sale    
   </select> 
     <!--  GoodsCoupon xml added by coca 2021/05/11 -->
     <select id="getGoodsCoupon" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsCoupon">
       select coupon_id, coupon_name, flag, start_date, end_date from goods_coupon
       where coupon_id = #{couponId,jdbcType=BIGINT}
   </select> 
-     <!--  GoodsCategory xml added by coca 2021/05/11 -->
+     <!--  GoodsCategory xml added by coca 2021/05/28 -->
     <select id="getTableCategory" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableCategory">
       select id, category_id, start_date, end_date table_category
-      where id = #{id,jdbcType=BIGINT}
+      where category_id = #{categoryId,jdbcType=BIGINT}
   </select> 
   <!--  insert table_sale xml added by coca 2021/05/11 -->
   <insert id="InsertTableSale" parameterType="java.lang.Long">
@@ -790,5 +789,16 @@
     <!-- adding count added by coca 2021/04/24 -->
    <select id="findGoodsSaleCount" parameterType="Map" resultType="int">
       select count(*) from goods_sale
-  </select> 
+  </select>
+  <!-- キャンペーンの抽出 added by coca 2021/05/28 -->
+   <select id="getGsTc" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableCategory">
+ 	  select g.id, g.name, g.startDate, g.endDate, g.campaign, g.content1, g.content2, g.content3, g.content4, g.content5, g.flag
+      g.flag, c.id, c.categoryId, c.startDate, c.endDate from goods_sale as g join tb_category as c on g.id = c.id 
+      where g.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getGsTs" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableSale">
+ 	  select g.id, g.name, g.startDate, g.endDate, g.campaign, g.content1, g.content2, g.content3, g.content4, g.content5, g.flag
+      g.flag, s.id, s.goodsId, s.startDate, s.endDate from goods_sale as g join tb_sale as s on g.id = s.id
+      where g.id = #{id,jdbcType=BIGINT}
+  </select>
 </mapper>

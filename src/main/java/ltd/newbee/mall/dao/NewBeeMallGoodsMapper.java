@@ -85,13 +85,13 @@ public interface NewBeeMallGoodsMapper {
        // get max id of SearchHistory added by coca 2021/05/10
      Long getMaxShId(Long userId);
      
- 	// added by coca 2021/05/11 TableSaleリストを取得
+ 	// added by coca 2021/05/28 TableSaleリストを取得
      List<TableSale> getTableSale(Long goodsId);
-    // added by coca 2021/05/11 GoodsSaleリストを取得
-     List<GoodsSale> getGoodsSale(Long id);
+    // added by coca 2021/05/28 GoodsSaleリストを取得
+     List<GoodsSale> getNewGoodsSale();
     // added by coca 2021/05/11 GoodsCouponリストを取得
      List<GoodsCoupon> getGoodsCoupon(Long couponId);
-    // added by coca 2021/05/11 TableCategoryリストを取得
+    // added by coca 2021/05/28 TableCategoryリストを取得
      List<TableCategory> getTableCategory(Long categoryId);
      //adding TableSale insert added by coca 2021/05/12
      int InsertTableSale(TableSale tSRecord);
@@ -108,6 +108,9 @@ public interface NewBeeMallGoodsMapper {
      // Adding Mapper to achieve paging added by coca 2021/05/15
      List<GoodsSale> findGoodsSalePagingBySearch(PageQueryUtil pageUtil);
      int findGoodsSaleCount(PageQueryUtil pageUtil);   
-  // get max id of qa added by coca 2021/05/24
+     // get max id of qa added by coca 2021/05/24
      Long findMaxGsId();
+     //キャンペーンの抽出 added by coca 2021/05/28
+     List<TableCategory> getGsTc(Long id);
+     List<TableSale> getGsTs(Long id);
 }

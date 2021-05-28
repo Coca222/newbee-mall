@@ -209,4 +209,18 @@
       update_user = #{updateUser,jdbcType=INTEGER}
     where category_id = #{categoryId,jdbcType=BIGINT}
   </update>
+   <!-- add categoryId by coca 2021/05/28 -->
+      <select id="selectByLevelAndParentIdsAndCategoryId" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_newbee_mall_goods_category
+        <where>
+            <if test="categoryId!=null and categoryId!=''">
+                and parent_id = #{categoryId}
+            </if>
+            <if test="categoryLevel!=null and categoryLevel!=''">
+                and category_level = #{categoryLevel}
+            </if>         
+       </where>
+    </select>
 </mapper>

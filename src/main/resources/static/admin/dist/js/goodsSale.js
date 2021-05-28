@@ -93,6 +93,49 @@ $('#download').on('click', function(){
              .show();
      })
  })
+ 
+//to add DB filter by coca 2021/05/27
+  $('#dBsearch').on('click', function() {
+    var keyword=$("#dBKeyword").val();
+	var data ={
+		"keyword": keyword,
+	          };  
+        $.ajax({
+            type: 'POST',//方法类型
+            url: "/goodsSale/searchDbKeyword",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+			//サーバーが成功した場合
+                if (result.resultCode == 200) {
+	            /*swal("質問ご登録ありがとうございました", {
+                        icon: "success",
+                    });    */
+                    
+               var list =result.list;             
+             /*  arr.filter(keyword=> keyword.includes(keyword));*/
+             for (var i=0;i<list.length;i++){
+				var str = list[i].goodsName;
+				var arr = [];
+               	arr.add(str);
+     			if(arr[i].includes(keyword)){
+    			keyword = arr[i];   
+							}
+						}
+                } else {
+                    swal(result.message, {
+                        icon: "error",
+                    });
+                }
+                ;
+            },
+            error: function () {
+                swal("操作失败", {
+                    icon: "error",
+                });
+            }
+        })
+     })
   
   //2021/05/24 modal test
 $(function(){

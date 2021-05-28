@@ -10,6 +10,7 @@ package ltd.newbee.mall.controller.common;
 
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.controller.vo.GoodsQAVO;
+import ltd.newbee.mall.entity.Download;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
@@ -193,10 +194,10 @@ public class UploadController {
     /* add test download added by coca 2021/05/14 */
     @RequestMapping(value = "/downloadFile/post", method = RequestMethod.POST)
     @ResponseBody
-    public Result downloadFile (@RequestBody Integer[] ids,@RequestBody String format) {
+    public Result downloadFile (@RequestBody Download download) {
     	 
     			StringBuilder txCv = new StringBuilder();
-    			txCv.append("."+ format);
+    			txCv.append("."+ download.getFormat());
     			String test= "test" + txCv;
     		  	File f = new File(Constants.FILE_UPLOAD_DIC + test);
 				BufferedWriter bw=null;
@@ -205,7 +206,7 @@ public class UploadController {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				List<GoodsSale> gsList =newBeeMallGoodsService.dlGetGoodsSale(ids);
+				List<GoodsSale> gsList =newBeeMallGoodsService.dlGetGoodsSale(download.getIds());
 	    	        for(int i = 0; i < gsList.size();i++) {
 	    	        	 GoodsSale gs=gsList.get(i);
 	    	        	if(gs != null) {

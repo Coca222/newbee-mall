@@ -43,6 +43,15 @@
                         </p>
                     </a>
                 </li>
+                <!--add GoodsSale by coca 2021/05/27-->
+                 <li class="nav-item">
+                    <a th:href="@{/admin/category}" th:class="${path}=='goods-category'?'nav-link active':'nav-link'">
+                        <i class="nav-icon fa fa-plus"></i>
+                        <p>
+                            Category
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-header">首页配置</li>
                 <li class="nav-item">
                     <a th:href="@{/admin/carousels}"
