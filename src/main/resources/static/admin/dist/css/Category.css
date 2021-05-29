@@ -11,24 +11,39 @@
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
 
-#area{
-	height:36px;
-	font-size: 16px;
-	float:left;
-}
-#character{
-	font-size: 16px;
-}
-.dumyLi{
-	display:none;
+.button1 {
+	 -webkit-transition-duration: 0.8s;
+	 transition-duration: 0.8s;
+	 padding: 1px 1px;
+	 text-align: center;
+	 background-color: white;
+	 color: black;
+	 border-radius:5px;
+ }
+ .button1:hover {
+	 background-color: #4CAF50;
+	 color: white;
+ }
+ .dumyLi{
+    display:none;
 }
 #searchResultUl{
-	display:none;
-	z-index:1000;
-	border: 1px solid #c5c5c5;
-	overflow-x: hidden;
-	overflow-y: auto;
-	max-height: 360px;
-	background-color: #fff;
-	width:362px;
-	}
+    display:none;
+    z-index:1000;
+    border: 1px solid #c5c5c5;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 360px;
+    background-color: #fff;
+    width: 40%;
+}
+.order-table{
+	width: 61.5%;
+}
+.fontSize{
+	font-size: 20px;
+}
+#inputGroupSelect05{
+	width: 25%;
+}
+

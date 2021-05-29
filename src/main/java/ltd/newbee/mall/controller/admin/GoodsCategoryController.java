@@ -8,12 +8,13 @@
  */
 package ltd.newbee.mall.controller.admin;
 
-import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsSale;
-import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.TableCategory;
+import ltd.newbee.mall.entity.TableSale;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -26,10 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author 13
@@ -39,14 +37,14 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/admin")
-public class CategoryController {
+public class GoodsCategoryController {
 
-    @Resource
-    private NewBeeMallGoodsService newBeeMallGoodsService;
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
+    @Resource
+    private NewBeeMallGoodsService newBeeMallGoodsService;
 
-    @GetMapping({ "/tableCategory", "/Category.html" })
+    @GetMapping({ "/goodsCategory", "/goodsCategory.html" })
     public String firstLevel(HttpServletRequest request) {
      request.setAttribute("path", "edit");
      // 查询所有的一级分类
@@ -56,8 +54,19 @@ public class CategoryController {
      request.setAttribute("goodsSaleList", goodsSaleList);
      request.setAttribute("firstLevelCategories", firstLevelCategories);
      request.setAttribute("path", "goods-edit");
-     return "admin/Category";
+     //Boolean firstLevelCategory = newBeeMallCategoryService.selectFirstLevelCategoryId();
+     return "admin/goodsCategory";
     }
-
-
+    
+	
+//	  @RequestMapping(value = "/goodsSaleCategory", method = RequestMethod.POST)
+//	  
+//	  @ResponseBody public Result selectByLevelAndParentIdsAndCategoryId(@RequestBody Long categoryId){
+//	  
+//	  List<GoodsCategory> gcList=newBeeMallCategoryService.selectByLevelAndParentIdsAndCategoryId(categoryId);
+//	  List<TableCategory> tcList= newBeeMallGoodsService.getTableCategory(categoryId);
+//	  
+//	  
+//	  return ResultGenerator.genSuccessResult(gcList); }
+	 
 }

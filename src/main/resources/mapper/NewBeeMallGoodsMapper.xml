@@ -560,8 +560,8 @@
       select id, goods_id, start_date, end_date from table_sale
       goods_id = #{goodsId,jdbcType=BIGINT}
   </select> 
-    <!--  goods_sale xml added by coca 2021/05/11 -->
-    <select id="getGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
+    <!--  goods_sale xml added by coca 2021/05/29 -->
+    <select id="getNewGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
       select id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag from goods_sale    
   </select> 
     <!--  GoodsCoupon xml added by coca 2021/05/11 -->

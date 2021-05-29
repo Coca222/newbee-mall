@@ -166,8 +166,10 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
     }
 
 	@Override
-	public List<GoodsCategory> selectByLevelAndParentIdsAndCategoryId(Long categoryId, int categoryLevel) {
-		  
-		return goodsCategoryMapper.selectByLevelAndParentIdsAndCategoryId(categoryId, categoryLevel);
+	public Boolean selectFirstLevelCategoryId() {
+		// TODO Auto-generated method stub
+		return goodsCategoryMapper.selectFirstLevelCategoryId();
 	}
+
+
 }

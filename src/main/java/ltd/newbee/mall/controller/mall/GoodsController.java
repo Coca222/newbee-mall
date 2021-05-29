@@ -286,16 +286,17 @@ public class GoodsController {
 	  
 	  NewBeeMallGoods goods1= new NewBeeMallGoods(); 
 	  goods1.setGoodsId(10700L);
-	  goods1.setGoodsName("iphone12"); 
+	  goods1.setGoodsName("家电"); 
 	  list.add(goods1);
 	  
+		
 	  NewBeeMallGoods goods2= new NewBeeMallGoods(); 
 	  goods2.setGoodsId(10701L);
-	  goods2.setGoodsName("iphone10"); 
-	  list.add(goods2);
+	  goods2.setGoodsName("数码"); list.add(goods2);
+		 
 	  
 	  NewBeeMallGoods goods3= new NewBeeMallGoods(); goods3.setGoodsId(10702L);
-	  goods3.setGoodsName("iphone4s"); 
+	  goods3.setGoodsName("手机"); 
 	  list.add(goods3);
 	  
 	  
