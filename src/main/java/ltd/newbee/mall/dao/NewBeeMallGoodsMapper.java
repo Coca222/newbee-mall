@@ -21,6 +21,7 @@ import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
 
@@ -61,7 +62,7 @@ public interface NewBeeMallGoodsMapper {
         // added by coca 2021/04/16　レビューリストを取得
      List<GoodsReview> getRevList(Long goodsId);
      	// added by coca 2021/04/16 QAリストを取得
-     List<GoodsQa> getGoodsQaList(Long goodsId);
+     List<GoodsQa> getGoodsQaList(Long categoryId);
      	// added by coca 2021/04/16 説明を取得
      GoodsDesc getGoodsDesc(Long goodsId);
         // Adding Mapper to achieve paging added by coca 2021/04/23
@@ -113,4 +114,15 @@ public interface NewBeeMallGoodsMapper {
      //キャンペーンの抽出 added by coca 2021/05/28
      List<TableCategory> getGsTc(Long id);
      List<TableSale> getGsTs(Long id);
+     // add delete  for tc by coca 2021/05/30
+     int deleteByTcPrimaryKey(Long id);
+     // to achieve insert tc record added by coca 2021/06/01
+     Long findMaxTcId(Long id);
+     List<GoodsSale> getGoodsSaleList(Long id); 
+  // to achieve insert cs record added by coca 2021/06/02
+     int insertCampaignSent (campaignSet csRecord);
+     Long findMaxCsId(Long id);
+     // giveaway added by coca 2021/06/03
+     List<NewBeeMallGoods> findByGoodsId(Long goodsId);
+     List<NewBeeMallGoods> findBygoodsCategoryId(Long goodsCategoryId);
 }

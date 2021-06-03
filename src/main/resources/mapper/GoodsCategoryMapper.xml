@@ -210,9 +210,9 @@
     where category_id = #{categoryId,jdbcType=BIGINT}
   </update>
    <!-- add categoryId by coca 2021/05/28 -->
-      <select id="selectFirstLevelCategoryId" parameterType="Map" resultMap="BaseResultMap">
+      <select id="selectFirstLevelCategoryId" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TcJoinCategory">
         select
-        <include refid="Base_Column_List"/>
-        from tb_newbee_mall_goods_category where parent_id = 0 
+        c.category_id, c.parent_id, c.category_name, tc.id, tc.category_id, tc.start_date, tc.end_date from tb_newbee_mall_goods_category as c 
+        left join table_category as tc on c.category_id = tc.category_id where parent_id = 0 
     </select>
 </mapper>

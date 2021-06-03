@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class GoodsCategory {
+public class GoodsCategory { 
     private Long categoryId;
 
     private Byte categoryLevel;

@@ -24,6 +24,7 @@ import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -252,11 +253,16 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		int gCCount = goodsMapper.InsertGoodsCoupon(gCRecord);
     	return gCCount;
 	}
-	//adding TableSale insert added by coca 2021/05/12
+	//adding TableSale insert added by coca 2021/06/01
 	@Override
-	public int InsertTableCategory(TableCategory tCRecord) {
-		int tCCount = goodsMapper.InsertTableCategory(tCRecord);
-    	return tCCount;
+	public Boolean InsertTableCategory(TableCategory tCRecord) {
+		List<GoodsSale> gSlist =goodsMapper.getGoodsSaleList(tCRecord.getId());
+		if(tCRecord.getStartDate().compareTo(gSlist.get(0).getStartDate())>=0
+				&& tCRecord.getEndDate().compareTo(gSlist.get(0).getEndDate())<=0) {
+			return true;
+		} 			 
+		
+    	return false;
 	}
 
 	//adding download csv file added by coca 2021/05/14
@@ -295,6 +301,58 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	public List<TableSale> getGsTsList(Long id) {
 		List<TableSale> tsList =goodsMapper.getGsTs(id);
 		return tsList;
+	}
+
+	@Override
+	public Boolean deleteByTcPrimaryKey(Long categoryId) {
+		// TODO Auto-generated method stub
+		return goodsMapper.deleteByTcPrimaryKey(categoryId)>0;
+	}
+
+	@Override
+	public Long GetMaxTcId(Long id) {
+		Long maxTcId = goodsMapper.findMaxTcId(id);
+    	if (maxTcId != null) {
+    		return maxTcId + 1;	
+    	} else {
+    		return 1L;
+    	}
+	}
+
+	@Override
+	public List<GoodsSale> findGoodsSaleList(Long id) {
+		List<GoodsSale> gSlist =goodsMapper.getGoodsSaleList(id);
+		return gSlist;
+	}
+
+	@Override
+	public int getInsertCampaignSent(campaignSet csRecord) {
+		int cSCount = goodsMapper.insertCampaignSent(csRecord);
+    	return cSCount;
+	}
+
+	@Override
+	public Long getFindMaxCsId(Long id) {
+		Long maxCsId = goodsMapper.findMaxCsId(id);
+    	if (maxCsId != null) {
+    		return maxCsId + 1;	
+    	} else {
+    		return 1L;
+    	}
+    	
+	}
+
+	@Override
+	public int insertTableCategory(TableCategory tCRecord) {
+		int tC = goodsMapper.InsertTableCategory(tCRecord);
+    	return tC;
+	}
+
+	@Override
+	public List<NewBeeMallGoods> findListByGoodsId(Long goodsId) {
+		List<NewBeeMallGoods> gdlist =goodsMapper.findByGoodsId(goodsId);
+		List<NewBeeMallGoods> cdlist =goodsMapper.findBygoodsCategoryId(gdlist.get(0).getGoodsCategoryId());
+		return cdlist;
 	}
 
 }

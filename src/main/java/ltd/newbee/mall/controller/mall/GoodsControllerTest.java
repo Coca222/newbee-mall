@@ -22,6 +22,8 @@ import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.TcJoinCategory;
+import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
@@ -29,7 +31,8 @@ import ltd.newbee.mall.util.PageResult;
 class GoodsControllerTest {
 @Resource
 private NewBeeMallGoodsService newBeeMallGoodsService;
-
+@Resource
+private NewBeeMallCategoryService newBeeMallCategoryService;
     @Test public void testGoodsImage() {
   long num =10700L;
    List<GoodsImage> list =newBeeMallGoodsService.getGoodsImageEntityByGoodsId(num); 
@@ -269,4 +272,14 @@ private NewBeeMallGoodsService newBeeMallGoodsService;
 //    	assertEquals("2021-05-30",endDate2);
     	assertEquals("2021-12-30",endDate3);
   }
+  
+  @Test public void testGoodsSale() {
+	  List<GoodsSale> goodsSaleList = newBeeMallGoodsService.getGoodsSale(); 
+	  GoodsSale goodsSale =goodsSaleList.get(0); 
+	   		String name = goodsSale.getName();
+	        assertEquals("夏季大甩卖",name);
+	        Long categoryId= 16L;
+	  List<TcJoinCategory> tcJoinCategory = newBeeMallCategoryService.selectByFirstLevelCategoryId(categoryId);
+	  assertEquals("女装 男装 穿搭",tcJoinCategory.get(0).getCategoryName());
+	   }
 }

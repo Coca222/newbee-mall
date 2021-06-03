@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace="admin/header::header-fragment"></header>
-<link rel="stylesheet" th:href="@{/admin/dist/css/Category.css}">
+<link rel="stylesheet" th:href="@{/admin/dist/css/goodsCategory.css}">
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
@@ -27,34 +27,34 @@
                     <div class="card-body">
                                                                
                           <div class="campaignTable">
-	                       <table class="order-table" id="table" border="1">	                        
+	                       <table class="order-table" id="table" >	                        
 							<tbody>
-							           <th:block th:unless="${#lists.isEmpty(firstLevelCategories)}">
-							            <th:block th:each="c : ${firstLevelCategories}">
+							           <th:block th:unless="${#lists.isEmpty(tcJoinCategory)}">
+              							<th:block th:each="c : ${tcJoinCategory}">
 							           <tr>
 							            <td id="height">
-							             <select class="custom-select" id="inputGroupSelect04">
-							             <th:block th:unless="${#lists.isEmpty(goodsSaleList)}">
-							              <th:block th:each="gs : ${goodsSaleList}">
-							              <option value="selected">Choose...</option>
-							              <option value="gs.id"> <th:block th:text="${gs.name}"></option>
-							               </th:block>
-							            </th:block>
-							             </select>
+							             <select class="custom-select1" id="inputGroupSelect04">
+							            <option th:each="gs : ${goodsSaleList}"
+							                      th:text="${gs.name}"
+							                      th:value="${gs.id}"
+							                      th:selected="${gs.id == c.id} ? true:false" > 
+							             </option>
+							            </select>
 							               </td>
 							            <td class="fontSize">&nbsp;
-							             <input type="checkbox" th:value="${c.categoryId}"
-							             th:text="${c.categoryName}"/>
-							             &nbsp;&nbsp;開始日:
-										<input type="date">
-										 &nbsp;&nbsp;終了日:	
-										 <input type="date">						             							            						              							             												
-							             <button class="button1" id="plus">➕</button>
+							             <input class="check" type="checkbox" th:value="${c.categoryId}" th:checked="${c.id} !=null? true:false"　th:text="${c.categoryName}"/>
+							          <span class="startDate">開始日
+										  <input type="date" id="date1" th:value="${#dates.format(c.startDate,'yyyy-MM-dd')}">
+									  </span>
+									  <span class="endDate">終了日
+										  <input type="date" id="date2" th:value="${#dates.format(c.endDate,'yyyy-MM-dd')}">
+									  </span>					             							            						              							             												
+							             <button class="button1" id="plus" th:if="${c.id}">➕</button>
 							            </td>
 							           </tr>
 							           </th:block>
-							           </th:block>
-							</tbody>
+							           </th:block>						
+							</tbody>						
 							</table>
 						</div>
 	                   	                                                                                                      
@@ -62,6 +62,11 @@
                 </div>
             </div><!-- /.container-fluid -->
         </div>
+        <div class="col-1">
+            	 <button class="giveaway" id="giveawayBtn" >
+            	 	<i class="fa fa-plus"></i>&nbsp; Giveaway
+             	</button>
+		</div>
          <!--add goods sale serachhitory by coca 2021/05/28-->
     <ul id="searchResultUl">
 		<li class="dumyLi" searchLi>
@@ -70,7 +75,7 @@
 			<option value="txt">换季大促销(40%)</option>
 			<option value="csv">换季大促销(40%)</option>
 		</select>
-		<input type="checkbox" />
+		<input id="check1" type="check1" />
 			<a>
 			link
 		</a> 
@@ -82,7 +87,53 @@
 	</li>
 </ul>
      <!-- /.content-wrapper -->
-    </div>        
+    </div>       		
+                <!-- modal added by coca 2021/05/22 -->
+			 <div id="modal-main">モーダルウィンドウ
+			<!--<div class="button open">OPEN</div>-->
+			<!--<div class="modal">-->
+			<div class="modal" id="campaignSentModal" tabindex="-1" role="dialog" aria-labelledby="campaignSentModalLabel">
+			 <div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+			    aria-hidden="true">&times;</span></button>
+			  <h6 class="modal-title" id="categoryModalLabel">Modal</h6>
+			 </div>
+			
+			 <div class="modal_bg"> </div>
+			 <div class="modal_window" id="campaignSentModal">
+			  <h3>Giveaway</h3>	
+			<!--  <div class="form-group">
+			   <label for="id" class="control-label">id</label>
+			   <input type="text" class="form-control" id="campaigSentId" name="id"
+			    placeholder="idを入力してください" required="true">
+			  </div>-->		
+			  <div class="form-group">
+			   <label for="primaryGoodsId" class="control-label">primaryGoodsId</label>
+			   <input type="text" class="form-control" id="campaigSentPGid" name="primaryGoodsId"
+			    placeholder="primaryGoodsIdを入力してください" required="true">
+			  </div>
+			
+			 <!-- <div class="form-group">
+			   <label for="subGoodsId" class="control-label">subGoodsId</label>
+			   <input type="text" class="form-control" id="campaigSentSGid" name="subGoodsId"
+			    placeholder="subGoodsIdを入力してください" required="true">
+			  </div>-->
+			  <div class="form-group">
+			   <label for="subGoodsId" class="control-label">赠送商品</label>
+			    <select class="custom-select" id="subGoodsId">
+		          <option "selected">Choose...</option>
+		           <option value="">充电器</option>
+		            <option value=""> 耳机</option>		      				            
+            	 </select>
+			  </div>
+			  <div class="modal-footer">
+			   <button type="button" class="btn btn-default" id="cancell">キャンセル</button>
+			   <button type="button" class="btn btn-primary" id="saveSaleButton">確認</button>
+			  </div>
+			  <!-- <div class="button close">CLOSE</div>-->
+			 </div>
+			</div>
+			</div>    
     <!-- 引入页脚footer-fragment -->
     <div th:replace="admin/footer::footer-fragment"></div>
 </div>
@@ -100,5 +151,5 @@
 <!-- wangEditor -->
 <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<script th:src="@{/admin/dist/js/Category.js}"></script>
+<script th:src="@{/admin/dist/js/goodsCategory.js}"></script>
 </html>

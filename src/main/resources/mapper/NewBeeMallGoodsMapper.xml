@@ -760,6 +760,10 @@
          
             </trim>
     </insert>
+   <!-- to achieve insert tc record added by coca 2021/06/01 -->
+    <select id="findMaxTcId" parameterType="java.lang.Long" resultType= "java.lang.Long">      
+	    select max(id) from table_category         
+	</select>
       <!-- add download goods_sale xml added by coca 2021/05/14 -->
     <select id="dlGetGoodsSale" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
       select id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag from goods_sale
@@ -793,7 +797,7 @@
   <!-- キャンペーンの抽出 added by coca 2021/05/28 -->
    <select id="getGsTc" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableCategory">
  	  select g.id, g.name, g.startDate, g.endDate, g.campaign, g.content1, g.content2, g.content3, g.content4, g.content5, g.flag
-      g.flag, c.id, c.categoryId, c.startDate, c.endDate from goods_sale as g join tb_category as c on g.id = c.id 
+      g.flag, c.id, c.category_id, c.start_date, c.end_date from goods_sale as g join tableb_category as c on g.id = c.id 
       where g.id = #{id,jdbcType=BIGINT}
   </select>
   <select id="getGsTs" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TableSale">
@@ -801,4 +805,83 @@
       g.flag, s.id, s.goodsId, s.startDate, s.endDate from goods_sale as g join tb_sale as s on g.id = s.id
       where g.id = #{id,jdbcType=BIGINT}
   </select>
+  <!--   add delete  for tc by coca 2021/05/30 -->
+  <delete id="deleteByTcPrimaryKey" parameterType="java.lang.Long">
+    delete from table_category
+    where category_id = #{categoryId,jdbcType=BIGINT}
+  </delete>
+  <select id="getGoodsSaleList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsSale">
+      select id, name, start_date, end_date, campaign, content1, content2, content3, content4, content5, flag from goods_sale
+      where id = #{id,jdbcType=BIGINT}   
+  </select>
+       <!--insert  GoodsCategory xml added by coca 2021/06/02 -->
+     <insert id="insertCampaignSent" parameterType="java.lang.Long">
+        insert into campaign_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="campaignId != null">
+                campaign_id,
+            </if>
+            <if test="primaryGoodsId != null">
+                primary_goods_id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+             <if test="subGoodsId != null">
+                sub_goods_id,
+            </if>
+             <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="campaignId != null">
+                #{campaignId,jdbcType=BIGINT},
+            </if>
+             <if test="primaryGoodsId != null">
+                #{primaryGoodsId,jdbcType=BIGINT},
+            </if>
+             <if test="categoryId != null">
+                #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="subGoodsId != null">
+                #{subGoodsId,jdbcType=BIGINT},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+         
+            </trim>
+    </insert>
+    <select id="findMaxCsId" parameterType="java.lang.Long" resultType= "java.lang.Long">      
+	    select max(id) from campaign_set         
+	</select>
+	<!-- added by coca 2021/06/03 -->
+	<select id="findByGoodsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from tb_newbee_mall_goods_info
+        where goods_id = #{goodsId,jdbcType=BIGINT}
+    </select>
+    <select id="findBygoodsCategoryId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+
+        from tb_newbee_mall_goods_info
+        where goods_category_id = #{goodsCategoryId,jdbcType=BIGINT}
+    </select>
 </mapper>

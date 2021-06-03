@@ -22,6 +22,7 @@ import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
 import ltd.newbee.mall.util.Result;
@@ -129,8 +130,8 @@ public interface NewBeeMallGoodsService {
     //adding GoodsCoupon insert added by coca 2021/05/12
     int InsertGoodsCoupon(GoodsCoupon gCRecord);
     //adding TableCategory insert added by coca 2021/05/12
-    int InsertTableCategory(TableCategory tCRecord);
-    
+    Boolean InsertTableCategory(TableCategory tCRecord);
+    int insertTableCategory(TableCategory tCRecord);
     //adding download csv file added by coca 2021/05/14
     List<GoodsSale> dlGetGoodsSale(Integer[] ids);
     //adding Service to achieve goods sale paging added by coca 2021/05/16
@@ -142,4 +143,15 @@ public interface NewBeeMallGoodsService {
     //キャンペーンの抽出 added by coca 2021/05/28
     List<TableCategory> getGsTcList(Long id);
     List<TableSale> getGsTsList(Long id);
+    // add delete  for tc by coca 2021/05/30   
+    Boolean deleteByTcPrimaryKey(Long categoryId);
+    // to achieve insert tc record added by coca 2021/06/01
+    Long GetMaxTcId(Long id);
+    List<GoodsSale> findGoodsSaleList(Long id);
+    // to achieve insert cs record added by coca 2021/06/02
+    int getInsertCampaignSent (campaignSet csRecord);
+    Long getFindMaxCsId(Long id);
+   
+    // giveaway added by coca 2021/06/03
+    List<NewBeeMallGoods> findListByGoodsId(Long goodsId);
 }

@@ -8,13 +8,19 @@
  */
 package ltd.newbee.mall.controller.admin;
 
+import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
+import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.entity.GoodsCategory;
+import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.TcJoinCategory;
+import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -27,6 +33,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import java.util.*;
 
 /**
@@ -45,28 +53,80 @@ public class GoodsCategoryController {
     private NewBeeMallGoodsService newBeeMallGoodsService;
 
     @GetMapping({ "/goodsCategory", "/goodsCategory.html" })
-    public String firstLevel(HttpServletRequest request) {
-     request.setAttribute("path", "edit");
+    public String firstLevel(HttpServletRequest request,Long categoryId) {
      // 查询所有的一级分类
-     List<GoodsCategory> firstLevelCategories = newBeeMallCategoryService.selectByLevelAndParentIdsAndNumber(
-       Collections.singletonList(0L), NewBeeMallCategoryLevelEnum.LEVEL_ONE.getLevel());
+     List<TcJoinCategory> tcJoinCategory = newBeeMallCategoryService.selectByFirstLevelCategoryId(categoryId);
      List<GoodsSale> goodsSaleList = newBeeMallGoodsService.getGoodsSale();
+   
+     
      request.setAttribute("goodsSaleList", goodsSaleList);
-     request.setAttribute("firstLevelCategories", firstLevelCategories);
-     request.setAttribute("path", "goods-edit");
-     //Boolean firstLevelCategory = newBeeMallCategoryService.selectFirstLevelCategoryId();
+     request.setAttribute("tcJoinCategory", tcJoinCategory);
+    
+     
+     
      return "admin/goodsCategory";
     }
     
-	
-//	  @RequestMapping(value = "/goodsSaleCategory", method = RequestMethod.POST)
-//	  
-//	  @ResponseBody public Result selectByLevelAndParentIdsAndCategoryId(@RequestBody Long categoryId){
-//	  
-//	  List<GoodsCategory> gcList=newBeeMallCategoryService.selectByLevelAndParentIdsAndCategoryId(categoryId);
-//	  List<TableCategory> tcList= newBeeMallGoodsService.getTableCategory(categoryId);
-//	  
-//	  
-//	  return ResultGenerator.genSuccessResult(gcList); }
-	 
+    //add delete TC record by coca 2021/05/30
+    @RequestMapping(value = "/deleteTableCategory", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteByTcPrimaryKey(@RequestBody Long categoryId) {
+        Boolean deleteResult = newBeeMallGoodsService.deleteByTcPrimaryKey(categoryId);
+        //删除成功
+        if (deleteResult) {
+            return ResultGenerator.genSuccessResult();
+        }
+        //删除失败
+        return ResultGenerator.genFailResult(ServiceResultEnum.OPERATE_ERROR.getResult());
+    }
+    
+    //to achieve insert tc record added by coca 2021/06/01
+    @RequestMapping(value = "/insertTc", method = RequestMethod.POST)
+    @ResponseBody
+    public Result InsertTableCategory(@RequestBody TableCategory tCRecord) {
+    	TableCategory list = new TableCategory();
+        Integer count = null;  
+        list.setId(tCRecord.getId());
+        list.setCategoryId(tCRecord.getCategoryId());
+        list.setStartDate(tCRecord.getStartDate());
+        list.setEndDate(tCRecord.getEndDate());
+        Boolean insertResult = newBeeMallGoodsService.InsertTableCategory(tCRecord);
+        if(insertResult) {
+        if(tCRecord != null) {
+            count = newBeeMallGoodsService.insertTableCategory(list);
+        }
+        if(!(count > 0)) {
+        return ResultGenerator.genFailResult("投稿失敗！");
+        }      
+        return ResultGenerator.genSuccessResult(count); 
+        }
+        return ResultGenerator.genFailResult("有効期限ではありません！");
+    }
+    
+ // adding insert paging added by coca 2021/06/02
+    @RequestMapping(value = "/insertCompaignSent", method = RequestMethod.POST)
+    @ResponseBody
+    public Result getInsertCampaignSent(@RequestBody campaignSet csRecord){
+		  Integer count = null;
+		  Long csId = newBeeMallGoodsService.getFindMaxCsId(csRecord.getId());
+		  csRecord.setId(csId);		
+		 // List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListByGoodsId(csRecord.getPrimaryGoodsId());
+		if(csRecord !=null) {
+			count=newBeeMallGoodsService.getInsertCampaignSent(csRecord);
+		}
+		if(!(count > 0))  {
+	        return ResultGenerator.genFailResult("投稿失敗！");
+	        }
+		return ResultGenerator.genSuccessResult(count);
+    }
+    
+ // adding giveaway paging added by coca 2021/06/02
+    @RequestMapping(value = "/giveawayCompaignSent", method = RequestMethod.POST)
+    @ResponseBody
+    public Result getGiveawayCompaignSent(@RequestBody Long goodsId){
+		 
+		 List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListByGoodsId(goodsId);
+		
+		return ResultGenerator.genSuccessResult(gdlist);
+    }
 }

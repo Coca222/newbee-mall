@@ -9,6 +9,7 @@
 package ltd.newbee.mall.dao;
 
 import ltd.newbee.mall.entity.GoodsCategory;
+import ltd.newbee.mall.entity.TcJoinCategory;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
 
@@ -37,5 +38,5 @@ public interface GoodsCategoryMapper {
 
     List<GoodsCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Long> parentIds, @Param("categoryLevel") int categoryLevel, @Param("number") int number);
     // get categoryId added by coca 2021/05/28
-    Boolean selectFirstLevelCategoryId();
+    List<TcJoinCategory> selectFirstLevelCategoryId(Long categoryId);
 }
