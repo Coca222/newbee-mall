@@ -173,6 +173,13 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
 		return tcList;
 	}
 
+	@Override
+	public List<TcJoinCategory> selectBySecondLevelCategoryId(Long categoryId) {
+		// TODO Auto-generated method stub
+		List<TcJoinCategory> tcsList = goodsCategoryMapper.selectSecondLevelCategoryId(categoryId);
+		return tcsList;
+	}
+
 	
 
 

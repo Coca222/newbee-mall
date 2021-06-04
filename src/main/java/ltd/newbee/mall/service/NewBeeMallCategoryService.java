@@ -59,4 +59,6 @@ public interface NewBeeMallCategoryService {
     List<GoodsCategory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, int categoryLevel);
     // get categoryId added by coca 2021/05/28
     List<TcJoinCategory> selectByFirstLevelCategoryId(Long categoryId);
+    // get categoryId added by coca 2021/06/04
+    List<TcJoinCategory> selectBySecondLevelCategoryId(Long categoryId);
 }

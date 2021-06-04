@@ -129,4 +129,16 @@ public class GoodsCategoryController {
 		
 		return ResultGenerator.genSuccessResult(gdlist);
     }
+    
+    // adding second category added by coca 2021/06/04
+    @RequestMapping(value = "/searchCategory", method = RequestMethod.POST)
+    @ResponseBody
+    public Result getBySecondLevelCategoryId(@RequestBody Long categoryId){
+    	
+		  TcJoinCategory tc= new TcJoinCategory();
+		  tc.setParentId(categoryId);
+		  List<TcJoinCategory> tcJoinCategory = newBeeMallCategoryService.selectBySecondLevelCategoryId(tc.getParentId());
+		 
+		  return ResultGenerator.genSuccessResult(tcJoinCategory);
+    }
 }

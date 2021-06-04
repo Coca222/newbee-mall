@@ -1,11 +1,13 @@
 var MouseOnSearchResultUl  //全局变量
- $("#plus").click(function(){	
-	var keyword = $( "#plus" ).val();
+ $(".button1").click(function(){
+	debugger;	
+	//var categoryId = $(".button1").val();
+	var categoryId = $(this).parent().find("#plus").val();
 		    $.ajax({
             type: 'POST',//方法类型
-            url: '/searchHistory/getSearchHistory',
+            url: '/admin/searchCategory',
             contentType: 'application/json',
-            data: JSON.stringify(keyword),
+            data: JSON.stringify(categoryId),
             success: function (result) {
 				//サーバーが成功した場合
                 if (result.resultCode == 200) {
@@ -27,15 +29,15 @@ var MouseOnSearchResultUl  //全局变量
          })
 });
 
-$("#plus").focusout(function(){
+$(".button1").focusout(function(){
 	if(MouseOnSearchResultUl)
 	return;
     clearResultList()
-	//hide #searchResultUl
-	$("#searchResultUl").hide();
+	//hide #searchResultUl=abc
+	$(".abc").hide();
 })
 function clearResultList(){
-	$("#searchResultUl").children().toArray().forEach(function(value,index,array){
+	$(".abc").children().toArray().forEach(function(value,index,array){
 		var incFlag = $(value).attr('class').includes("dumyLi");
 		if(!incFlag){
 			$(value).remove();
@@ -46,21 +48,29 @@ function clearResultList(){
 function showResult(result){
 	var list = result.data;
 	//href="search?goodsCategoryId=77"
-	var _href = "search?goodsCategoryId=";
+	var data = {
+    'name': 'name',
+    }
+    var s = $('<select />');
+    for(var val in data) {
+    $('<option />', {value: val, text: data[val]}).appendTo(s);
+}
+	s.appendTo('inputGroupSelect05');
 	for(var i = 0; i< list.length; i++){
 		var el = $(".dumyLi").clone().removeClass("dumyLi");
-		var link = el.find("a");
+	/*	var link = el.find("a");
 		link.text(list[i].goodsName);
-		link.attr("href", _href + list[i].goodsId);
+		link.attr("href", _href + list[i].goodsId);	*/	
 		$(".dumyLi").before(el);
 	}
-	$("#searchResultUl").show();
-	appendToSearchBar($("#searchResultUl"));
+
+	$(".abc").show();
+	appendToSearchBar($(".abc"));
 }
 
 function appendToSearchBar(el){
 	debugger;
-	var searchBar = $("#plus");//jquery object
+	var searchBar = $(".button1");//jquery object
 	//var searchBar = document.getElementById("button2");//dom
 	var rect = searchBar[0].getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
 	console.log(rect.top,rect.right,rect.bottom,rect.left);
@@ -69,10 +79,10 @@ function appendToSearchBar(el){
 	//el.left(rect.left);
 	el.css({top: rect.top,left: rect.right,position:'fixed'});//相对定位relative  绝对定位absolute
 	}
-$("#searchResultUl").mousemove(function(){
+$(".abc").mousemove(function(){
 	MouseOnSearchResultUl = true;
 });
-$("#searchResultUl").mouseleave(function(){
+$(".abc").mouseleave(function(){
 	MouseOnSearchResultUl = false;
 })
 
@@ -153,7 +163,7 @@ $(function(){
  });
 });
 
-$(function(){
+/*$(function(){
   //なにかしらの処理
    var primaryGoodsId = $("#campaigSentPGid").val();
    
@@ -161,7 +171,7 @@ $(function(){
         type: 'POST',//方法类型
         url: '/admin/giveawayCompaignSent',
         contentType: 'application/json',
-        data: JSON.stringify(primaryGoodsId),
+        data: JSON.stringify(data),
         success: function (result) {
 //サーバーが成功した場合
             if (result.resultCode == 200) {
@@ -185,7 +195,7 @@ $(function(){
             });
          }
      })
-});
+});*/
 
 
  $("#saveSaleButton").click(function(){ 

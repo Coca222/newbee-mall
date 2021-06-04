@@ -39,4 +39,6 @@ public interface GoodsCategoryMapper {
     List<GoodsCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Long> parentIds, @Param("categoryLevel") int categoryLevel, @Param("number") int number);
     // get categoryId added by coca 2021/05/28
     List<TcJoinCategory> selectFirstLevelCategoryId(Long categoryId);
+    // get categoryId added by coca 2021/06/04
+    List<TcJoinCategory> selectSecondLevelCategoryId(Long categoryId);
 }

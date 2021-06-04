@@ -215,4 +215,10 @@
         c.category_id, c.parent_id, c.category_name, tc.id, tc.category_id, tc.start_date, tc.end_date from tb_newbee_mall_goods_category as c 
         left join table_category as tc on c.category_id = tc.category_id where parent_id = 0 
     </select>
+      <!-- add categoryId by coca 2021/06/04 -->
+       <select id="selectSecondLevelCategoryId" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TcJoinCategory">
+        select
+        c.category_id, c.parent_id, c.category_name, tc.id, tc.category_id, tc.start_date, tc.end_date from tb_newbee_mall_goods_category as c 
+        left join table_category as tc on c.category_id = tc.category_id where parent_id = #{parentId,jdbcType=BIGINT} 
+    </select>
 </mapper>
