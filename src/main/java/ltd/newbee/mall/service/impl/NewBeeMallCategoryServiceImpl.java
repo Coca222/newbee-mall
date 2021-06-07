@@ -17,6 +17,8 @@ import ltd.newbee.mall.controller.vo.SecondLevelCategoryVO;
 import ltd.newbee.mall.controller.vo.ThirdLevelCategoryVO;
 import ltd.newbee.mall.dao.GoodsCategoryMapper;
 import ltd.newbee.mall.entity.GoodsCategory;
+import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.GsTcJoinCategory;
 import ltd.newbee.mall.entity.TcJoinCategory;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -177,6 +179,12 @@ public class NewBeeMallCategoryServiceImpl implements NewBeeMallCategoryService 
 	public List<TcJoinCategory> selectBySecondLevelCategoryId(Long categoryId) {
 		// TODO Auto-generated method stub
 		List<TcJoinCategory> tcsList = goodsCategoryMapper.selectSecondLevelCategoryId(categoryId);
+		return tcsList;
+	}
+
+	@Override
+	public List<GsTcJoinCategory> selectByJoinSecondLevelCategoryId(Long categoryId) {
+		List<GsTcJoinCategory> tcsList = goodsCategoryMapper.selectJoinSecondLevelCategoryId(categoryId);
 		return tcsList;
 	}
 

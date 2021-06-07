@@ -11,6 +11,7 @@ package ltd.newbee.mall.service;
 import ltd.newbee.mall.controller.vo.NewBeeMallIndexCategoryVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
 import ltd.newbee.mall.entity.GoodsCategory;
+import ltd.newbee.mall.entity.GsTcJoinCategory;
 import ltd.newbee.mall.entity.TcJoinCategory;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
@@ -61,4 +62,6 @@ public interface NewBeeMallCategoryService {
     List<TcJoinCategory> selectByFirstLevelCategoryId(Long categoryId);
     // get categoryId added by coca 2021/06/04
     List<TcJoinCategory> selectBySecondLevelCategoryId(Long categoryId);
+ // get join categoryId added by coca 2021/06/05
+    List<GsTcJoinCategory> selectByJoinSecondLevelCategoryId (Long categoryId);
 }

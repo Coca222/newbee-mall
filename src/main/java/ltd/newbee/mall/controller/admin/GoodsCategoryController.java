@@ -16,6 +16,7 @@ import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.GsTcJoinCategory;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
@@ -135,10 +136,24 @@ public class GoodsCategoryController {
     @ResponseBody
     public Result getBySecondLevelCategoryId(@RequestBody Long categoryId){
     	
-		  TcJoinCategory tc= new TcJoinCategory();
-		  tc.setParentId(categoryId);
-		  List<TcJoinCategory> tcJoinCategory = newBeeMallCategoryService.selectBySecondLevelCategoryId(tc.getParentId());
+			 TcJoinCategory tc= new TcJoinCategory();
+			 tc.setParentId(categoryId);
+			 List<GoodsSale> gsList = new ArrayList<GoodsSale>();
+			 List<TcJoinCategory> tcJoinCategory = newBeeMallCategoryService.selectBySecondLevelCategoryId(tc.getParentId());
+			 for(int i=0; i<tcJoinCategory.size();i++) {
+				 if (tcJoinCategory.get(i).getId()!=null) {
+					 List<GoodsSale> box = newBeeMallGoodsService.findGoodsSaleList(tcJoinCategory.get(i).getId());
+					 gsList.addAll(box);
+				 }
+			 }
+			 Map<Object, List> result =new HashMap<>();
+			 result.put("tcJoinCategory", tcJoinCategory);
+			 result.put("gsList", gsList);
+//    	   GsTcJoinCategory tc = new GsTcJoinCategory();
+//    	   tc.setParentId(categoryId);
+//		   List<GsTcJoinCategory> gsTcJoinCategory =newBeeMallCategoryService.selectByJoinSecondLevelCategoryId(tc.getParentId());
 		 
-		  return ResultGenerator.genSuccessResult(tcJoinCategory);
+		 
+		  return ResultGenerator.genSuccessResult(result);
     }
 }
