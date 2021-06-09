@@ -1,8 +1,9 @@
 var MouseOnSearchResultUl  //全局变量
- $(".button1").click(function(){
+function clickButton(thi,categoryId){
 	debugger;	
 	//var categoryId = $(".button1").val();
-	var categoryId = $(this).parent().find("#plus").val();
+	
+
 		    $.ajax({
             type: 'POST',//方法类型
             url: '/admin/searchCategory',
@@ -13,7 +14,7 @@ var MouseOnSearchResultUl  //全局变量
                 if (result.resultCode == 200) {
 				debugger;
 				    clearResultList();					
-					showResult(result);
+					showResult(thi,result);
                 } else {
                     	swal(result.message, {
                         icon: "error",
@@ -27,7 +28,7 @@ var MouseOnSearchResultUl  //全局变量
                 });
              }
          })
-});
+};
 
 $(".button1").focusout(function(){
 	if(MouseOnSearchResultUl)
@@ -45,7 +46,7 @@ function clearResultList(){
 	})
 }
 
-function showResult(result){
+function showResult(thi,result){
 	var tcJoinCategoryList = result.data.tcJoinCategory;
 	var gsList = result.data.gsList;
 	/*var campaign=gsList.campaign;
@@ -66,6 +67,7 @@ function showResult(result){
 	 
 	 
 	 var option = " ";
+	 var cloneUl = $(".abc").clone();
 
   		for(var i = 0; i< gsList.length; i++){
 			var se = $('<select/>');
@@ -98,7 +100,7 @@ function showResult(result){
 		}
 
 		el.find("input:first-child").before(se);
-		//$(".secondCheck").prop('checked',true);
+		cloneUl.find(".secondCheck").prop('checked',true);
 		var sd = el.find("input:nth-child(4)");
 		sd.val(formatDate(tcJoinCategoryList[i].startDate));
 		
@@ -109,12 +111,16 @@ function showResult(result){
 		
 		var link = el.find("a");
 		link.text(tcJoinCategoryList[i].categoryName);
-		$(".dumyLi").before(el);
+		 cloneUl.find('.button2').attr('onClick','clickButton(' +this +','+tcJoinCategoryList[i].categoryId+');');
+		cloneUl.find(".dumyLi").before(el);
   }
   
 
 	$(".abc").show();
-	appendToSearchBar($(".abc"));
+	appendToSearchBar(thi,$(".abc"));
+	
+	// add third category click event added by coca 2021/06/08
+ 
 }
 
 function formatDate(date) {
@@ -131,17 +137,23 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
-function appendToSearchBar(el){
+function appendToSearchBar(thi,el){
 	debugger;
-	var searchBar = $(".button1");//jquery object
+	//var searchBar = el.textContent;//jquery object
+	//var searchBar = $("button");//jquery object
 	//var searchBar = document.getElementById("button2");//dom
-	var rect = searchBar[0].getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
-	console.log(rect.top,rect.right,rect.bottom,rect.left);
+	var rect = thi.getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
+		thi.value = 'top:' + rect.top+'\r\n'; 
+        thi.value += 'left:' + rect.left+'\r\n'; 
+        thi.value += 'bottom:' + rect.bottom+'\r\n'; 
+        thi.value += 'right:' + rect.right+'\r\n';
+	//console.log(rect.top,rect.right,rect.bottom,rect.left);
 	//var sbHeight = searchBar.height();
 	//el.height(rect.top + sbHeight)
 	//el.left(rect.left);
 	el.css({top: rect.top,left: rect.right,position:'fixed'});//相对定位relative  绝对定位absolute
 	}
+	
 $(".abc").mousemove(function(){
 	MouseOnSearchResultUl = true;
 });

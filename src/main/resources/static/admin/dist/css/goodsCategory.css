@@ -11,7 +11,7 @@
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
 
-.button1 {
+.button {
 	 -webkit-transition-duration: 0.8s;
 	 transition-duration: 0.8s;
 	 padding: 1px 1px;
@@ -20,7 +20,7 @@
 	 color: black;
 	 border-radius:5px;
  }
- .button1:hover {
+ .button:hover {
 	 background-color: #4CAF50;
 	 color: white;
  }
