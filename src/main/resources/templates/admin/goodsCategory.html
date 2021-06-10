@@ -17,7 +17,7 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- Main content -->
-       <div class="content">
+       <div class="content" id="mainContent">
             <div class="container-fluid">
                 <div class="card card-primary card-outline">
                 <br>
@@ -67,24 +67,7 @@
             	 	<i class="fa fa-plus"></i>&nbsp; Giveaway
              	</button>
 		</div>
-         <!--add goods sale serachhitory by coca 2021/05/28-->
-    <ul id="searchResultUl" class="abc">
-		<li class="dumyLi" searchLi>
-		<!--<select class="select" id="inputGroupSelect05">
-			<option value="selected">Choose...</option>
-			<option value=""></option>
-		</select>-->
-		<input id="check1" type="checkbox" class= "secondCheck" />
-		<a>
-			link
-		</a> 
-		 &nbsp;&nbsp;開始日:
-		<input type="date" class="start">
-		 &nbsp;&nbsp;終了日:
-		<input type="date" class="end">
-		<button class="button">➕</button>
-	</li>
-</ul>	
+	
      <!-- /.content-wrapper -->
     </div>       		
                 <!-- modal added by coca 2021/05/22 -->
@@ -136,6 +119,23 @@
     <!-- 引入页脚footer-fragment -->
     <div th:replace="admin/footer::footer-fragment"></div>
 </div>
+
+     <!--add goods sale serachhitory by coca 2021/05/28-->
+    <ul class="abc unique"><li class="dumyLi" searchLi>
+		<!--<select class="select" id="inputGroupSelect05">
+			<option value="selected">Choose...</option>
+			<option value=""></option>
+		</select>-->
+		<input id="check1" type="checkbox" class= "secondCheck" />
+		<a>
+			link
+		</a> 
+		 <span>開始日:</span>
+		<input type="date" class="start">
+		 <span>終了日:</span>
+		<input type="date" class="end">
+		<button class="button" id="plus1" th:onclick="'javascript:clickButton(' +this +');'">➕</button>
+	</li></ul>
 </body>
 <!-- jQuery -->
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>

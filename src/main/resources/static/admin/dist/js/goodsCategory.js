@@ -67,17 +67,17 @@ function showResult(thi,result){
 	 
 	 
 	 var option = " ";
-	 var cloneUl = $(".abc").clone();
-
+	 var cloneUl = $(".unique").clone().removeClass("unique");
+	
+	 
   		for(var i = 0; i< gsList.length; i++){
 			var se = $('<select/>');
 			
 			//<option value="gsM[i].id">  gsM[i].name  </option>
   			option += '<option value=\"'+gsList[i].id+'\">' + gsList[i].campaign + '</option>'
   			se.html(option);
-  			
-  			var el = $(".dumyLi").clone().removeClass("dumyLi");			
-
+  			 						
+			 var el = $(".dumyLi").clone().removeClass("dumyLi");
   			
   			for(var j=0; j<tcJoinCategoryList.length; j++){
 				if(tcJoinCategoryList[j].id==null){
@@ -100,25 +100,34 @@ function showResult(thi,result){
 		}
 
 		el.find("input:first-child").before(se);
-		cloneUl.find(".secondCheck").prop('checked',true);
-		var sd = el.find("input:nth-child(4)");
+		el.find(".secondCheck").prop('checked',true);
+	//	cloneUl.find(".secondCheck").prop('checked',true);
+		var sd = el.find("input:nth-child(5)");
 		sd.val(formatDate(tcJoinCategoryList[i].startDate));
 		
-		var ed = el.find("input:nth-child(5)");
+		var ed = el.find("input:nth-child(7)");
 		ed.val(formatDate(tcJoinCategoryList[i].endDate));
 		/*se.val(formatDate(tcJoinCategoryList[i].startDate));
 		se.val(formatDate(tcJoinCategoryList[i].endDate));*/
 		
 		var link = el.find("a");
 		link.text(tcJoinCategoryList[i].categoryName);
-		 cloneUl.find('.button2').attr('onClick','clickButton(' +this +','+tcJoinCategoryList[i].categoryId+');');
+	//	cloneUl.find('.button2').attr('onClick','clickButton(' +this +','+tcJoinCategoryList[i].categoryId+');');
+		cloneUl.find(thi).attr('onClick','clickButton(' + thi +','+tcJoinCategoryList[i].categoryId+');');
 		cloneUl.find(".dumyLi").before(el);
   }
   
 
-	$(".abc").show();
-	appendToSearchBar(thi,$(".abc"));
-	
+	cloneUl.show();
+	//appendToSearchBar(thi,$(".abc"));
+	var rect = thi.getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
+		thi.value = 'top:' + rect.top+'\r\n'; 
+        thi.value += 'left:' + rect.left+'\r\n'; 
+        thi.value += 'bottom:' + rect.bottom+'\r\n'; 
+        thi.value += 'right:' + rect.right+'\r\n';
+	//console.log(rect.top,rect.right,rect.bottom,rect.left);
+	cloneUl.css({top: rect.top,left: rect.right,position:'absolute'});//相对定位relative  绝对定位absolute
+	$("#mainContent").append(cloneUl);
 	// add third category click event added by coca 2021/06/08
  
 }
@@ -136,23 +145,6 @@ function formatDate(date) {
 
     return [year, month, day].join('-');
 }
-
-function appendToSearchBar(thi,el){
-	debugger;
-	//var searchBar = el.textContent;//jquery object
-	//var searchBar = $("button");//jquery object
-	//var searchBar = document.getElementById("button2");//dom
-	var rect = thi.getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
-		thi.value = 'top:' + rect.top+'\r\n'; 
-        thi.value += 'left:' + rect.left+'\r\n'; 
-        thi.value += 'bottom:' + rect.bottom+'\r\n'; 
-        thi.value += 'right:' + rect.right+'\r\n';
-	//console.log(rect.top,rect.right,rect.bottom,rect.left);
-	//var sbHeight = searchBar.height();
-	//el.height(rect.top + sbHeight)
-	//el.left(rect.left);
-	el.css({top: rect.top,left: rect.right,position:'fixed'});//相对定位relative  绝对定位absolute
-	}
 	
 $(".abc").mousemove(function(){
 	MouseOnSearchResultUl = true;

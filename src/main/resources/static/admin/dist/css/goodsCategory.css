@@ -30,8 +30,7 @@
 .card {
 	overflow: auto;
 }
-#searchResultUl{
-    display:none;
+.abc{
     z-index:1000;
     border: 1px solid #c5c5c5;
     overflow-x: hidden;
@@ -99,4 +98,7 @@ h3{
 .control-label{
 	 background-color: rgb(192, 192, 192);
 	 padding:5px;
+}
+unique{
+	display:none;
 }
