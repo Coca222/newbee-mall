@@ -1,9 +1,12 @@
 var MouseOnSearchResultUl  //全局变量
+var arr=[];
 function clickButton(thi,categoryId){
-	debugger;	
-	//var categoryId = $(".button1").val();
-	
-
+			debugger;
+			 if (arr.includes(categoryId)) {
+				return;
+			} 
+			arr.push(categoryId);	
+								
 		    $.ajax({
             type: 'POST',//方法类型
             url: '/admin/searchCategory',
@@ -12,8 +15,8 @@ function clickButton(thi,categoryId){
             success: function (result) {
 				//サーバーが成功した場合
                 if (result.resultCode == 200) {
-				debugger;
-				    clearResultList();					
+				debugger;	
+												
 					showResult(thi,result);
                 } else {
                     	swal(result.message, {
@@ -27,110 +30,91 @@ function clickButton(thi,categoryId){
                     icon: "error",
                 });
              }
-         })
+         })  
+	             
 };
 
-$(".button1").focusout(function(){
-	if(MouseOnSearchResultUl)
-	return;
-    clearResultList()
-	//hide #searchResultUl=abc
-	$(".abc").hide();
-})
-function clearResultList(){
-	$(".abc").children().toArray().forEach(function(value,index,array){
-		var incFlag = $(value).attr('class').includes("dumyLi");
-		if(!incFlag){
-			$(value).remove();
-		}
-	})
-}
 
 function showResult(thi,result){
 	var tcJoinCategoryList = result.data.tcJoinCategory;
 	var gsList = result.data.gsList;
-	/*var campaign=gsList.campaign;
-	//href="search?goodsCategoryId=77"
-	var data = {
-    'campaign': campaign,
-    }
-    var s = $('<select />');
-    for(var val in data) {
-    $('<option />', {value: val, text: data[val]}).appendTo(s);
-}
-	s.appendTo('.select');*/
 	
-	/*for(var i = 0; i< gsList.length; i++){
-		$('.select').append(
-        $('<option></option>').val(gsList[i].campaign).html(gsList[i].campaign));
-	}*/
 	 
 	 
 	 var option = " ";
 	 var cloneUl = $(".unique").clone().removeClass("unique");
 	
 	 
-  		for(var i = 0; i< gsList.length; i++){
+	for (var j = 0; j < tcJoinCategoryList.length; j++) {
+
+		var el =cloneUl.find(".dumyLi").clone().removeClass("dumyLi");
+		for (var i = 0; i < gsList.length; i++) {
 			var se = $('<select/>');
-			
+
 			//<option value="gsM[i].id">  gsM[i].name  </option>
-  			option += '<option value=\"'+gsList[i].id+'\">' + gsList[i].campaign + '</option>'
-  			se.html(option);
-  			 						
-			 var el = $(".dumyLi").clone().removeClass("dumyLi");
-  			
-  			for(var j=0; j<tcJoinCategoryList.length; j++){
-				if(tcJoinCategoryList[j].id==null){
-					se.val(gsList[0].id);
+			option += '<option value=\"' + gsList[i].id + '\">' + gsList[i].name + '</option>'
+			se.html(option);
+
+			if (tcJoinCategoryList[j].id == null) {
+				se.val(gsList[0].id);
 				//	$(".select").val(gsList[0].campaign);
-				
-				}
-				
-				if(tcJoinCategoryList[j].id != null && gsList[i].id==tcJoinCategoryList[j].id){
-					se.val(gsList[i].id);
+			}
+
+			if (tcJoinCategoryList[j].id != null && gsList[i].id == tcJoinCategoryList[j].id) {
+				se.val(gsList[i].id);
 				//	se.val(gsList[i].campaign);			
-					
-					/*se.val(gsList[i].id);
-					se.text(gsList[i].campaign);
-					$(".start").val(formatDate(tcJoinCategoryList[j].startDate));
-					$(".end").val(formatDate(tcJoinCategoryList[j].endDate));*/
-					
-       			 
 			}
 		}
 
 		el.find("input:first-child").before(se);
-		el.find(".secondCheck").prop('checked',true);
-	//	cloneUl.find(".secondCheck").prop('checked',true);
+		if (tcJoinCategoryList[j].id != null) {
+			el.find(".secondCheck").prop('checked', true);
+		}
+		//	el.find(".secondCheck").prop('checked',true);
+		//	cloneUl.find(".secondCheck").prop('checked',true);
 		var sd = el.find("input:nth-child(5)");
-		sd.val(formatDate(tcJoinCategoryList[i].startDate));
-		
+		sd.val(formatDate(tcJoinCategoryList[j].startDate));
+
 		var ed = el.find("input:nth-child(7)");
-		ed.val(formatDate(tcJoinCategoryList[i].endDate));
+		ed.val(formatDate(tcJoinCategoryList[j].endDate));
 		/*se.val(formatDate(tcJoinCategoryList[i].startDate));
 		se.val(formatDate(tcJoinCategoryList[i].endDate));*/
-		
+
 		var link = el.find("a");
-		link.text(tcJoinCategoryList[i].categoryName);
-	//	cloneUl.find('.button2').attr('onClick','clickButton(' +this +','+tcJoinCategoryList[i].categoryId+');');
-		cloneUl.find(thi).attr('onClick','clickButton(' + thi +','+tcJoinCategoryList[i].categoryId+');');
+		link.text(tcJoinCategoryList[j].categoryName);
+		//	cloneUl.find('.button2').attr('onClick','clickButton(' +this +','+tcJoinCategoryList[i].categoryId+');');
+		el.find("#plus1").attr('onclick', 'clickButton(this,' + tcJoinCategoryList[j].categoryId + ')');
+		//	cloneUl.find("#stupid").find(" button:first-child").attr('onclick','closeButton(this)');
+		//	arr = arr.filter(item => !itemToBeRemoved.includes(tcJoinCategoryList[i].categoryId));
 		cloneUl.find(".dumyLi").before(el);
-  }
+
+	}
   
 
 	cloneUl.show();
 	//appendToSearchBar(thi,$(".abc"));
 	var rect = thi.getBoundingClientRect();//转换成dom加[0]  convert jquery object to dom by searchBar[0]
-		thi.value = 'top:' + rect.top+'\r\n'; 
+		/*thi.value = 'top:' + rect.top+'\r\n'; 
         thi.value += 'left:' + rect.left+'\r\n'; 
         thi.value += 'bottom:' + rect.bottom+'\r\n'; 
-        thi.value += 'right:' + rect.right+'\r\n';
-	//console.log(rect.top,rect.right,rect.bottom,rect.left);
-	cloneUl.css({top: rect.top,left: rect.right,position:'absolute'});//相对定位relative  绝对定位absolute
+        thi.value += 'right:' + rect.right+'\r\n';*/
+	console.log(rect.top,rect.right,rect.bottom,rect.left);
+	cloneUl.css({top: rect.top,left: rect.right,position:'fixed'});//相对定位relative  绝对定位absolute
 	$("#mainContent").append(cloneUl);
-	// add third category click event added by coca 2021/06/08
- 
+	
+	/*function closeButton () {
+		cloneUl.find("#closeButton").hide();
+	}*/
+	cloneUl.find("#stupid").find(" button:first-child").click(function(){
+		 
+		cloneUl.find("#stupid").remove();
+	})
+/*	cloneUl.find("#closeButton").click(function(){		
+    cloneUl.find("#stupid").remove();
+ });*/	
 }
+
+
 
 function formatDate(date) {
     var d = new Date(date),

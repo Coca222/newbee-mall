@@ -30,14 +30,15 @@
 .card {
 	overflow: auto;
 }
-.abc{
+#stupid{
+	list-style-type: none;
     z-index:1000;
     border: 1px solid #c5c5c5;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 360px;
     background-color: #fff;
-    width: 35%;
+    width: 100%;
 }
 .order-table{
 	width: 61.5%;
@@ -99,6 +100,22 @@ h3{
 	 background-color: rgb(192, 192, 192);
 	 padding:5px;
 }
-unique{
+.unique{
 	display:none;
 }
+
+#closeButton {
+	
+	-webkit-transition-duration: 0.8s;
+	 transition-duration: 0.8s;
+	 padding: 1px 1px;
+	 text-align: right;
+	 background-color: white;
+	 color: black;
+	 border-radius:5px;
+	
+}
+ #close-button:hover {
+	 background-color: #4CAF50;
+	 color: white;
+ }
