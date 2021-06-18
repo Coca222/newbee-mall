@@ -154,4 +154,5 @@ public interface NewBeeMallGoodsService {
    
     // giveaway added by coca 2021/06/03
     List<NewBeeMallGoods> findListByGoodsId(Long goodsId);
+    List<NewBeeMallGoods> findListBygoodsCategoryId(Long goodsCategoryId);
 }

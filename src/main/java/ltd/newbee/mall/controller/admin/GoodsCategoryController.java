@@ -85,33 +85,52 @@ public class GoodsCategoryController {
     @RequestMapping(value = "/insertTc", method = RequestMethod.POST)
     @ResponseBody
     public Result InsertTableCategory(@RequestBody TableCategory tCRecord) {
-    	TableCategory list = new TableCategory();
-        Integer count = null;  
-        list.setId(tCRecord.getId());
-        list.setCategoryId(tCRecord.getCategoryId());
-        list.setStartDate(tCRecord.getStartDate());
-        list.setEndDate(tCRecord.getEndDate());
-        Boolean insertResult = newBeeMallGoodsService.InsertTableCategory(tCRecord);
-        if(insertResult) {
-        if(tCRecord != null) {
-            count = newBeeMallGoodsService.insertTableCategory(list);
-        }
-        if(!(count > 0)) {
-        return ResultGenerator.genFailResult("投稿失敗！");
-        }      
-        return ResultGenerator.genSuccessResult(count); 
-        }
-        return ResultGenerator.genFailResult("有効期限ではありません！");
-    }
+    	
+    	 TableCategory list = new TableCategory();
+         Integer count = null;  
+         list.setId(tCRecord.getId());
+         list.setCategoryId(tCRecord.getCategoryId());
+         list.setStartDate(tCRecord.getStartDate());
+         list.setEndDate(tCRecord.getEndDate());
+        
+    	 if(!tCRecord.getFlag()){//删除成功
+    		 Boolean deleteResult = newBeeMallGoodsService.deleteByTcPrimaryKey(tCRecord.getCategoryId());
+    	        if (deleteResult) {
+    	            return ResultGenerator.genSuccessResult();
+    	        }
+    	        //删除失败
+    	        return ResultGenerator.genFailResult(ServiceResultEnum.OPERATE_ERROR.getResult());
+    	        } else {
+    	        	 Boolean insertResult = newBeeMallGoodsService.InsertTableCategory(tCRecord);
+    	        	if(insertResult) {
+    	            if(tCRecord != null) {
+    	                count = newBeeMallGoodsService.insertTableCategory(list);
+    	            }
+    	            if(!(count > 0)) {
+    	            return ResultGenerator.genFailResult("投稿失敗！");
+    	            }      
+    	            return ResultGenerator.genSuccessResult(count); 
+    	            }
+    	            return ResultGenerator.genFailResult("有効期限ではありません！");
+    	            }
+    			}
     
  // adding insert paging added by coca 2021/06/02
     @RequestMapping(value = "/insertCompaignSent", method = RequestMethod.POST)
     @ResponseBody
     public Result getInsertCampaignSent(@RequestBody campaignSet csRecord){
 		  Integer count = null;
+		  Integer countTbSale=null;
+		
 		  Long csId = newBeeMallGoodsService.getFindMaxCsId(csRecord.getId());
-		  csRecord.setId(csId);		
-		 // List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListByGoodsId(csRecord.getPrimaryGoodsId());
+		  TableSale ts= new TableSale();
+		  ts.setId(csRecord.getCampaignId());
+		  ts.setGoodsId(csRecord.getPrimaryGoodsId());
+		  ts.setStartDate(csRecord.getStartDate());
+		  ts.setEndDate(csRecord.getEndDate());
+		  if(csRecord !=null) {
+			  countTbSale=newBeeMallGoodsService.InsertTableSale(ts);
+			}	
 		if(csRecord !=null) {
 			count=newBeeMallGoodsService.getInsertCampaignSent(csRecord);
 		}
@@ -124,9 +143,9 @@ public class GoodsCategoryController {
  // adding giveaway paging added by coca 2021/06/02
     @RequestMapping(value = "/giveawayCompaignSent", method = RequestMethod.POST)
     @ResponseBody
-    public Result getGiveawayCompaignSent(@RequestBody Long goodsId){
+    public Result getGiveawayCompaignSent(@RequestBody Long goodsCategoryId){
 		 
-		 List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListByGoodsId(goodsId);
+		 List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListBygoodsCategoryId(goodsCategoryId);
 		
 		return ResultGenerator.genSuccessResult(gdlist);
     }
@@ -135,23 +154,22 @@ public class GoodsCategoryController {
     @RequestMapping(value = "/searchCategory", method = RequestMethod.POST)
     @ResponseBody
     public Result getBySecondLevelCategoryId(@RequestBody Long categoryId){
-    	
+    		Map<Object, List> result =new HashMap<>();
+    		
 			 TcJoinCategory tc= new TcJoinCategory();
 			 tc.setParentId(categoryId);
-			 List<GoodsSale> gsList = new ArrayList<GoodsSale>();
+			 List<GoodsSale> gsList = newBeeMallGoodsService.getGoodsSale();
+			 //List<GoodsSale> gsList = new ArrayList<>();
 			 List<TcJoinCategory> tcJoinCategory = newBeeMallCategoryService.selectBySecondLevelCategoryId(tc.getParentId());
-			 for(int i=0; i<tcJoinCategory.size();i++) {
-				 if (tcJoinCategory.get(i).getId()!=null) {
-					 List<GoodsSale> box = newBeeMallGoodsService.findGoodsSaleList(tcJoinCategory.get(i).getId());
-					 gsList.addAll(box);
-				 }
-			 }
-			 Map<Object, List> result =new HashMap<>();
-			 result.put("tcJoinCategory", tcJoinCategory);
+			 List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListBygoodsCategoryId(categoryId);
+
+			 if(!gdlist.isEmpty()){
+				 result.put("list", gdlist);
+				 result.put("gsList", gsList);
+			 }	else {
+			 result.put("list", tcJoinCategory);
 			 result.put("gsList", gsList);
-//    	   GsTcJoinCategory tc = new GsTcJoinCategory();
-//    	   tc.setParentId(categoryId);
-//		   List<GsTcJoinCategory> gsTcJoinCategory =newBeeMallCategoryService.selectByJoinSecondLevelCategoryId(tc.getParentId());
+			 } 
 		 
 		 
 		  return ResultGenerator.genSuccessResult(result);

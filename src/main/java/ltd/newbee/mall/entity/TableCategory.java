@@ -3,11 +3,17 @@ package ltd.newbee.mall.entity;
 import java.util.Date;
 
 public class TableCategory {
-
+    private  Boolean flag;
 	private Long id;
 	private Long categoryId;
 	private Date startDate;
 	private Date endDate;
+	public Boolean getFlag() {
+		return flag;
+	}
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -34,8 +40,8 @@ public class TableCategory {
 	}
 	@Override
 	public String toString() {
-		return "TableCategory [id=" + id + ", categoryId=" + categoryId + ", startDate=" + startDate + ", endDate="
-				+ endDate + "]";
+		return "TableCategory [flag=" + flag + ", id=" + id + ", categoryId=" + categoryId + ", startDate=" + startDate
+				+ ", endDate=" + endDate + "]";
 	}
 	
 	

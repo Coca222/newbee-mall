@@ -351,7 +351,13 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	@Override
 	public List<NewBeeMallGoods> findListByGoodsId(Long goodsId) {
 		List<NewBeeMallGoods> gdlist =goodsMapper.findByGoodsId(goodsId);
-		List<NewBeeMallGoods> cdlist =goodsMapper.findBygoodsCategoryId(gdlist.get(0).getGoodsCategoryId());
+		
+		return gdlist;
+	}
+
+	@Override
+	public List<NewBeeMallGoods> findListBygoodsCategoryId(Long goodsCategoryId) {
+		List<NewBeeMallGoods> cdlist =goodsMapper.findBygoodsCategoryId(goodsCategoryId);
 		return cdlist;
 	}
 

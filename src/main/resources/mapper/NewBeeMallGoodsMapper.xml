@@ -877,7 +877,7 @@
         from tb_newbee_mall_goods_info
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </select>
-    <select id="findBygoodsCategoryId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="findBygoodsCategoryId"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
 

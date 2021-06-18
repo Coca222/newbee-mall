@@ -36,54 +36,67 @@ function clickButton(thi,categoryId){
 
 
 function showResult(thi,result){
-	var tcJoinCategoryList = result.data.tcJoinCategory;
+	var list = result.data.list;
 	var gsList = result.data.gsList;
 	
 	 
 	 
-	 var option = " ";
+	 
 	 var cloneUl = $(".unique").clone().removeClass("unique");
 	
 	 
-	for (var j = 0; j < tcJoinCategoryList.length; j++) {
-
+	for (var j = 0; j < list.length; j++) {
+		var option = "";//the 1st arrList will be covered by the second
+		var temp="";
+		var se = $('<select/>',{id:"inputGroupSelect04"});
 		var el =cloneUl.find(".dumyLi").clone().removeClass("dumyLi");
 		for (var i = 0; i < gsList.length; i++) {
-			var se = $('<select/>');
-
-			//<option value="gsM[i].id">  gsM[i].name  </option>
+			
+			
+						//<option value="gsM[i].id">  gsM[i].name  </option>
 			option += '<option value=\"' + gsList[i].id + '\">' + gsList[i].name + '</option>'
-			se.html(option);
+			
 
-			if (tcJoinCategoryList[j].id == null) {
+		/*	if (tcJoinCategoryList[j].id == null) {
 				se.val(gsList[0].id);
 				//	$(".select").val(gsList[0].campaign);
-			}
+			}*/
 
-			if (tcJoinCategoryList[j].id != null && gsList[i].id == tcJoinCategoryList[j].id) {
-				se.val(gsList[i].id);
-				//	se.val(gsList[i].campaign);			
+			if (list[j].id != null && gsList[i].id == list[j].id) {
+				
+				el.find("#isCheck").prop('checked', true);
+				temp=gsList[i].id;
+							
 			}
+		
+			
 		}
-
+		se.html(option);
+		if(temp!=""){
+			se.val(temp);
+		}
 		el.find("input:first-child").before(se);
-		if (tcJoinCategoryList[j].id != null) {
-			el.find(".secondCheck").prop('checked', true);
-		}
 		//	el.find(".secondCheck").prop('checked',true);
 		//	cloneUl.find(".secondCheck").prop('checked',true);
-		var sd = el.find("input:nth-child(5)");
-		sd.val(formatDate(tcJoinCategoryList[j].startDate));
+		var sd = el.find("input:nth-child(7)");
+		sd.val(list[j].startDate);
 
-		var ed = el.find("input:nth-child(7)");
-		ed.val(formatDate(tcJoinCategoryList[j].endDate));
-		/*se.val(formatDate(tcJoinCategoryList[i].startDate));
-		se.val(formatDate(tcJoinCategoryList[i].endDate));*/
+		var ed = el.find("input:nth-child(9)");
+		ed.val(list[j].endDate);		
+  		var cId = el.find("input:nth-child(3)");
+  		cId.val(list[j].categoryId);
+  		var gcId = el.find("input:nth-child(4)");
+  		gcId.val(list[j].goodsCategoryId);
+  		
+  		/*var cGd = el.find("input:nth-child(4)");
+  		cGd.val(list[j].goodsId);	*/	
 
 		var link = el.find("a");
-		link.text(tcJoinCategoryList[j].categoryName);
+		link.text(list[j].categoryName);
+		link.text(list[j].goodsName);
 		//	cloneUl.find('.button2').attr('onClick','clickButton(' +this +','+tcJoinCategoryList[i].categoryId+');');
-		el.find("#plus1").attr('onclick', 'clickButton(this,' + tcJoinCategoryList[j].categoryId + ')');
+		el.find("#plus1").attr('onclick', 'clickButton(this,' + list[j].categoryId + ')');
+		el.find("#isCheck").attr('onchange', 'insertDel(this)');
 		//	cloneUl.find("#stupid").find(" button:first-child").attr('onclick','closeButton(this)');
 		//	arr = arr.filter(item => !itemToBeRemoved.includes(tcJoinCategoryList[i].categoryId));
 		cloneUl.find(".dumyLi").before(el);
@@ -116,7 +129,7 @@ function showResult(thi,result){
 
 
 
-function formatDate(date) {
+/*function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -128,7 +141,7 @@ function formatDate(date) {
         day = '0' + day;
 
     return [year, month, day].join('-');
-}
+}*/
 	
 $(".abc").mousemove(function(){
 	MouseOnSearchResultUl = true;
@@ -138,6 +151,98 @@ $(".abc").mouseleave(function(){
 })
 
 //add delete TC record by coca 2021/05/30
+
+function insertDel(thi) {
+	debugger;
+	var id = $(thi).parent().parent().find("#inputGroupSelect04").val();
+	if(id==1){
+		var goodsName=$(thi).parent().find("#mdlCtyNm").text();
+		var goodsCategoryId = $(thi).parent().find("#hidgid").val();
+		$("#campaignSentModal").find("#campaigSentPGid").val(goodsName);			
+		//var goodsId = $(thi).parent().find("#hidgid").val();
+			
+		$("#campaignSentModal").modal('show');	
+		$.ajax({
+			type: 'POST',//方法类型
+			url: '/admin/giveawayCompaignSent',
+			contentType: 'application/json',
+			data: JSON.stringify(goodsCategoryId),
+			success: function(result) {
+				//サーバーが成功した場合
+				if (result.resultCode == 200) {
+					debugger;
+					/*swal("ご挿入出来ました！", {
+						icon: "success",
+					});*/
+					 debugger;
+					var goodsList = result.data;
+															
+					for (var i = 0; i < goodsList.length; i++) {
+					$("#subGoodsId").append('<option value=\"' + goodsList[i].goodsId + '\">' + goodsList[i].goodsName + '</option>');												
+					}
+				
+				} else {
+					swal(result.message, {
+						icon: "error",
+					});
+				}
+
+			},
+			error: function() {
+				swal("操作失败", {
+					icon: "error",
+				});
+			}
+		})
+		return;		
+	}else{
+	var flag = $(thi).is(':checked');
+	var id = $(thi).parent().parent().find("#inputGroupSelect04").val();
+	var startDate = $(thi).parent().find("#date1").val();
+	var endDate = $(thi).parent().find("#date2").val()
+	var categoryId = $(thi).parent().find("#hidChk").val();
+	var data = {
+		"flag":flag,
+		"id": id,
+		"categoryId": categoryId,
+		"startDate": startDate,
+		"endDate": endDate,
+	};
+
+	$.ajax({
+		type: 'POST',//方法类型
+		url: '/admin/insertTc',
+		contentType: 'application/json',
+		data: JSON.stringify(data),
+		success: function(result) {
+			if (result.resultCode == 200) {
+				if(flag){
+					swal("ご挿入出来ました！", {
+					icon: "success",
+				});
+				}else{
+					swal("ご削除出来ました！", {
+						icon: "success",
+					});
+				}
+				
+			} else {
+				swal(result.message, {
+					icon: "error",
+				});
+			}
+			;
+		},
+		error: function() {
+			swal("操作失败", {
+				icon: "error",
+			});
+		}
+	});
+};
+}
+	
+/*//add delete TC record by coca 2021/05/30
 debugger;
 $(".check").change(function() {
  var ischecked = $(this).is(':checked');
@@ -203,50 +308,15 @@ $.ajax({
  });	
 }
 });
-
+*/
 //2021/06/02 insertSale 绑定modal上的保存按钮
-$(function(){
+
  $("#giveawayBtn").click(function(){
   $(".modal").fadeIn();
  });
  $("#cancell").click(function(){
   $(".modal").fadeOut();
  });
-});
-
-/*$(function(){
-  //なにかしらの処理
-   var primaryGoodsId = $("#campaigSentPGid").val();
-   
-  $.ajax({
-        type: 'POST',//方法类型
-        url: '/admin/giveawayCompaignSent',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function (result) {
-//サーバーが成功した場合
-            if (result.resultCode == 200) {
-			    var levelTwoSelect = '';
-                var secondLevelCategories = result.data.gdlist;
-                var length2 = secondLevelCategories.length;
-                for (var i = 0; i < length2; i++) {
-                    levelTwoSelect += '<option value=\"' + secondLevelCategories[i].goodsId + '\">' + secondLevelCategories[i].goodsName + '</option>';
-                }
-                $('#subGoodsId').html(levelTwoSelect);
-            } else {
-                 swal(result.message, {
-                    icon: "error",
-                });
-            }
-            
-        },
-        error: function () {
-            swal("操作失败", {
-                icon: "error",
-            });
-         }
-     })
-});*/
 
 
  $("#saveSaleButton").click(function(){ 
@@ -283,4 +353,38 @@ $(function(){
      })
      $(".modal").fadeOut();
   });
+/*$(function(){
+  //なにかしらの処理
+   var primaryGoodsId = $("#campaigSentPGid").val();
+   
+  $.ajax({
+        type: 'POST',//方法类型
+        url: '/admin/giveawayCompaignSent',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+//サーバーが成功した場合
+            if (result.resultCode == 200) {
+			    var levelTwoSelect = '';
+                var secondLevelCategories = result.data.gdlist;
+                var length2 = secondLevelCategories.length;
+                for (var i = 0; i < length2; i++) {
+                    levelTwoSelect += '<option value=\"' + secondLevelCategories[i].goodsId + '\">' + secondLevelCategories[i].goodsName + '</option>';
+                }
+                $('#subGoodsId').html(levelTwoSelect);
+            } else {
+                 swal(result.message, {
+                    icon: "error",
+                });
+            }
+            
+        },
+        error: function () {
+            swal("操作失败", {
+                icon: "error",
+            });
+         }
+     })
+});*/
+
   

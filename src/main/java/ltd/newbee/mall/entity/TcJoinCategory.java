@@ -2,6 +2,8 @@ package ltd.newbee.mall.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TcJoinCategory {
 	   
 
@@ -9,7 +11,9 @@ public class TcJoinCategory {
 	private String categoryName;
 	private Long id;
 	private Long categoryId;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
 	private Date startDate;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
 	private Date endDate;
 	public Long getParentId() {
 		return parentId;

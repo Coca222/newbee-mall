@@ -42,14 +42,15 @@
 							            </select>
 							               </td>
 							            <td class="fontSize">&nbsp;
-							             <input class="check" type="checkbox" th:value="${c.categoryId}" th:checked="${c.id} !=null? true:false"　th:text="${c.categoryName}"/>
+							             <input class="check" id="isCheck" th:onchange="javascript:insertDel( this)" type="checkbox" th:checked="${c.id} !=null? true:false"　th:text="${c.categoryName}"/>
+							             <input type="hidden" id="hidChk" th:value="${c.categoryId}">
 							          <span class="startDate">開始日
 										  <input type="date" id="date1" th:value="${#dates.format(c.startDate,'yyyy-MM-dd')}">
 									  </span>
 									  <span class="endDate">終了日
 										  <input type="date" id="date2" th:value="${#dates.format(c.endDate,'yyyy-MM-dd')}">
 									  </span>					             							            						              							             												
-							             <button class="button" th:onclick="'javascript:clickButton(' +this +',' + ${c.categoryId} + ')'"  id="plus" th:value="${c.categoryId}" th:if="${c.id}">➕</button>
+							             <button class="button" th:onclick="'javascript:clickButton(' +this +',' + ${c.categoryId} + ')'"  id="plus1" th:value="${c.categoryId}" >➕</button>
 							            </td>
 							           </tr>
 							           	</th:block>
@@ -90,12 +91,12 @@
 			    placeholder="idを入力してください" required="true">
 			  </div>-->		
 			  <div class="form-group">
-			   <label for="primaryGoodsId" class="control-label">primaryGoodsId</label>
+			   <label for="primaryGoodsId" class="control-label">主商品</label>
 			   <input type="text" class="form-control" id="campaigSentPGid" name="primaryGoodsId"
 			    placeholder="primaryGoodsIdを入力してください" required="true">
 			  </div>
 			
-			 <!-- <div class="form-group">
+			 <!--  <div class="form-group">
 			   <label for="subGoodsId" class="control-label">subGoodsId</label>
 			   <input type="text" class="form-control" id="campaigSentSGid" name="subGoodsId"
 			    placeholder="subGoodsIdを入力してください" required="true">
@@ -103,14 +104,12 @@
 			  <div class="form-group">
 			   <label for="subGoodsId" class="control-label">赠送商品</label>
 			    <select class="custom-select" id="subGoodsId">
-		          <option "selected">Choose...</option>
-		           <option value="">充电器</option>
-		            <option value=""> 耳机</option>		      				            
+		          	      				            
             	 </select>
 			  </div>
 			  <div class="modal-footer">
 			   <button type="button" class="btn btn-default" id="cancell">キャンセル</button>
-			   <button type="button" class="btn btn-primary" id="saveSaleButton">確認</button>
+			   <button type="button" class="btn btn-primary" id="saveSaleButton">Submit</button>
 			  </div>
 			  <!-- <div class="button close">CLOSE</div>-->
 			 </div>
@@ -126,14 +125,16 @@
 			<option value="selected">Choose...</option>
 			<option value=""></option>
 		</select>-->			
-		<input id="check1" type="checkbox" class= "secondCheck" />
-		<a>
-			link
+		<input class="check" id="isCheck" type="checkbox" />
+		 <input type="hidden" id="hidChk">
+		 <input type="hidden" id="hidgid">
+		<a id="mdlCtyNm">
+			
 		</a> 
-		 <span>開始日:</span>
-		<input type="date" class="start">
-		 <span>終了日:</span>
-		<input type="date" class="end">
+		 <span class="startDate">開始日:</span>
+		<input type="date" id="date1" class="start">
+		 <span class="endDate">終了日:</span>
+		<input type="date" id="date2" class="end">
 		<button class="button" id="plus1">➕</button>
 	</li></div></ul>
 </body>
