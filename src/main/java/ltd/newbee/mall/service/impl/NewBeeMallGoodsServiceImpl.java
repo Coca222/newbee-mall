@@ -24,6 +24,8 @@ import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.TcJoinCategory;
+import ltd.newbee.mall.entity.TsJoinCategory;
 import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -332,8 +334,8 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	}
 
 	@Override
-	public Long getFindMaxCsId(Long id) {
-		Long maxCsId = goodsMapper.findMaxCsId(id);
+	public Long getFindMaxCsId() {
+		Long maxCsId = goodsMapper.findMaxCsId();
     	if (maxCsId != null) {
     		return maxCsId + 1;	
     	} else {
@@ -359,6 +361,28 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 	public List<NewBeeMallGoods> findListBygoodsCategoryId(Long goodsCategoryId) {
 		List<NewBeeMallGoods> cdlist =goodsMapper.findBygoodsCategoryId(goodsCategoryId);
 		return cdlist;
+	}
+
+	@Override
+	public Boolean deleteByTsGoodsId(Long goodsId) {
+		return goodsMapper.deleteByTsPrimaryKey(goodsId)>0;
+	}
+
+	@Override
+	public Boolean deleteByCsId(Long primaryGoodsId) {
+		return goodsMapper.deleteByCsPrimaryKey(primaryGoodsId)>0;
+	}
+
+	
+	@Override
+	public Boolean deleteByCsTs(Long primaryGoodsId) {
+		return goodsMapper.deleteByCsTsPrimaryKey(primaryGoodsId)>0;
+	}
+	
+	@Override
+	public List<TsJoinCategory> getTsJoinCategoryList(Long goodsCategoryId) {
+		List<TsJoinCategory> tsList = goodsMapper.getTsJoinCategory(goodsCategoryId);
+		return tsList;
 	}
 
 }

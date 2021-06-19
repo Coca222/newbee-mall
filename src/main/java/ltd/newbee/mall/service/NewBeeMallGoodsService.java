@@ -22,6 +22,7 @@ import ltd.newbee.mall.entity.PagingQa;
 import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.TsJoinCategory;
 import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
@@ -150,9 +151,18 @@ public interface NewBeeMallGoodsService {
     List<GoodsSale> findGoodsSaleList(Long id);
     // to achieve insert cs record added by coca 2021/06/02
     int getInsertCampaignSent (campaignSet csRecord);
-    Long getFindMaxCsId(Long id);
+    Long getFindMaxCsId();
    
     // giveaway added by coca 2021/06/03
     List<NewBeeMallGoods> findListByGoodsId(Long goodsId);
     List<NewBeeMallGoods> findListBygoodsCategoryId(Long goodsCategoryId);
+    
+    // add delete  for tc by coca 2021/06/19
+    Boolean deleteByTsGoodsId(Long goodsId);
+    Boolean deleteByCsId(Long primaryGoodsId);
+    List<TsJoinCategory> getTsJoinCategoryList(Long goodsCategoryId);
+
+	Boolean deleteByCsTs(Long primaryGoodsId);
+
+	
 }

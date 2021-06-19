@@ -21,6 +21,7 @@ import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
 import ltd.newbee.mall.entity.TcJoinCategory;
+import ltd.newbee.mall.entity.TsJoinCategory;
 import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
@@ -122,7 +123,9 @@ public class GoodsCategoryController {
 		  Integer count = null;
 		  Integer countTbSale=null;
 		
-		  Long csId = newBeeMallGoodsService.getFindMaxCsId(csRecord.getId());
+		  Long csId = newBeeMallGoodsService.getFindMaxCsId();
+		  csRecord.setId(csId);
+		  
 		  TableSale ts= new TableSale();
 		  ts.setId(csRecord.getCampaignId());
 		  ts.setGoodsId(csRecord.getPrimaryGoodsId());
@@ -143,11 +146,23 @@ public class GoodsCategoryController {
  // adding giveaway paging added by coca 2021/06/02
     @RequestMapping(value = "/giveawayCompaignSent", method = RequestMethod.POST)
     @ResponseBody
-    public Result getGiveawayCompaignSent(@RequestBody Long goodsCategoryId){
-		 
-		 List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListBygoodsCategoryId(goodsCategoryId);
-		
-		return ResultGenerator.genSuccessResult(gdlist);
+    public Result getGiveawayCompaignSent(@RequestBody TsJoinCategory tsRecord){
+    	
+		 //List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListBygoodsCategoryId(goodsCategoryId);
+		 // return ResultGenerator.genSuccessResult(gdlist);
+    	if(!tsRecord.getFlag()){//删除成功
+   	//	 Boolean deleteTsResult = newBeeMallGoodsService.deleteByTsGoodsId(tsRecord.getGoodsId());
+   	//	 Boolean deleteTcResult = newBeeMallGoodsService.deleteByTcPrimaryKey(tsRecord.getGoodsId());
+    		
+    		Boolean deleteTcResult = newBeeMallGoodsService.deleteByCsTs(tsRecord.getGoodsId());
+   	       if(deleteTcResult) {
+   	            return ResultGenerator.genSuccessResult();
+   	       }
+   	       	return ResultGenerator.genFailResult(ServiceResultEnum.OPERATE_ERROR.getResult());
+   	        } else {
+    		List<TsJoinCategory> gdlist =newBeeMallGoodsService.getTsJoinCategoryList(tsRecord.getGoodsCategoryId());
+    		  return ResultGenerator.genSuccessResult(gdlist);
+   	        }
     }
     
     // adding second category added by coca 2021/06/04
@@ -161,7 +176,8 @@ public class GoodsCategoryController {
 			 List<GoodsSale> gsList = newBeeMallGoodsService.getGoodsSale();
 			 //List<GoodsSale> gsList = new ArrayList<>();
 			 List<TcJoinCategory> tcJoinCategory = newBeeMallCategoryService.selectBySecondLevelCategoryId(tc.getParentId());
-			 List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListBygoodsCategoryId(categoryId);
+			// List<NewBeeMallGoods> gdlist =newBeeMallGoodsService.findListBygoodsCategoryId(categoryId);
+			 List<TsJoinCategory> gdlist =newBeeMallGoodsService.getTsJoinCategoryList(categoryId);
 
 			 if(!gdlist.isEmpty()){
 				 result.put("list", gdlist);

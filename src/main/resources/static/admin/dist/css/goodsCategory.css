@@ -61,11 +61,7 @@
  left: 0;
  display: none; 
 }
-.modal_bg {
- height: 100%;
- background-color: rgba(0,0,0,0.8);
-}
-.modal_window {
+.modal_view {
  width: 41.66%;
  height: 58.33%;
  border-radius:5px;

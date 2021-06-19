@@ -78,15 +78,17 @@ function showResult(thi,result){
 		el.find("input:first-child").before(se);
 		//	el.find(".secondCheck").prop('checked',true);
 		//	cloneUl.find(".secondCheck").prop('checked',true);
-		var sd = el.find("input:nth-child(7)");
+		var sd = el.find("#date1");
 		sd.val(list[j].startDate);
 
-		var ed = el.find("input:nth-child(9)");
+		var ed = el.find("#date2");
 		ed.val(list[j].endDate);		
-  		var cId = el.find("input:nth-child(3)");
-  		cId.val(list[j].categoryId);
-  		var gcId = el.find("input:nth-child(4)");
-  		gcId.val(list[j].goodsCategoryId);
+  		var categoryId = el.find("#categoryId");
+  		categoryId.val(list[j].categoryId);
+  		var goodsCategoryId = el.find("#goodsCategoryId");
+  		goodsCategoryId.val(list[j].goodsCategoryId);
+  		var goodsId = el.find("#goodsId");
+  		goodsId.val(list[j].goodsId);
   		
   		/*var cGd = el.find("input:nth-child(4)");
   		cGd.val(list[j].goodsId);	*/	
@@ -121,6 +123,7 @@ function showResult(thi,result){
 	cloneUl.find("#stupid").find(" button:first-child").click(function(){
 		 
 		cloneUl.find("#stupid").remove();
+		arr.pop();
 	})
 /*	cloneUl.find("#closeButton").click(function(){		
     cloneUl.find("#stupid").remove();
@@ -156,37 +159,53 @@ function insertDel(thi) {
 	debugger;
 	var id = $(thi).parent().parent().find("#inputGroupSelect04").val();
 	if(id==1){
-		var goodsName=$(thi).parent().find("#mdlCtyNm").text();
-		var goodsCategoryId = $(thi).parent().find("#hidgid").val();
-		$("#campaignSentModal").find("#campaigSentPGid").val(goodsName);			
-		//var goodsId = $(thi).parent().find("#hidgid").val();
-			
-		$("#campaignSentModal").modal('show');	
+		var flag = $(thi).is(':checked');
+		var goodsName=$(thi).parent().find("#mdlCtyNm").text();		
+		$("#campaignSentModal").find("#campaigSentPGid").val(goodsName);
+		var goodsCategoryId = $(thi).parent().find("#goodsCategoryId").val();
+		$("#campaignSentModal").find("#modalCategoryId").val(goodsCategoryId);		
+	//	var categoryId = $(thi).parent().find("#categoryId").val();			
+		var goodsId = $(thi).parent().find("#goodsId").val();
+		$("#campaignSentModal").find("#primaryGoodsId").val(goodsId);
+		var startDate=$(thi).parent().find("#date1").val();
+		$("#campaignSentModal").find("#startDate").val(startDate);
+		var endDate=$(thi).parent().find("#date2").val();
+		$("#campaignSentModal").find("#endDate").val(endDate);
+		var data = {
+			"goodsId":goodsId,
+			"flag": flag,
+			"goodsCategoryId": goodsCategoryId,
+
+		};			
 		$.ajax({
 			type: 'POST',//方法类型
 			url: '/admin/giveawayCompaignSent',
 			contentType: 'application/json',
-			data: JSON.stringify(goodsCategoryId),
+			data: JSON.stringify(data),
 			success: function(result) {
 				//サーバーが成功した場合
 				if (result.resultCode == 200) {
 					debugger;
-					/*swal("ご挿入出来ました！", {
-						icon: "success",
-					});*/
+					
+						if(!flag){
+							swal("ご削除出来ました！", {
+								icon: "success",
+							});
+				//	 $(".modal").remove();
+				}else{
 					 debugger;
 					var goodsList = result.data;
 															
 					for (var i = 0; i < goodsList.length; i++) {
 					$("#subGoodsId").append('<option value=\"' + goodsList[i].goodsId + '\">' + goodsList[i].goodsName + '</option>');												
 					}
-				
+				  }
 				} else {
 					swal(result.message, {
 						icon: "error",
 					});
 				}
-
+			 
 			},
 			error: function() {
 				swal("操作失败", {
@@ -194,13 +213,17 @@ function insertDel(thi) {
 				});
 			}
 		})
+		if (goodsId) {
+			$("#campaignSentModal").modal('show');
+		} else {
+		};
 		return;		
 	}else{
 	var flag = $(thi).is(':checked');
 	var id = $(thi).parent().parent().find("#inputGroupSelect04").val();
 	var startDate = $(thi).parent().find("#date1").val();
 	var endDate = $(thi).parent().find("#date2").val()
-	var categoryId = $(thi).parent().find("#hidChk").val();
+	var categoryId = $(thi).parent().find("#categoryId").val();
 	var data = {
 		"flag":flag,
 		"id": id,
@@ -311,21 +334,32 @@ $.ajax({
 */
 //2021/06/02 insertSale 绑定modal上的保存按钮
 
- $("#giveawayBtn").click(function(){
+/* $("#giveawayBtn").click(function(){
   $(".modal").fadeIn();
  });
  $("#cancell").click(function(){
   $(".modal").fadeOut();
- });
+ });*/
 
 
  $("#saveSaleButton").click(function(){ 
- var primaryGoodsId = $("#campaigSentPGid").val();
- var subGoodsId = $("#campaigSentSGid").val();
- var data = {
-  "primaryGoodsId":primaryGoodsId,
- "subGoodsId":subGoodsId,
-    };   
+	debugger;
+	 var flag= $(isCheck).prop('checked', true);
+	 var primaryGoodsId = $("#primaryGoodsId").val();
+	 var subGoodsId = $("#subGoodsId").val();
+	 var startDate = $("#startDate").val();
+	 var endDate = $("#endDate").val();
+	 var campaignId=1;
+	 var categoryId=$("#modalCategoryId").val();
+	 var data = {
+		 "flag":flag,
+		 "primaryGoodsId": primaryGoodsId,
+		 "subGoodsId": subGoodsId,
+		 "startDate": startDate,
+		 "endDate": endDate,
+		 "campaignId":campaignId,
+		 "categoryId":categoryId
+    };
     $.ajax({
         type: 'POST',//方法类型
         url: '/admin/insertCompaignSent',
@@ -334,8 +368,9 @@ $.ajax({
         success: function (result) {
 //サーバーが成功した場合
             if (result.resultCode == 200) {
-   debugger;     
-     swal("ご挿入出来ました！" ,{
+	  $(isCheck).prop('checked', true);
+   	  debugger;     
+      swal("ご挿入出来ました！" ,{
       icon:"success",
      });
             } else {

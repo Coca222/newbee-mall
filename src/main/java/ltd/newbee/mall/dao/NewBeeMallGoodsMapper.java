@@ -21,6 +21,7 @@ import ltd.newbee.mall.entity.SearchHistory;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.TsJoinCategory;
 import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
@@ -121,8 +122,14 @@ public interface NewBeeMallGoodsMapper {
      List<GoodsSale> getGoodsSaleList(Long id); 
   // to achieve insert cs record added by coca 2021/06/02
      int insertCampaignSent (campaignSet csRecord);
-     Long findMaxCsId(Long id);
+     Long findMaxCsId();
      // giveaway added by coca 2021/06/03
      List<NewBeeMallGoods> findByGoodsId(Long goodsId);
      List<NewBeeMallGoods> findBygoodsCategoryId(Long goodsCategoryId);
+  // add delete  for tc by coca 2021/06/19
+     int deleteByTsPrimaryKey(Long goodsId);
+     int deleteByCsPrimaryKey(Long primaryGoodsId);
+     List<TsJoinCategory> getTsJoinCategory(Long goodsCategoryId);
+
+	int deleteByCsTsPrimaryKey(Long primaryGoodsId);
 }

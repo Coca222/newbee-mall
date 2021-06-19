@@ -83,7 +83,7 @@
 			 </div>
 			
 			 <div class="modal_bg"> </div>
-			 <div class="modal_window" id="campaignSentModal">
+			 <div class="modal_view" id="campaignSentModal">
 			  <h3>Giveaway</h3>	
 			<!--  <div class="form-group">
 			   <label for="id" class="control-label">id</label>
@@ -92,6 +92,10 @@
 			  </div>-->		
 			  <div class="form-group">
 			   <label for="primaryGoodsId" class="control-label">主商品</label>
+			   <input type="hidden" id="primaryGoodsId">
+			   <input type="hidden" id="startDate">
+			   <input type="hidden" id="endDate">
+			   <input type="hidden" id="modalCategoryId">
 			   <input type="text" class="form-control" id="campaigSentPGid" name="primaryGoodsId"
 			    placeholder="primaryGoodsIdを入力してください" required="true">
 			  </div>
@@ -108,8 +112,8 @@
             	 </select>
 			  </div>
 			  <div class="modal-footer">
-			   <button type="button" class="btn btn-default" id="cancell">キャンセル</button>
-			   <button type="button" class="btn btn-primary" id="saveSaleButton">Submit</button>
+			   <button type="button" class="btn btn-default" data-dismiss="modal" id="modal-close">キャンセル</button>
+			   <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveSaleButton">Submit</button>
 			  </div>
 			  <!-- <div class="button close">CLOSE</div>-->
 			 </div>
@@ -126,8 +130,9 @@
 			<option value=""></option>
 		</select>-->			
 		<input class="check" id="isCheck" type="checkbox" />
-		 <input type="hidden" id="hidChk">
-		 <input type="hidden" id="hidgid">
+		 <input type="hidden" id="categoryId">
+		 <input type="hidden" id="goodsCategoryId">
+		 <input type="hidden" id="goodsId">
 		<a id="mdlCtyNm">
 			
 		</a> 

@@ -884,4 +884,22 @@
         from tb_newbee_mall_goods_info
         where goods_category_id = #{goodsCategoryId,jdbcType=BIGINT}
     </select>
+    <!-- added by coca 2021/06/19-->
+   <delete id="deleteByTsPrimaryKey" parameterType="java.lang.Long">
+    delete from table_sale
+    where goods_id = #{goodsId,jdbcType=BIGINT}
+   </delete>
+   <delete id="deleteByCsPrimaryKey" parameterType="java.lang.Long">
+    delete from campaign_set
+    where primary_goods_id = #{primaryGoodsId,jdbcType=BIGINT}
+   </delete>
+   <delete id="deleteByCsTsPrimaryKey" parameterType="java.lang.Long">
+    delete  campaign_set, table_sale from campaign_set LEFT JOIN table_sale ON campaign_set.primary_goods_id = table_sale.goods_id 
+    WHERE campaign_set.primary_goods_id = #{primaryGoodsId,jdbcType=BIGINT}
+   </delete>
+    <select id="getTsJoinCategory" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TsJoinCategory">
+        select
+        n.goods_id, n.goods_name, n.goods_category_id, ts.id, ts.goods_id, ts.start_date, ts.end_date from tb_newbee_mall_goods_info as n 
+        left join table_sale as ts on n.goods_id = ts.goods_id where goods_category_id = #{goodsCategoryId,jdbcType=BIGINT} 
+    </select>
 </mapper>
