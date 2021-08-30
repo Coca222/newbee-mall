@@ -44,7 +44,7 @@ function showResult(thi,result){
 	 
 	 var cloneUl = $(".unique").clone().removeClass("unique");
 	
-	 
+	 debugger;
 	for (var j = 0; j < list.length; j++) {
 		var option = "";//the 1st arrList will be covered by the second
 		var temp="";
@@ -157,7 +157,7 @@ $(".abc").mouseleave(function(){
 
 function insertDel(thi) {
 	debugger;
-	var id = $(thi).parent().parent().find("#inputGroupSelect04").val();
+	var id = $(thi).parent().find("#inputGroupSelect04").val();
 	if(id==1){
 		var flag = $(thi).is(':checked');
 		var goodsName=$(thi).parent().find("#mdlCtyNm").text();		
@@ -213,9 +213,8 @@ function insertDel(thi) {
 				});
 			}
 		})
-		if (goodsId) {
+		if (goodsId&&flag) {
 			$("#campaignSentModal").modal('show');
-		} else {
 		};
 		return;		
 	}else{
@@ -344,7 +343,6 @@ $.ajax({
 
  $("#saveSaleButton").click(function(){ 
 	debugger;
-	 var flag= $(isCheck).prop('checked', true);
 	 var primaryGoodsId = $("#primaryGoodsId").val();
 	 var subGoodsId = $("#subGoodsId").val();
 	 var startDate = $("#startDate").val();
@@ -352,7 +350,6 @@ $.ajax({
 	 var campaignId=1;
 	 var categoryId=$("#modalCategoryId").val();
 	 var data = {
-		 "flag":flag,
 		 "primaryGoodsId": primaryGoodsId,
 		 "subGoodsId": subGoodsId,
 		 "startDate": startDate,
@@ -368,7 +365,6 @@ $.ajax({
         success: function (result) {
 //サーバーが成功した場合
             if (result.resultCode == 200) {
-	  $(isCheck).prop('checked', true);
    	  debugger;     
       swal("ご挿入出来ました！" ,{
       icon:"success",

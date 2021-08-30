@@ -8,6 +8,11 @@
  */
 package ltd.newbee.mall.dao;
 
+import ltd.newbee.mall.entity.AfterAge;
+import ltd.newbee.mall.entity.BasicInformation;
+import ltd.newbee.mall.entity.BeforeAge;
+import ltd.newbee.mall.entity.DetailTitle;
+import ltd.newbee.mall.entity.FeaturesRelatedInfo;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
@@ -16,11 +21,29 @@ import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.JoinTabelogCategory;
+import ltd.newbee.mall.entity.Kuchikomi;
+import ltd.newbee.mall.entity.MenuCourse;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.Pension;
+import ltd.newbee.mall.entity.RestaurantDesc;
 import ltd.newbee.mall.entity.SearchHistory;
+import ltd.newbee.mall.entity.SeatFacility;
 import ltd.newbee.mall.entity.StockNumDTO;
+import ltd.newbee.mall.entity.TabelogCategory;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.TbComment;
+import ltd.newbee.mall.entity.TbGenre;
+import ltd.newbee.mall.entity.TopCoupon;
+import ltd.newbee.mall.entity.TopCourse;
+import ltd.newbee.mall.entity.TopHygiene;
+import ltd.newbee.mall.entity.TopImage;
+import ltd.newbee.mall.entity.TopKodawari;
+import ltd.newbee.mall.entity.TopMatome;
+import ltd.newbee.mall.entity.TopPage;
+import ltd.newbee.mall.entity.TopPostphoto;
+import ltd.newbee.mall.entity.TopPostphotoNum;
 import ltd.newbee.mall.entity.TsJoinCategory;
 import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -62,10 +85,16 @@ public interface NewBeeMallGoodsMapper {
      List<GoodsImage> getImageList(Long goodsId);
         // added by coca 2021/04/16　レビューリストを取得
      List<GoodsReview> getRevList(Long goodsId);
+   //adding by coca 2021/07/13
+     List<GoodsReview> copyRevList(Integer[] ids);
+     List<GoodsReview> getRevListLimit(PageQueryUtil pageUtil);
+     int findGoodsReviewCount(PageQueryUtil pageUtil);
      	// added by coca 2021/04/16 QAリストを取得
      List<GoodsQa> getGoodsQaList(Long categoryId);
      	// added by coca 2021/04/16 説明を取得
      GoodsDesc getGoodsDesc(Long goodsId);
+     List<GoodsDesc> copyGoodsDesc(Long goodsId);
+     
         // Adding Mapper to achieve paging added by coca 2021/04/23
      List<GoodsQa> findGoodsQaList(PageQueryUtil pageUtil);
      int findGoodsQaCount(PageQueryUtil pageUtil);
@@ -132,4 +161,64 @@ public interface NewBeeMallGoodsMapper {
      List<TsJoinCategory> getTsJoinCategory(Long goodsCategoryId);
 
 	int deleteByCsTsPrimaryKey(Long primaryGoodsId);
+//	=====================================================================
+	 // added by coca 2021/07/20 DetailTitleリストを取得
+     List<DetailTitle> getDetailTitle(Long id);
+     
+      // added by coca 2021/07/20 RestaurantDescリストを取得
+     List<RestaurantDesc> getRestaurantDesc(Long id);
+     
+      // added by coca 2021/07/20 TbGenreリストを取得
+     List<TbGenre> getTbGenre(Long id);
+     
+      // added by coca 2021/07/20 TabelogCategoryリストを取得
+     List<TabelogCategory> getTabelogCategory(Long categoryId);
+     // added by coca 2021/07/26 TbCommentリストを取得
+     List<TbComment> getTbComment(Long id);
+     int getTbCommentTotal();
+     double getTbCommentAvg();
+     // added by coca 2021/07/28 JoinTabelogCategoryリストを取得
+     List<JoinTabelogCategory>getJoinTabelogCategory(Long id);
+  // added by coca 2021/07/29 TopImageリストを取得
+     List<TopImage>getTopImage(Long id);
+  // added by coca 2021/07/29 TopImageリストを取得
+     List<TopPage>getTopPage(Long id);
+     // added by coca 2021/07/30 TopKodawariリストを取得
+     List<TopKodawari>getTopKodawari(Long id);
+  // added by coca 2021/07/30 TopHygieneリストを取得
+     List<TopHygiene>getTopHygiene(Long id);
+     // added by coca 2021/07/31 TopCourseリストを取得
+     List<TopCourse>getTopCourse(Long id);
+  // added by coca 2021/07/31 TopCouponリストを取得
+     List<TopCoupon>getTopCoupon(Long id);
+
+	List<TopPostphoto> getTopPostphoto(Long id);
+	
+	// add insertHelpNum by coca 2021/08/02
+    boolean insertTopPostphotoNum (TopPostphotoNum topPostphotoNum);
+      // update Review help Num updateReviewNum by coca 2021/08/02
+    boolean updateTopPostphotoNum (TopPostphotoNum topPostphotoNum);
+      // to get total reviewNum add by coca 2021/08/02
+    long getTopPostphotoNum(int reviewId);
+    
+     // add delete  for tc by coca 2021/0８/02
+    int deleteTopPostphotoNum(int reviewId);
+    // update Review help Num updateReviewNum by coca 2021/08/02
+    boolean updateMinusTopPostphotoNum (TopPostphotoNum topPostphotoNum);
+
+	List<Kuchikomi> getKuchikomi(Long id);
+
+	List<TopMatome> getTopMatome(Long id);
+
+	List<BasicInformation> getBasicInformation(Long id);
+
+	List<SeatFacility> getSeatFacility(Long id);
+
+	List<MenuCourse> getMenuCourse(Long id);
+
+	List<FeaturesRelatedInfo> getFeaturesRelatedInfo(Long id);
+	
+	List<Pension> getPension(Long id);
+	List<BeforeAge> getBeforeAge(Long age);
+	List<AfterAge> getAfterAge(Long age);
 }

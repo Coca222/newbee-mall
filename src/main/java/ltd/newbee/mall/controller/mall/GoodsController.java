@@ -19,6 +19,9 @@ import ltd.newbee.mall.controller.vo.GoodsSaleVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallGoodsDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.controller.vo.SearchPageCategoryVO;
+import ltd.newbee.mall.entity.AfterAge;
+import ltd.newbee.mall.entity.BeforeAge;
+import ltd.newbee.mall.entity.DetailTitle;
 import ltd.newbee.mall.entity.GoodsDesc;
 import ltd.newbee.mall.entity.GoodsImage;
 import ltd.newbee.mall.entity.GoodsQa;
@@ -28,7 +31,11 @@ import ltd.newbee.mall.entity.GoodsSale;
 import ltd.newbee.mall.entity.IndexConfig;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
 import ltd.newbee.mall.entity.PagingQa;
+import ltd.newbee.mall.entity.Pension;
+import ltd.newbee.mall.entity.RestaurantDesc;
 import ltd.newbee.mall.entity.SearchHistory;
+import ltd.newbee.mall.entity.TabelogCategory;
+import ltd.newbee.mall.entity.TbGenre;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
@@ -347,5 +354,74 @@ public class GoodsController {
  		return ResultGenerator.genSuccessResult(count);
      }
      
-    
+
+     
+  // adding pention added by coca 2021/08/23
+	@RequestMapping(value = "/pension", method = RequestMethod.POST)
+     @ResponseBody
+     public Result getPension(@RequestBody Pension pension){
+    	
+			List<Pension> list = newBeeMallGoodsService.getPensionList(pension.getId());
+
+			long a = list.get(0).getPaidInsuranceMonth();
+			long b = list.get(0).getAllExemptionMonth();
+			long c = list.get(0).getOneQuarterPaidMonth();
+			long d = list.get(0).getHalfPaidMonth();
+			long e = list.get(0).getThreeQuarterPaidMonth();
+			long pension1 = 780900 * (a + b + c + d + e) / 480;
+			double PENSION = 0.0;
+
+			if ((list.get(0).getBirthday() - 19410402) < 0) {
+				List<BeforeAge> beforeAge = newBeeMallGoodsService.getBeforeAgeList(list.get(0).getAge());
+				if (beforeAge.get(0).getAge() <= 65) {
+
+					PENSION = pension1 - pension1 * beforeAge.get(0).getS();
+
+				} else {
+
+					PENSION = pension1 + pension1 * beforeAge.get(0).getT();
+				}
+
+				return ResultGenerator.genSuccessResult(PENSION);
+			} else {
+				long age = list.get(0).getAge();
+				
+				List<AfterAge> afterAge = newBeeMallGoodsService.getAfterAgeList(age);
+				
+				if (afterAge.get(0).getAge() <= 65) {
+					
+					for (int i = 0; i < afterAge.size(); i++) {
+						
+						if (age == afterAge.get(i).getAge()) {
+							
+							double s = afterAge.get(i).getS();
+							
+							PENSION = pension1 - pension1 * s;
+
+						}
+					}
+
+				} else {
+					if (afterAge.get(0).getAge() > 65) {
+						
+						for (int i = 0; i < afterAge.size(); i++) {
+							
+							if (age == afterAge.get(i).getAge()) {
+								
+								double t = afterAge.get(i).getT()/100;
+
+								PENSION = pension1 + pension1 * t;
+
+							}
+						}
+
+					}
+
+				}
+				
+				return ResultGenerator.genSuccessResult(PENSION);
+			}
+			// return ResultGenerator.genSuccessResult(PENSION);
+		}
+     
 }

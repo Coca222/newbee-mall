@@ -46,5 +46,7 @@ public class Constants {
     
     public final static int SELL_STATUS_UP = 0;//商品上架状态
     public final static int SELL_STATUS_DOWN = 1;//商品下架状态
+    public final static int CATEGORY_FETCH_ERROR = 300;// リターンコード
+    public final static String CATEGORY_FETCH_ERROR_MESSAGE = "カテゴリー取得出来ません";
 
 }

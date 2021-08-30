@@ -21,11 +21,13 @@ public class PageQueryUtil extends LinkedHashMap<String, Object> {
         this.putAll(params);
 
         //分页参数
+       
         this.page = Integer.parseInt(params.get("page").toString());
         this.limit = Integer.parseInt(params.get("limit").toString());
         this.put("start", (page - 1) * limit);// present the first question of each page
         this.put("page", page);
         this.put("limit", limit);
+       
     }
 
 

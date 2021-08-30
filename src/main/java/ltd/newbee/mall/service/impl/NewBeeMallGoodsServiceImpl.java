@@ -12,6 +12,11 @@ import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.GoodsReviewVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
+import ltd.newbee.mall.entity.AfterAge;
+import ltd.newbee.mall.entity.BasicInformation;
+import ltd.newbee.mall.entity.BeforeAge;
+import ltd.newbee.mall.entity.DetailTitle;
+import ltd.newbee.mall.entity.FeaturesRelatedInfo;
 import ltd.newbee.mall.entity.GoodsCategory;
 import ltd.newbee.mall.entity.GoodsCoupon;
 import ltd.newbee.mall.entity.GoodsDesc;
@@ -20,11 +25,29 @@ import ltd.newbee.mall.entity.GoodsQa;
 import ltd.newbee.mall.entity.GoodsReview;
 import ltd.newbee.mall.entity.GoodsReviewHelpNum;
 import ltd.newbee.mall.entity.GoodsSale;
+import ltd.newbee.mall.entity.JoinTabelogCategory;
+import ltd.newbee.mall.entity.Kuchikomi;
+import ltd.newbee.mall.entity.MenuCourse;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.Pension;
+import ltd.newbee.mall.entity.RestaurantDesc;
 import ltd.newbee.mall.entity.SearchHistory;
+import ltd.newbee.mall.entity.SeatFacility;
+import ltd.newbee.mall.entity.TabelogCategory;
 import ltd.newbee.mall.entity.TableCategory;
 import ltd.newbee.mall.entity.TableSale;
+import ltd.newbee.mall.entity.TbComment;
+import ltd.newbee.mall.entity.TbGenre;
 import ltd.newbee.mall.entity.TcJoinCategory;
+import ltd.newbee.mall.entity.TopCoupon;
+import ltd.newbee.mall.entity.TopCourse;
+import ltd.newbee.mall.entity.TopHygiene;
+import ltd.newbee.mall.entity.TopImage;
+import ltd.newbee.mall.entity.TopKodawari;
+import ltd.newbee.mall.entity.TopMatome;
+import ltd.newbee.mall.entity.TopPage;
+import ltd.newbee.mall.entity.TopPostphoto;
+import ltd.newbee.mall.entity.TopPostphotoNum;
 import ltd.newbee.mall.entity.TsJoinCategory;
 import ltd.newbee.mall.entity.campaignSet;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
@@ -385,4 +408,210 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
 		return tsList;
 	}
 
+	@Override
+	public List<GoodsDesc> copyGoodsDescEntityByGoodsId(Long goodsId) {
+		List<GoodsDesc> goodsDescList= goodsMapper.copyGoodsDesc(goodsId);
+		return goodsDescList;
+	}
+
+	@Override
+	public List<GoodsReview> copyGoodsReviewEntityByGoodsId(Integer[] ids) {
+		List<GoodsReview> gRlist =goodsMapper.copyRevList(ids);
+        return gRlist ;
+	}
+
+	@Override
+	public PageResult copyGoodsReviewEntityById(PageQueryUtil pageUtil) {
+		List <GoodsReview> reviewList =goodsMapper.getRevListLimit(pageUtil);	
+		int total = goodsMapper.findGoodsReviewCount(pageUtil);
+		PageResult pageResult = new PageResult(reviewList, total, pageUtil.getLimit(), pageUtil.getPage());
+       return pageResult;
+	}
+	
+//	=============================================================================================================
+
+	@Override
+	public List<DetailTitle> getDetailTitleList(Long id) {
+		List<DetailTitle> dtlist = goodsMapper.getDetailTitle(id);
+		
+		return dtlist;
+	}
+
+	@Override
+	public List<RestaurantDesc> getRestaurantDescList(Long id) {
+		List<RestaurantDesc> rdlist = goodsMapper.getRestaurantDesc(id);
+		return rdlist;
+	}
+
+	@Override
+	public List<TbGenre> getTbGenreList(Long id) {
+		List<TbGenre> tglist = goodsMapper.getTbGenre(id);
+		return tglist;
+	}
+
+	@Override
+	public List<TabelogCategory> getTabelogCategoryList(Long categoryId) {
+		List<TabelogCategory> tclist = goodsMapper.getTabelogCategory(categoryId);
+		return tclist;
+	}
+
+	@Override
+	public List<TbComment> getTbCommentList(Long id) {
+		List<TbComment> tbClist = goodsMapper.getTbComment(id);
+		return tbClist;
+	}
+
+	@Override
+	public int getTbCommentTotal() {
+		int total = goodsMapper.getTbCommentTotal();
+		return total;
+	}
+
+	@Override
+	public double getTbCommentAvg() {
+		double averStore = goodsMapper.getTbCommentAvg();
+		return averStore;
+	}
+
+	@Override
+	public List<JoinTabelogCategory> getJoinTabelogCategoryList(Long id) {
+		List<JoinTabelogCategory> jtClist = goodsMapper.getJoinTabelogCategory(id);
+		return jtClist;
+	}
+
+	@Override
+	public List<TopImage> getTopImageList(Long id) {
+		List<TopImage> list = goodsMapper.getTopImage(id);
+		return list;
+	}
+
+	@Override
+	public List<TopPage> getTopPageList(Long id) {
+		List<TopPage> tplist = goodsMapper.getTopPage(id);
+		return tplist;
+	}
+
+	@Override
+	public List<TopKodawari> getTopKodawariList(Long id) {
+		List<TopKodawari> tklist = goodsMapper.getTopKodawari(id);
+		return tklist;
+	}
+
+	@Override
+	public List<TopHygiene> getTopHygieneList(Long id) {
+		List<TopHygiene> thlist = goodsMapper.getTopHygiene(id);
+		return thlist;
+	}
+
+	@Override
+	public List<TopCourse> getTopCourseList(Long id) {
+		List<TopCourse> thlist = goodsMapper.getTopCourse(id);
+		return thlist;
+	}
+
+	@Override
+	public List<TopCoupon> getTopCouponList(Long id) {
+		List<TopCoupon> tclist = goodsMapper.getTopCoupon(id);
+		return tclist;
+	}
+	
+	
+	@Override
+	public List<TopPostphoto> getTopPostphotoList(Long id) {
+		List<TopPostphoto> tclist = goodsMapper.getTopPostphoto(id);
+		return tclist;
+	}
+
+	@Override
+	public boolean insertTopPostphotoNumList(TopPostphotoNum topPostphotoNum) {
+		// TODO Auto-generated method stub
+		return goodsMapper.insertTopPostphotoNum(topPostphotoNum);
+	}
+
+	@Override
+	public boolean updateTopPostphotoNumList(TopPostphotoNum topPostphotoNum) {
+		// TODO Auto-generated method stub
+		return goodsMapper.updateTopPostphotoNum(topPostphotoNum);
+	}
+
+	@Override
+	public long getTopPostphotoNumList(int reviewId) {
+		// TODO Auto-generated method stub
+		return goodsMapper.getTopPostphotoNum(reviewId);
+	}
+
+	@Override
+	public Boolean deleteTopPostphotoNumList(int reviewId) {
+		// TODO Auto-generated method stub
+		return goodsMapper.deleteTopPostphotoNum(reviewId)>0;
+	}
+
+	@Override
+	public boolean updateMinusTopPostphotoNumList(TopPostphotoNum topPostphotoNum) {
+		// TODO Auto-generated method stub
+		return goodsMapper.updateMinusTopPostphotoNum(topPostphotoNum);
+	}
+	
+	
+
+	@Override
+	public List<Kuchikomi> getKuchikomiList(Long id) {
+		List<Kuchikomi> tklist = goodsMapper.getKuchikomi(id);
+		return tklist;
+	}
+	
+	@Override
+	public List<TopMatome> getTopMatomeList(Long id) {
+		List<TopMatome> tmlist = goodsMapper.getTopMatome(id);
+		return tmlist;
+	}
+	
+	
+	
+	@Override
+	public List<BasicInformation> getBasicInformationList(Long id) {
+		List<BasicInformation> tblist = goodsMapper.getBasicInformation(id);
+		return tblist;
+	}
+	
+	
+	@Override
+	public List<SeatFacility> getSeatFacilityList(Long id) {
+		List<SeatFacility> tslist = goodsMapper.getSeatFacility(id);
+		return tslist;
+	}
+	
+	
+
+	@Override
+	public List<MenuCourse> getMenuCourseList(Long id) {
+		List<MenuCourse> tmlist = goodsMapper.getMenuCourse(id);
+		return tmlist;
+	}
+	
+	
+	@Override
+	public List<FeaturesRelatedInfo> getFeaturesRelatedInfoList(Long id) {
+		List<FeaturesRelatedInfo> tmlist = goodsMapper.getFeaturesRelatedInfo(id);
+		return tmlist;
+	}
+
+	@Override
+	public List<Pension> getPensionList(Long id) {
+		List<Pension> list = goodsMapper.getPension(id);
+		return list;
+	}
+
+	public List<BeforeAge> getBeforeAgeList(Long age) {
+		List<BeforeAge> list = goodsMapper.getBeforeAge(age);
+		return list;
+	}
+
+	public List<AfterAge> getAfterAgeList(Long age) {
+		List<AfterAge> list = goodsMapper.getAfterAge(age);
+		return list;
+	}
+
+
+	
 }

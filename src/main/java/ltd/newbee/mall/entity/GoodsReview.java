@@ -1,16 +1,25 @@
 package ltd.newbee.mall.entity;
 
+import java.util.Arrays;
 
 public class GoodsReview {
+	private Integer[] ids;
 	private int id;
 	private int star;
-	private long reviewNum;
+	private Long reviewNum;
+	private Long goodsId;
 	private String commentDate;
 	private String title;
 	private String content;
 	private String picture;
 	private String nickName;
 	private String goodsName;
+	public Integer[] getIds() {
+		return ids;
+	}
+	public void setIds(Integer[] ids) {
+		this.ids = ids;
+	}
 	public int getId() {
 		return id;
 	}
@@ -23,11 +32,17 @@ public class GoodsReview {
 	public void setStar(int star) {
 		this.star = star;
 	}
-	public long getReviewNum() {
+	public Long getReviewNum() {
 		return reviewNum;
 	}
-	public void setReviewNum(long reviewNum) {
+	public void setReviewNum(Long reviewNum) {
 		this.reviewNum = reviewNum;
+	}
+	public Long getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(Long goodsId) {
+		this.goodsId = goodsId;
 	}
 	public String getCommentDate() {
 		return commentDate;
@@ -67,10 +82,11 @@ public class GoodsReview {
 	}
 	@Override
 	public String toString() {
-		return "GoodsReview [id=" + id + ", star=" + star + ", reviewNum=" + reviewNum + ", commentDate=" + commentDate
-				+ ", title=" + title + ", content=" + content + ", picture=" + picture + ", nickName=" + nickName
-				+ ", goodsName=" + goodsName + "]";
+		return "GoodsReview [ids=" + Arrays.toString(ids) + ", id=" + id + ", star=" + star + ", reviewNum=" + reviewNum
+				+ ", goodsId=" + goodsId + ", commentDate=" + commentDate + ", title=" + title + ", content=" + content
+				+ ", picture=" + picture + ", nickName=" + nickName + ", goodsName=" + goodsName + "]";
 	}
+	
 	
 	
 	

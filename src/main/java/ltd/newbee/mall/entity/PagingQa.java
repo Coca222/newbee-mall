@@ -3,11 +3,17 @@ package ltd.newbee.mall.entity;
 
 
 public class PagingQa {
-
+	private Long goodsId;
 	private String page;
 	private String totalPage;
 	private String submitDate;
 	private String helpedNum;
+	public Long getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(Long goodsId) {
+		this.goodsId = goodsId;
+	}
 	public String getPage() {
 		return page;
 	}
@@ -34,9 +40,10 @@ public class PagingQa {
 	}
 	@Override
 	public String toString() {
-		return "PagingQa [page=" + page + ", totalPage=" + totalPage + ", submitDate=" + submitDate + ", helpedNum="
-				+ helpedNum + "]";
+		return "PagingQa [goodsId=" + goodsId + ", page=" + page + ", totalPage=" + totalPage + ", submitDate="
+				+ submitDate + ", helpedNum=" + helpedNum + "]";
 	}
+	
 	
 	
 	

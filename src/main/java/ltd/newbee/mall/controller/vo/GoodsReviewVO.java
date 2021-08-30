@@ -10,22 +10,33 @@ package ltd.newbee.mall.controller.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 商品详情页VO
  */
 public class GoodsReviewVO implements Serializable {
-
+	private Integer[] ids;
 	private int id;
 	private int star;
-	private long reviewNum;
+	private Long reviewNum;
+	private Long goodsId;
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
 	private String commentDate;
 	private String title;
 	private String content;
 	private String picture;
 	private String nickName;
 	private String goodsName;
+	public Integer[] getIds() {
+		return ids;
+	}
+	public void setIds(Integer[] ids) {
+		this.ids = ids;
+	}
 	public int getId() {
 		return id;
 	}
@@ -38,11 +49,17 @@ public class GoodsReviewVO implements Serializable {
 	public void setStar(int star) {
 		this.star = star;
 	}
-	public long getReviewNum() {
+	public Long getReviewNum() {
 		return reviewNum;
 	}
-	public void setReviewNum(long reviewNum) {
+	public void setReviewNum(Long reviewNum) {
 		this.reviewNum = reviewNum;
+	}
+	public Long getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(Long goodsId) {
+		this.goodsId = goodsId;
 	}
 	public String getCommentDate() {
 		return commentDate;
@@ -80,4 +97,13 @@ public class GoodsReviewVO implements Serializable {
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
+	@Override
+	public String toString() {
+		return "GoodsReviewVO [ids=" + Arrays.toString(ids) + ", id=" + id + ", star=" + star + ", reviewNum="
+				+ reviewNum + ", goodsId=" + goodsId + ", commentDate=" + commentDate + ", title=" + title
+				+ ", content=" + content + ", picture=" + picture + ", nickName=" + nickName + ", goodsName="
+				+ goodsName + "]";
+	}
+	
+	
 }

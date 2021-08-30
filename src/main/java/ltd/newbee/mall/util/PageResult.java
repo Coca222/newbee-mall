@@ -23,6 +23,7 @@ public class PageResult implements Serializable {
     private int currPage;
     //列表数据
     private List<?> list;
+    private Boolean isInitial;
 
     /**
      * 分页
@@ -40,7 +41,15 @@ public class PageResult implements Serializable {
         this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
     }
 
-    public int getTotalCount() {
+    public Boolean getIsInitial() {
+		return isInitial;
+	}
+
+	public void setIsInitial(Boolean isInitial) {
+		this.isInitial = isInitial;
+	}
+
+	public int getTotalCount() {
         return totalCount;
     }
 

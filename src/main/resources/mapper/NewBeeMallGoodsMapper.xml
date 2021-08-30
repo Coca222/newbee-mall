@@ -395,6 +395,10 @@
      select goods_id, color, size, material, weight, warranty_year, set_date, warp_size from goods_desc
       where goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
+   <select id="copyGoodsDesc"  parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsDesc">
+     select goods_id, color, size, material, weight, warranty_year, set_date, warp_size from goods_desc
+      where goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
 
 
   <select id="getGoodsQaList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsQa">
@@ -407,6 +411,37 @@
       from goods_review as r join tb_newbee_mall_user as u on r.custermer_id = u.user_id join tb_newbee_mall_goods_info as i  
       on r.goods_id = i.goods_id
       where r.goods_id = #{goodsId,jdbcType=BIGINT} order by r.star DESC
+  </select>
+  
+    <select id="getRevListLimit" parameterType="Map" resultType="ltd.newbee.mall.entity.GoodsReview">
+ 	  select r.id, r.star,r.review_num, r.comment_date, r.title, r.content, r.picture, r.goods_id, u.nick_name, i.goods_name
+      from goods_review as r join tb_newbee_mall_user as u on r.custermer_id = u.user_id join tb_newbee_mall_goods_info as i  
+      on r.goods_id = i.goods_id where r.goods_id = #{goodsId,jdbcType=BIGINT}
+      <!-- where r.goods_id = #{goodsId,jdbcType=BIGINT}  -->
+           <if test="orderBy!=null and orderBy!=''">
+         <choose>
+                <otherwise>             
+                    order by r.star
+                </otherwise>
+         </choose>
+      </if>
+      <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+      </if>
+  </select>
+    <select id="findGoodsReviewCount" parameterType="Map" resultType="int">
+      select count(*) from goods_review as r join tb_newbee_mall_user as u on r.custermer_id = u.user_id join tb_newbee_mall_goods_info as i  
+      on r.goods_id = i.goods_id
+  </select> 
+  
+    <select id="copyRevList" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.GoodsReview">
+ 	  select r.id,r.goods_id, r.star,r.review_num, r.comment_date, r.title, r.content, r.picture, r.goods_id, u.nick_name, i.goods_name
+      from goods_review as r join tb_newbee_mall_user as u on r.custermer_id = u.user_id join tb_newbee_mall_goods_info as i  
+      on r.goods_id = i.goods_id
+      where r.id in 
+      <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+      </foreach>
   </select>
   
   <!--  Adding XML to achieve paging added by coca 2021/04/23 -->
@@ -440,7 +475,7 @@
   </select>   
   <!-- adding count added by coca 2021/04/24 -->
   <select id="findGoodsQaCount" parameterType="Map" resultType="int">
-      select count(*) from goods_qa where goods_id = #{goodsId,jdbcType=BIGINT}
+      select count(*) from goods_qa
   </select> 
   
   <!-- adding insert added by coca 2021/04/24 -->
@@ -902,4 +937,175 @@
         n.goods_id, n.goods_name, n.goods_category_id, ts.id, ts.goods_id, ts.start_date, ts.end_date from tb_newbee_mall_goods_info as n 
         left join table_sale as ts on n.goods_id = ts.goods_id where goods_category_id = #{goodsCategoryId,jdbcType=BIGINT} 
     </select>
+    <!-- ================================================================================================================================================ -->
+	<!-- tabelog XML added by coca 2021/7/20 -->
+	<select id="getDetailTitle" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.DetailTitle">
+		select id,name, star, save_num,style, comment_num from detail_title
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="getRestaurantDesc" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.RestaurantDesc">
+		select id,nearby_station, genre_id, night_budget, day_budget,
+		rest_day from restaurant_desc
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="getTbGenre" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TbGenre">
+		select genre_id,name_1, name_2, name_3,id from tb_genre
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="getTabelogCategory" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TabelogCategory">
+		select category_id, category_name from tabelog_category
+		where category_id= #{categoryId,jdbcType=BIGINT}
+	</select> 
+		<!-- tabelog tb_comment XML added by coca 2021/7/20 -->
+	<select id="getTbComment" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TbComment">
+		select id,comment_id, topic, comment, image,visit_date,star,sum,visit_time from tb_comment
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	 <select id="getTbCommentTotal" parameterType="Map" resultType="int">
+	select count(*) from tb_comment
+	</select>
+	<select id="getTbCommentAvg" parameterType="Map" resultType="double">
+		SELECT AVG(star) FROM tb_comment
+	</select>
+	<select id="getJoinTabelogCategory" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.JoinTabelogCategory">
+ 	  select t.id, t.station_collection_id,t.genre_collection_id, g.genre_id,g.name,g.genre_collection_id, s.closed_station_id, 
+ 	  s.station, s.station_collection_id from tabelog_category as t join tb_genre as g on t.genre_collection_id = g.genre_collection_id join tb_station as s  
+      on t.station_collection_id = s.station_collection_id
+      where t.id = #{id,jdbcType=BIGINT}
+  </select>
+  	<select id="getTopImage" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TopImage">
+		select id,path from top_image
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="getTopPage" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TopPage">
+		select id,notice1,notice2,notice3,notice4,notice5,notice6,top_appeal,top_appeal_content from top_page
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+		<select id="getTopKodawari" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TopKodawari">
+		select id,path,modal_title,label,content from top_kodawari
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="getTopHygiene" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TopHygiene">
+		select id,title,instore,hygiene_data1,hygiene_data2,customer,hygiene_data3,text_notice1,text_notice2a,text_notice2link,
+		text_notice2c,text_notice2d,text_notice3link,text_notice3a from top_hygiene
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+		<select id="getTopCourse" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TopCourse">
+		select id,title,sub_title,course_title,course_number,course_list,course_book,course_detail,course_price,tax,
+		member,detail_member,oneNeng,path_pic,path_link,path_more from top_course
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+		<select id="getTopCoupon" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TopCoupon">
+		select id,title,path,subject,description,detail,coupon_notice,oneNeng from top_coupon
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="getTopPostphoto" parameterType="java.lang.Long" resultType="ltd.newbee.mall.entity.TopPostphoto">
+		select id, title, submit, path_submit, path_link, path_pic, path_more, show_users, log_on_date, path_all, name, place, comment, 
+		path_continue, oneNeng1, oneNeng2 from top_postphoto
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	 <!--   add top_postphoto_num added by coca 2021/08/02 -->
+   <insert id="insertTopPostphotoNum" parameterType="ltd.newbee.mall.entity.GoodsReviewHelpNum">
+        insert into top_postphoto_num (review_id, user_id) values (#{reviewId, jdbcType=INTEGER},#{userId, jdbcType=BIGINT})
+        
+   </insert>
+   <update id="updateTopPostphotoNum">     
+            update top_postphoto set show_users = show_users + 1
+            where oneNeng1 = #{reviewId} 
+   </update>
+   <select id="getTopPostphotoNum" parameterType="int" resultType="java.lang.Long">
+ 	  select show_users from top_postphoto 
+      where oneNeng1 = #{reviewId,jdbcType=BIGINT}
+  </select>
+  
+  
+  
+  <delete id="deleteTopPostphotoNum" parameterType="java.lang.Long">
+    delete from top_postphoto_num
+    where review_id = #{reviewId, jdbcType=INTEGER}
+  </delete>
+  <update id="updateMinusTopPostphotoNum">     
+            update top_postphoto set show_users = show_users - 1
+            where oneNeng1 = #{reviewId} 
+  </update>
+  <!--   add top_kuchikomi added by coca 2021/08/05 -->
+	<select id="getKuchikomi" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.Kuchikomi">
+		select id, path_img, user, count, path_authentication, authentication,
+		log_num, res_num, follow_num,
+		follower_num, path_href, place, comment, path_continue, heart_count, visit_date,
+		dinner, lunch, visit_count,
+		oneNeng1, oneNeng2, comment_id from top_kuchikomi where id =
+		#{id,jdbcType=BIGINT}
+	</select>
+	
+	  <!--   add top_matome added by coca 2021/08/05 -->
+	<select id="getTopMatome" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.TopMatome">
+		select id, head, path_img, path_href, title, description,
+		path_user, path_matome, matome, oneNeng from top_matome where id =
+		#{id,jdbcType=BIGINT}
+	</select>
+	
+	  <!--   add basic_information added by coca 2021/08/06 -->
+	<select id="getBasicInformation" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.BasicInformation">
+		select access3, id, name, genre, phone_number, reservation,
+		address1, access1, work_time, official_budget, aggregate_budget,
+		pay_way, oneNeng1, oneNeng2, access2, access4, pathBigMap,
+		pathCloseMap, address2, address3, address4, address5, path1, path2,
+		path3, path4 from basic_information where id =
+		#{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- add seat_facility added by coca 2021/08/06 -->
+	<select id="getSeatFacility" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.SeatFacility">
+		select id, seats_number, private_room, reserved, smoking,
+		parking_Lot, space_equipment, mobile_phone, oneNeng1, oneNeng2 from
+		seat_facility where id =
+		#{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- addmenu_course added by coca 2021/08/06 -->
+	<select id="getMenuCourse" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.MenuCourse">
+		select id, menu_course, drink, food from
+		menu_course where id =
+		#{id,jdbcType=BIGINT}
+	</select>
+
+	<!-- add　features_related_information added by coca 2021/08/06 -->
+	<select id="getFeaturesRelatedInfo" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.FeaturesRelatedInfo">
+		select id, use_scene, with_children, homepage,
+		official_account, phone_num, remarks, related_store_info,
+		first_contributor, oneNeng1, oneNeng2 from
+		features_related_information where id =
+		#{id,jdbcType=BIGINT}
+	</select>
+	
+		<!-- pension added by coca 2021/08/23 -->
+	<select id="getPension" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.Pension">
+		select id, paid_insurance_month, all_exemption_month, one_quarter_paid_month, half_paid_month, three_quarter_paid_month, age, name, address, sexual, phone, birthday from
+		pension where id =
+		#{id,jdbcType=BIGINT}
+	</select>
+	<select id="getBeforeAge" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.BeforeAge">
+		select age, s, t from
+		before_age where age =
+		#{age,jdbcType=VARCHAR}
+	</select>
+	<select id="getAfterAge" parameterType="java.lang.Long"
+		resultType="ltd.newbee.mall.entity.AfterAge">
+		select age, s, t from
+		after_age where age =
+		#{age,jdbcType=VARCHAR}
+	</select>
 </mapper>
